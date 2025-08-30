@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_BRANCH="master"
+GIT_BRANCH="main"
 COMMIT_MESSAGE="Updates - $(date +"%Y-%m-%d %T")"
 
 
