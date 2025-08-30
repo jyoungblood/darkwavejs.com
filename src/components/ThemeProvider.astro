@@ -1,0 +1,11 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+// import Icon from "../user-components/Icon.astro";
+---
+
+{/* This is intentionally inlined to avoid FOUC. */}
+<script is:inline>
+  document.documentElement.dataset.theme = "light";
+</script>
+
+<template id="theme-icons"> </template>

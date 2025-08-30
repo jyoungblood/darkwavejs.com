@@ -1,0 +1,17 @@
+---
+title: Deployment
+---
+
+Put the files on your web server and set your docroot to the `public` directory...easy huh?
+
+We have a .htaccess file that handles the routing for Apache. See the [slim deployment](https://www.slimframework.com/docs/v4/start/web-servers.html) docs for more info on deploying with other web servers (nginx, caddy, iis, lighttpd).
+
+// fixit - would be cool to have a copy/paste nginx config here
+
+// fixit copy/paste deploy script / instructions
+
+You could, of course, just copy the files with FTP. That absolutely works.
+
+We have a modified version of [0x00-stereo-deploy](https://github.com/jyoungblood/0x00-stereo-deploy) --- this is our favorite way to deploy to a VPS with rsync via SSH. Hooked up with git, all you gotta do is `./deploy.sh`
+
+If you add migrations, queues, tests, or whatever stuff in the future, add any necessary deployment commands to this script ... or do whatever, that's really not my problem.

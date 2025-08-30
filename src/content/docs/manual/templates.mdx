@@ -1,0 +1,20 @@
+---
+title: Templates
+---
+
+
+Stereo comes with [Blade](https://laravel.com/docs/blade) templating capability using the standalone [BladeOne](https://github.com/EFTEC/BladeOne) package
+
+The [BladeOne HTML](https://github.com/EFTEC/BladeOneHtml) components are also available
+
+We'll provide some examples for the basics, but refer to the [Blade](https://laravel.com/docs/blade) and [BladeOne](https://github.com/EFTEC/BladeOne) docs for more info
+
+NOTE - blade dynamic components are not supported by bladeone for performance reasons. (I'd prefer that they were, but it's not my decision...at the moment). See the [BladeOne Manual](https://github.com/EFTEC/BladeOne/wiki/Template-Component) for more info on how to make components.
+
+(mirror whatever's in the [stereo-render](https://github.com/jyoungblood/stereo-render) readme, examples, descriptions, config, general usage ... note what you need to do in the route to connect a view with a url/route)
+
+// normal example of a typical page that includes layout/wrapper and title
+// variables, logic, loops, including templates, layouts, components
+// using b1html components, writing your own components
+
+Also note - Stereo can use any templating engine, try [slime-render](https://github.com/jyoungblood/slime-render) if you want to swap out blade for handlebars (just remember to set the views directory to something different? ... might want to have a tutorial for doing this idk) ... twig can work too, so can liquid. you're welcome to do it yourself, idc

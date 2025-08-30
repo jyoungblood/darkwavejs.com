@@ -1,0 +1,81 @@
+---
+title: Docs Code Samples
+description: Example implementations of the various types of code samples.
+---
+import { Code } from 'astro-expressive-code/components'
+import { Tabs, TabItem, Aside, Steps } from '@astrojs/starlight/components';
+
+
+
+Just a code block:
+
+<Code code="console.log('Hello world!')" lang="js" />
+
+---
+
+Code block with a filename and highlights:
+
+export const exampleCode = `console.log('This could come from a file or CMS!');`
+export const fileName = 'example.js'
+export const highlights = ['file', 'CMS']
+
+<Code code={exampleCode} lang="js" title={fileName} mark={highlights} />
+
+---
+
+Code blocks with tabs and different languages:
+
+<Tabs>
+  <TabItem label="Blade">
+    <Code code="<h1>Hello world! My name is {{ $name }}</h1>" lang="blade" />
+  </TabItem>
+  <TabItem label="PHP">
+    <Code code="<?php echo 'Hello world!'; ?>" lang="php" />
+  </TabItem>
+  <TabItem label="JS">
+    <Code code="console.log('Hello world!');" lang="js" />
+  </TabItem>
+  <TabItem label="CSS">
+    <Code code="body { color: red; }" lang="css" />
+  </TabItem>
+</Tabs>
+
+---
+
+
+Steps:
+
+
+<Steps>
+
+1. Import the component into your MDX file:
+
+   ```js
+   import { Steps } from '@astrojs/starlight/components';
+   ```
+
+2. Wrap `<Steps>` around your ordered list items.
+
+</Steps>
+
+
+---
+
+Love these asides too:
+
+<Aside>Some content in an aside.</Aside>
+<Aside type="caution">Some cautionary content.</Aside>
+
+---
+
+
+See docs for starlight and expressive code for more examples.
+
+
+- [https://starlight.astro.build/components/using-components/](https://starlight.astro.build/components/using-components/) **
+- [https://starlight.astro.build/components/tabs/](https://starlight.astro.build/components/tabs/)
+- [https://expressive-code.com/guides/themes/](https://expressive-code.com/guides/themes/)
+- [https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor](https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor)
+- [https://starlight.astro.build/guides/css-and-tailwind/#tailwind-css](https://starlight.astro.build/guides/css-and-tailwind/#tailwind-css)
+- ?? [https://tailwindcss.com/docs/theme](https://tailwindcss.com/docs/theme)
+
