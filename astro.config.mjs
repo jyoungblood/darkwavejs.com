@@ -15,7 +15,7 @@ export default defineConfig({
       logo: {
         light: "/src/assets/dw-triangles.svg",
         dark: "/src/assets/dw-triangles-white.svg",
-        replacesTitle: true,
+        // replacesTitle: true,
       },
       customCss: ["./src/styles/tailwind.css", "./src/styles/custom.css"],
       expressiveCode: {
@@ -36,21 +36,25 @@ export default defineConfig({
       sidebar: [
         {
           label: "Documentation",
-          autogenerate: { directory: "docs" },
-          // items: [
-          //   { label: "Introduction", slug: "docs" },
-          //   { label: "Installation", slug: "docs/installation" },
-          //   { label: "Structure", slug: "docs/structure" },
-          //   { label: "Routing & Rendering", slug: "docs/routing" },
-          //   { label: "Templates", slug: "docs/templates" },
-          //   { label: "Deployment", slug: "docs/deployment" },
-          //   { label: "Resources", slug: "docs/resources" },
-          // ],
+          // autogenerate: { directory: "docs" },
+          items: [
+            { label: "Introduction", slug: "docs" },
+            { label: "Installation", slug: "docs/installation" },
+            { label: "Architecture", slug: "docs/architecture" },
+            { label: "Getting Started", slug: "docs/getting-started" },
+            { label: "Configuring Services", slug: "docs/configuring" },
+            { label: "Troubleshooting", slug: "docs/troubleshooting" },
+            { label: "Deployment", slug: "docs/deployment" },
+          ],
         },
 
         {
           label: "Components",
           autogenerate: { directory: "components" },
+        },
+        {
+          label: "Admin",
+          autogenerate: { directory: "admin" },
         },
         {
           label: "Field Guide",
@@ -60,6 +64,13 @@ export default defineConfig({
         {
           label: "Resources",
           autogenerate: { directory: "resources" },
+        },
+        {
+          label: "Project",
+          items: [
+            { label: "Roadmap", slug: "project/roadmap" },
+            { label: "Contributing", slug: "project/contributing" },
+          ],
         },
       ],
       head: [

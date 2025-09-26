@@ -192,8 +192,7 @@ starlight-theme-select {
 }
 
 
-:root[data-theme='light'] .sl-link-button.primary,
-:root[data-theme='light'] [aria-current="page"] {
+:root[data-theme='light'] .sl-link-button.primary, :root[data-theme='light'] [aria-current="page"]{
   color: var(--sl-color-black);
 
 }
@@ -203,12 +202,12 @@ starlight-theme-select {
   padding: 1.2rem 1.1rem 1.2rem 1.5rem !important;
 }
 
-.sl-link-button:hover {
+.sl-link-button:hover{
   /* text-decoration: underline; */
   opacity: 0.7;
 }
 
-.sl-markdown-content a:not(:where(.not-content *)):hover {
+.sl-markdown-content a:not(:where(.not-content *)):hover{
   opacity: 0.7;
 }
 
@@ -222,8 +221,8 @@ sl-sidebar-state-persist ul.top-level summary:hover {
 }
 
 
-.site-title:hover {
-  opacity: 0.7;
+.site-title:hover{
+opacity: 0.7;
 }
 
 
