@@ -3,3 +3,91 @@ title: Deployment
 ---
 
 vps guide
+
+idk about serverless / platform deployments (cf workers, vercel, etc) ... and honestly i don't give a shit, at least not right now
+
+we're deploying on a private vps like our grandparents used to do
+
+astro using node ssr adapter...how hard could it be?
+
+dw deployment guide
+- (see server ref vps astro deployment instructions)
+- best practices: make sure you're backing up your db
+	- ref (good idea) - s3mysqlbackup solution (purhost, reininghost, eqkh)
+		- s3 media/static files backup script too (using on rh & purhost)
+
+
+honestly i'm super stoked at how easy this can be to set up on a vps. you just need ssh & node (nvm & pm2, in my case...super easy and super reliable)
+this will work on "modern" infra too (host it with vercel or cloudflare, idgaf)
+
+
+
+
+?? where do you deploy it? wherever the f you want
+- railway, render (or like netlify, vercel, fly, etc, idgaf)
+- your own vps!
+
+
+---
+
+
+for this example, let's say the app is called dwsite
+
+
+
+## node apps (astro, esp) on kh vps
+- ssh setup for user (not root)
+- ssh as user
+  - install nvm for user
+  - install pm2 for user
+  - add all the ecosystem.config stuff (pm2 config) for astro locally (ok to put in repo, shouldn't ever need to change tho)
+  - add codebase via git (set up .env w/ correct production settings)
+- pm2 start ecosystem.config.cjs
+  - pm2 save
+  - pm2 startup
+    - [run the command it gives you as root]
+    - will be something like `sudo env PATH=$PATH:/home/dwsite/.nvm/versions/node/v20.19.4/bin /home/dwsite/.nvm/versions/node/v20.19.4/lib/node_modules/pm2/bin/pm2 startup systemd -u dwsite --hp /home/dwsite`
+    - use the "bin" version of pm2 (ex, replace '/home/dwsite/.nvm/versions/node/v20.19.4/lib/node_modules/pm2/bin/pm2' with '/home/dwsite/.nvm/versions/node/v20.19.4/bin/pm2')
+    - ugh this part sucks, i hate it
+      - systemctl status pm2-dwsite -- if it gives you shit:
+        - systemctl stop pm2-dwsite || true
+        - ```
+            # replace lib/node_modules/... with bin/pm2 on ExecStart/Reload/Stop
+            sed -i 's#/home/dwsite/.nvm/versions/node/v20.19.4/lib/node_modules/pm2/bin/pm2#/home/dwsite/.nvm/versions/node/v20.19.4/bin/pm2#g' /etc/systemd/system/pm2-dwsite.service
+
+            # add a small delay after start (only once; safe to re-run)
+            grep -q '^ExecStartPost=' /etc/systemd/system/pm2-dwsite.service || \
+              sed -i '/^ExecStart=.*resurrect/a ExecStartPost=/bin/sleep 1' /etc/systemd/system/pm2-dwsite.service
+
+            # optional: reduce restart hammering
+            grep -q '^RestartSec=' /etc/systemd/system/pm2-dwsite.service || \
+              sed -i '/^Restart=on-failure/a RestartSec=1' /etc/systemd/system/pm2-dwsite.service
+            ```
+        - ```
+          systemctl daemon-reload
+          systemctl enable pm2-dwsite
+          systemctl start pm2-dwsite
+          systemctl status pm2-dwsite -l
+          journalctl -u pm2-dwsite -n 50 --no-pager
+          ```
+  - pm2 save (run again, as user)
+- .htaccess proxy
+  - ```
+  DirectoryIndex disabled  # disable default redirect to index.php
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
+  RewriteRule ^/?(.*)$ http://localhost:3669/$1 [P,L]
+  ```
+
+
+
+---
+
+
+and if it goes offline
+- cd /home/dwsite/astro // (directory where the site is deployed on your server)
+- su dwsite
+- pm2 start ecosystem.config.cjs
+- pm2 save

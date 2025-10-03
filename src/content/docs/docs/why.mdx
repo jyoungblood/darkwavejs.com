@@ -1,0 +1,88 @@
+---
+title: WHY??????
+---
+
+WHY DO YOU DO IT LIKE THAT
+
+
+WHY DOES THIS EXIST - Built my own fw/toolkit even though I didn't want to bc I've tried SO many fws/cms and they ALL felt cumbersome and unwieldy
+
+Value of dw is that all the big decisions are made for you, you don't have to spend time deciding which tech to use
+	and they’re good pragmatic decisions made with a few key principles in mind (keep architecture and workflow simple, no build step, etc)
+
+
+
+
+Why have we made the decisions we've made? Why choose these specific tools & libraries?
+
+I'm so glad you asked:
+
+
+why flyon?
+- did a brief exploration of an implementation w/ just daisyui (because it's lighter and "simpler" and the "normal" go-to choice for a lot of devs)...not ideal
+	- concerned about accessibility issues
+		- flyon built on preline
+	- color contrast issues
+	- daisy just feels incomplete compared to flyon/preline
+- it feels COMPLETE
+- daisy is nice, basecoat is nice, but they're not the right choices
+- we need turn-key components that are ACCESSIBLE and COMPLETE feeling
+- maybe daisy will be it one day, but it's not it now
+- basecoat/shad is nice, but too much involved to get the functionality we want
+	- basecoat is sick and looks great by default, but it's "headless" w/ minimal style and limited components (less pre-built stuff)
+		- which is fine, but what we want here is pre-built components you can plug in and magically have a complete feeling thing that's accessible (enough)
+- https://flyonui.com/docs/getting-started/introduction/
+- it's built on daisy (decent aesthetic) AND preline (and iconify) ... concern for "finished" looking aesthetics and more accessible (headless) components
+
+
+
+
+Why node? It’s everywhere! (So many people have built integrations w services, easy pkg integration)
+Why node
+More secure on a vps (than php apps for sure)
+it's easy to set up on your local env, everyone has it anyway
+also, re: node, we're specifically using npm (cli) because it's the "normal" way to do this. fuck using pnpm or yarn or whatever else.
+
+
+
+why js/ts/node?
+- ecosystem is HUGE, tons of people building stuff i can use for free
+- it's easier than it used to be (not ideal, but it works pretty well these days)
+- fast enough processing, reliable architecture etc
+- easy(-ish) turn-key functionality
+
+for like 10 years DW was written with php and it was great. i hate typescript and swore i would NEVER use it, but here i am, using typescript for new apps...and loving it!
+
+this toolkit was previously built on php (focusing on ease of deployment & dev workflow, but now node is really easy, MUCH easier to deploy w/ modern platforms, and older platforms [vps w/ hetzner, kh, do, linode, etc] is easy enough to set up too...modify for your needs)
+
+
+
+TS is GREAT for AI
+- you can write apps with this stack SO FREAKING FAST with claude & cursor 
+
+
+
+why astro?
+it's fucking easy
+- you want react components? You got it!
+  - vue? svelte?
+  - use anything you want!
+- easy dev workflow, easy (enough) deployment story
+
+
+Why Astro?
+CRUD apps with Astro? Don’t mind if I do!
+Clean organization & workflow, easy to understand , easy enough to make it what you need to be  
+Omg these components!  
+  Astro components are great, super easy  
+  Use anything else too! It works with everything! IT WORKS WITH EVERYTHING!!!!!
+it's a little heavier than it used to be (php put the files on your server & run the install script) (lot more files now) ... but it's worth it! this functionality can be pretty complex and this is the best way (imo) to manage it
+
+here's a more specific breakdown - https://strapi.io/blog/building-faster-content-driven-sites-with-astro
+same vibes here - https://developeraryan.in/blogs/astro-for-react-devs/
+
+
+sorry about all the files, btw
+	that's file-based routing, babee
+	that's just he way it is, grow up
+

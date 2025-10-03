@@ -25,6 +25,14 @@ my "best-practices" guide for putting stuff together
 
 ---
 
+building with dw - copypasta boilerplate
+- some of these components/sections/functionality DO require a lot of code, but all the code is boring and the patterns are pretty obvious, you can find an existing pattern (admin/users index/edit/new/save/delete) and copy it, modify for your purposes
+
+
+
+
+---
+
 
 - front end / dev resources
   - collection of cool "approved" libraries (ones that we like working with and yield badass results, ideally fitting the same license and ethos of the projects)
@@ -35,12 +43,5 @@ my "best-practices" guide for putting stuff together
 
 ---
 
-
-
-config ref
-
-
-recommend the default table encoding/charset to support emoji / int’l chars (whatever’s prob fine for just english, but, if you want better support this is the best option)
-- charset: utf8mb4 collation: utf8mb4_general_ci
-- prob also want to use innodb, but it doesn’t really matter (myisam or whatever default is fine)
+easy on-ramp for more "advanced" features (queues, real-time streaming, elastic search/meili , etc)
 

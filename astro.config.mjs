@@ -39,12 +39,16 @@ export default defineConfig({
           // autogenerate: { directory: "docs" },
           items: [
             { label: "Introduction", slug: "docs" },
+            { label: "What is it?", slug: "docs/what" },
+            { label: "Ethos", slug: "docs/ethos" },
             { label: "Installation", slug: "docs/installation" },
             { label: "Architecture", slug: "docs/architecture" },
             { label: "Getting Started", slug: "docs/getting-started" },
             { label: "Configuring Services", slug: "docs/configuring" },
             { label: "Troubleshooting", slug: "docs/troubleshooting" },
             { label: "Deployment", slug: "docs/deployment" },
+            { label: "Why?", slug: "docs/why" },
+            { label: "LLM Ergonomics", slug: "docs/llms" },
           ],
         },
 
