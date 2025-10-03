@@ -1,0 +1,22 @@
+---
+title: Photo Uploader
+---
+
+
+
+
+#### PHOTO UPLOAD - SINGLE
+
+```
+<PhotoUploadSingle
+  related_id={link?.uuid}
+  related_table="links"            
+  related_column="alt_photo_url"
+  url={link?.alt_photo_url}
+  url_parameters={link?.alt_photo_url_parameters}
+  upload_path="/links/alt"
+  file_limit_size={1}
+  file_formats="image/jpeg"
+  dz_icon="tabler--cloud-upload"
+/>
+```

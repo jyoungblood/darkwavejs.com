@@ -1,0 +1,86 @@
+---
+title: Date Picker
+---
+
+
+
+it uses flat pickr
+
+
+claude demo for flatpickr
+`
+<!-- Basic date picker (friendly format) -->
+<DatePicker
+  label="Date"
+  name="date"
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y"
+/>
+
+<!-- Date + Time picker -->
+<DatePicker
+  label="Date and Time"
+  name="datetime"
+  enableTime={true}
+  dateFormat="Y-m-d H:i"
+  altInput={true}
+  altFormat="F j, Y h:i K" // March 21, 2024 02:30 PM
+/>
+
+<!-- Range picker -->
+<DatePicker
+  label="Date Range"
+  name="daterange"
+  mode="range"
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y" // March 21, 2024 to March 25, 2024
+/>
+
+<!-- Inline calendar -->
+<DatePicker
+  label="Select Date"
+  name="date"
+  inline={true}
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y"
+/>
+
+<!-- With disabled dates -->
+<DatePicker
+  label="Select Date"
+  name="date"
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y"
+  disable={[
+    {
+      from: "2024-03-20",
+      to: "2024-03-25"
+    }
+  ]}
+/>
+
+<!-- With min/max dates -->
+<DatePicker
+  label="Select Date"
+  name="date"
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y"
+  minDate="2024-01-01"
+  maxDate="2024-12-31"
+/>
+
+<!-- With week numbers -->
+<DatePicker
+  label="Select Date"
+  name="date"
+  dateFormat="Y-m-d"
+  altInput={true}
+  altFormat="F j, Y"
+  weekNumbers={true}
+/>
+`

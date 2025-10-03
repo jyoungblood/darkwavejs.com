@@ -1,0 +1,231 @@
+---
+title: Input Validation
+---
+
+
+
+
+#### INPUT VALIDATION - (i think all?)
+see 'validate-input.js' for all potential rules
+```
+<InputText
+  label="Registered Name"
+  sublabel="<span class='text-red-500 text-xs font-bold'>* Required</span>"
+  name="name"
+  value={link?.name}
+  required
+  validation={{
+    types: ["alphanumericWithSpaces"],
+    unique: {
+      collection: "links",
+      field: "name",
+      errorMessage: "This name is already registered",
+      exempt: link
+        ? {
+            uuid: link.uuid,
+          }
+        : undefined,
+    },
+    // success: { message: '✅ Name looks good!' }
+    // success: true
+  }}
+/>
+```
+
+
+#### INPUT VALIDATION - multiple rules, required + isemail + unique email
+```
+<InputText
+  label="Email"
+  name="email"
+  required
+  validation={{
+    rules: [
+      {
+        type: "email",
+        errorMessage: "Please enter a valid email address",
+      },
+    ],
+    unique: {
+      collection: "user",
+      field: "email",
+      errorMessage: "This email is already registered",
+      // exempt:{
+      //   "id": "J5iDwysuwswSxhOeMgqldXCNXrZRQxBc"
+      // }
+    },
+    success: {
+      message: "Email looks good!",
+    },
+  }}
+/>
+```
+
+
+#### INPUT VALIDATION - simple validation w/ strings in array
+```
+<InputText
+  label="Email"
+  name="email"
+  required
+  validation={{
+    types: ["email", "alphanumeric"],
+  }}
+/>
+```
+
+
+#### INPUT VALIDATION - multiple rules/types (not entirely sensical example)
+```
+validation={{
+  rules: [
+    {
+      type: 'email',
+      options: { allow_display_name: true },
+      errorMessage: 'Custom error message'
+    },
+    {
+      type: 'mobilePhone',
+      locale: 'en-US',
+      options: { strictMode: true }
+    }
+  ]
+}}
+```
+
+
+MISC VALIDATION RULES
+```
+// Email with options
+{
+  type: 'email',
+  options: { allow_display_name: true, require_display_name: true },
+  errorMessage: 'Please enter a valid email address'
+}
+
+// Mobile phone with locale and options
+{
+  type: 'mobilePhone',
+  locale: 'en-US',
+  options: { strictMode: true },
+  errorMessage: 'Please enter a valid US phone number'
+}
+
+// Strong password with options
+{
+  type: 'strongPassword',
+  options: {
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1,
+    minNumbers: 1,
+    minSymbols: 1
+  },
+  errorMessage: 'Password must be stronger'
+}
+```
+
+
+PATTERN NAMES
+```
+<InputText
+  label="Username"
+  name="username"
+  validation={{
+    types: ["simpleUsername"],
+  }}
+/>
+
+
+<InputText
+  label="Username"
+  name="username"
+  validation={{
+    rules: [
+      {
+        type: "pattern",
+        pattern: "simpleUsername",
+        errorMessage:
+          "Please enter a valid username (letters, numbers, hyphens, and underscores only)",
+      },
+    ],
+  }}
+/>
+```
+
+
+
+NUMBER VALIDATION WITH SUCCESS MESSAGE
+```
+<InputText
+  label="Age"
+  name="age"
+  validation={{
+    rules: [
+      {
+        type: "number",
+        min: 18,
+        max: 120,
+        errorMessage: "Age must be between 18 and 120",
+      },
+    ],
+    success: {
+      message: "Age is valid!",
+    },
+  }}
+/>
+```
+
+
+WITH/WITHOUT SUCCESS/ERROR MESSAGE
+```
+
+<!-- Show success UI with a message -->
+<InputText
+  label="Email"
+  name="email"
+  required
+  validation={{
+    rules: [
+      {
+        type: "email",
+        errorMessage: "Please enter a valid email address",
+      },
+    ],
+    success: { message: "Email looks good!" },
+  }}
+/>
+
+<!-- Show success UI without a message -->
+<InputText
+  label="Age"
+  name="age"
+  validation={{
+    rules: [
+      {
+        type: "number",
+        min: 18,
+        max: 120,
+        errorMessage: "Age must be between 18 and 120",
+      },
+    ],
+    success: true,
+  }}
+/>
+
+<!-- Show success UI with a message -->
+<InputText
+  label="Email"
+  name="email"
+  required
+  validation={{
+    rules: [
+      {
+        type: "email",
+        errorMessage: "Please enter a valid email address",
+      },
+    ],
+  }}
+/>
+```
+

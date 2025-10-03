@@ -1,0 +1,83 @@
+---
+title: Photo Upload Save (alt)
+---
+
+
+### (optional / alt) handle photo uploads after saving instead of real-time on the form
+- could be added to dw/crud after saving
+
+
+```typescript
+
+
+import { dwStorage } from '@/lib/dw/storage';
+
+// DONT REALLY NEED THESE ANYMORE, BUT KEEPING AS AN OPTION
+
+interface PhotoData {
+  [key: string]: string | null;
+}
+interface PhotoFieldsConfig {
+  [key: string]: string | null;
+}
+
+/**
+ * Handles deletion of old photo files when they are being replaced or removed
+ * @param currentData Object containing the current photo URLs
+ * @param newData Object containing the new photo URLs
+ * @param photoFields Array of field names that contain photo URLs
+ * @returns Array of any errors that occurred during deletion
+ */
+async function handlePhotoUpdates(
+  currentData: PhotoFieldsConfig,
+  newData: PhotoFieldsConfig,
+  photoFields: string[]
+): Promise<string[]> {
+  const deletionErrors: string[] = [];
+
+  for (const field of photoFields) {
+    const currentUrl = currentData[field];
+    const newUrl = newData[field];
+    
+    if (currentUrl && currentUrl !== newUrl) {
+      const deleteSuccess = await dwStorage.deleteFile(currentUrl);
+      if (!deleteSuccess) {
+        deletionErrors.push(`Failed to delete old photo for ${field}: ${currentUrl}`);
+      }
+    }
+  }
+
+  return deletionErrors;
+}
+
+
+  // Handle photos if specified
+    if (options.photoFields?.length) {
+      const photoData: PhotoData = {};
+      options.photoFields.forEach(field => {
+        photoData[field] = formData.get(field)?.toString() || null;
+      });
+
+      if (uuid) {
+        const { data: currentRecord, error: fetchError } = await supabase
+          .from(options.table)
+          .select(options.photoFields.join(', '))
+          .eq('uuid', uuid)
+          .single();
+
+        if (fetchError) throw fetchError;
+
+        if (currentRecord) {
+          // Convert the record to PhotoData type
+          const currentPhotoData: PhotoData = {};
+          options.photoFields.forEach(field => {
+            currentPhotoData[field] = (currentRecord as GenericRecord)[field] || null;
+          });
+
+          await handlePhotoUpdates(currentPhotoData, photoData, options.photoFields);
+        }
+      }
+
+      Object.assign(options.recordData, photoData);
+    }
+```

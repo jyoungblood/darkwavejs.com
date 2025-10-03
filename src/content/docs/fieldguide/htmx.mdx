@@ -1,0 +1,61 @@
+---
+title: HTMX
+---
+
+
+not specific to dw, but would like to have a ref for how to do common stuff w/ htmx
+```
+<button
+  class="btn btn-outline"
+  hx-get="/partials/list-demo"
+  hx-target="#moreLinks"
+  hx-swap="beforeend"
+>
+  More Links!
+</button>
+
+<div id="moreLinks"></div>
+```
+
+```
+<div hx-get="/partials/list-demo" hx-trigger="load"></div>
+```
+
+partials/list-demo.astro
+```astro
+---
+export const partial = true;
+import { db } from "@/lib/db";
+
+let links;
+
+try {
+  links = await db
+    .selectFrom('links')
+    .selectAll()
+    .where('deleted_at', 'is', null)
+    .orderBy('created_at')
+    .execute();
+} catch (error) {
+  console.error("Error fetching links:", error);
+}
+---
+
+{links && (
+  <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+    <h3 class="text-lg font-semibold mb-3">Partial Links (loaded via HTMX)</h3>
+    {links.length === 0 ? (
+      <p class="text-gray-500">No links found</p>
+    ) : (
+      <ul class="list-disc pl-5">
+        {links?.map((link) => (
+          <li class="text-sm mb-1 underline hover:no-underline">
+            <a href={`/links/${link.uuid}`}>{link.title}</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
+
+```

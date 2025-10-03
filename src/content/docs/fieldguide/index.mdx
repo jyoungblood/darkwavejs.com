@@ -6,3 +6,41 @@ user guide / cookbook / "field guide"
 field guide / recipes
 
 FERC / webcraft
+
+this section includes practical "go-to" / endorsed solutions for common (problems) using this toolkit. the technology used isn't always necessarily part of the toolkit, but they're my "if you asked me how to do ____, this is what i'd do" solutions.
+
+smaller tutorials for how to do specific kinds of things
+
+code snippet library
+
+---
+
+
+a manual (/field guide) for building (effective/attractive/solid/usable) web sites/applications with as little (fanfare/suffering/pretense/) as possible
+
+instructional guides and resources (links to valuable online tools/libraries that can help you solve problems quickly)
+
+my "best-practices" guide for putting stuff together
+
+
+---
+
+
+- front end / dev resources
+  - collection of cool "approved" libraries (ones that we like working with and yield badass results, ideally fitting the same license and ethos of the projects)
+- front end best practices
+  - the workflows, resources and best practices i use/need to be a productive and efficient FE dev
+  - notes of all the tools i use for various things (unix time format, generating favicons, etc)
+
+
+---
+
+
+
+config ref
+
+
+recommend the default table encoding/charset to support emoji / int’l chars (whatever’s prob fine for just english, but, if you want better support this is the best option)
+- charset: utf8mb4 collation: utf8mb4_general_ci
+- prob also want to use innodb, but it doesn’t really matter (myisam or whatever default is fine)
+

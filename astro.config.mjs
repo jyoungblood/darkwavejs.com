@@ -60,6 +60,10 @@ export default defineConfig({
           label: "Field Guide",
           autogenerate: { directory: "fieldguide" },
         },
+        {
+          label: "Tutorials",
+          autogenerate: { directory: "tutorials" },
+        },
 
         {
           label: "Resources",
