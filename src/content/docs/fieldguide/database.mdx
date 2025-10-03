@@ -11,6 +11,17 @@ recommend the default table encoding/charset to support emoji / int’l chars (w
 
 
 
+
+note standard for data fields (required & common patterns)
+
+- uuid, created\_at, updated\_at, title, slug, photo_url, etc
+- "the rules" - here's what the components expect, here's the "happy path" (structure your data like this and you're golden, it's all plug n play)
+
+
+
+---
+
+
 db design concept - include fields you KNOW you'll need at some point- https://www.scottantipa.com/yagri.html  
 - In general, these are some useful fields to store on almost any table:
   - created\_at

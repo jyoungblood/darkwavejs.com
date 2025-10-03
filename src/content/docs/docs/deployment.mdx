@@ -91,3 +91,118 @@ and if it goes offline
 - su dwsite
 - pm2 start ecosystem.config.cjs
 - pm2 save
+
+
+
+
+
+---
+
+
+
+init deploy notes
+
+- see lwoa [deploy.sh](http://deploy.sh "‌") script
+- need to run `npm run init` (via cli) when installing the site on the server
+  - ?? can we do this w/ cf/serverless?
+  - OR should we recommend just dumping a copy of the dev db?
+- all the pm2 stuff too for vps (ecosystem.config.cjs in lwoa)
+  - [monitor.sh](http://monitor.sh "‌")
+
+‌
+
+field guide - deployment
+
+- never thought i'd see the day when node apps are easier to deploy than php apps
+- if you use cpanel do this (whatever the solution is)
+- otherwise use pm2 on a vps
+- or use railway or fly or the other modern node hosts
+  - this shit is trivially easy to set up
+  - git push and don't worry about it
+
+‌
+
+??
+
+dw - "deploy to render" solution
+
+- recipe or whatever to do a simple install on render
+- instructions for how to work w/ this (ftp or set up your own env locally idk)
+- add a button to the readme
+
+
+
+
+
+---
+
+
+
+./deploy.sh
+
+```bash
+#!/bin/bash
+
+GIT_BRANCH="main"
+COMMIT_MESSAGE="Updates - $(date +"%Y-%m-%d %T")"
+SSH_USER="dwsite"
+SSH_SERVER="xxx.xxx.xxx.xxx"
+SSH_PORT="22"
+DEPLOYMENT_PATH="/home/dwsite/astro"
+
+# (build step optional, uncomment to enable)
+
+## Build FE assets
+# npm run build
+
+
+## Add new files to repo
+git add --all
+
+
+## Prompt for commit message (and provide a default)
+echo "Enter Git commit message (default: $COMMIT_MESSAGE)"
+read NEW_MESSAGE
+[ -n "$NEW_MESSAGE" ] && COMMIT_MESSAGE=$NEW_MESSAGE
+git commit -am "$COMMIT_MESSAGE"
+
+
+## Push to origin branch
+git push origin $GIT_BRANCH
+
+
+
+## Pull on remote via ssh
+ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "cd $DEPLOYMENT_PATH && git restore package-lock.json && git pull origin $GIT_BRANCH && npm install && npm run build && npm run migrate && pm2 reload lwoa"
+
+
+
+exit
+
+```
+
+
+
+
+
+./monitor.sh
+
+```bash
+
+#!/bin/bash
+
+SSH_USER="dwsite"
+SSH_SERVER="xxx.xxx.xxx.xxx"
+SSH_PORT="22"
+
+## just monitoring pm2 from the home dir 
+
+## Pull on remote via ssh
+ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "pm2 logs"
+
+exit
+
+
+
+
+```

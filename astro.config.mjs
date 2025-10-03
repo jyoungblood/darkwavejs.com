@@ -46,6 +46,7 @@ export default defineConfig({
             { label: "Getting Started", slug: "docs/getting-started" },
             { label: "Configuring Services", slug: "docs/configuring" },
             { label: "Troubleshooting", slug: "docs/troubleshooting" },
+            { label: "CLI", slug: "docs/cli" },
             { label: "Deployment", slug: "docs/deployment" },
             { label: "Why?", slug: "docs/why" },
             { label: "LLM Ergonomics", slug: "docs/llms" },
