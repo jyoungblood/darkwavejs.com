@@ -1,31 +1,48 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
+import starlightThemeBlack from "starlight-theme-black";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://darkwavejs.com',
+  site: "https://darkwavejs.com",
   integrations: [
     starlight({
+      plugins: [
+        starlightThemeBlack({
+          navLinks: [
+            {
+              // optional
+              label: "Docs",
+              link: "/getting-started",
+            },
+          ],
+          //optional
+          footerText:
+            "<a href='https://jyoungblood.github.io/'>♥︎ JY</a>",
+        }),
+      ],
+
       title: "Darkwave",
-      components: {
-        TwoColumnContent: "/src/components/TwoColumnContent.astro",
-        ThemeProvider: "/src/components/ThemeProvider.astro",
-        ThemeSelect: "/src/components/ThemeSelect.astro",
-      },
+      // components: {
+      //   TwoColumnContent: "/src/components/TwoColumnContent.astro",
+      //   ThemeProvider: "/src/components/ThemeProvider.astro",
+      //   ThemeSelect: "/src/components/ThemeSelect.astro",
+      // },
       logo: {
         light: "/src/assets/dw-triangles.svg",
         dark: "/src/assets/dw-triangles-white.svg",
         // replacesTitle: true,
       },
-      customCss: ["./src/styles/tailwind.css", "./src/styles/custom.css"],
+      // customCss: ["./src/styles/tailwind.css", "./src/styles/custom.css"],
+      customCss: ["./src/styles/styles.css"],
       expressiveCode: {
         // Replace the default themes with a custom set of bundled themes:
         // "dracula" (a dark theme) and "solarized-light"
         // themes: ['catppuccin-frappe', 'catppuccin-latte'],
         // themes: ['catppuccin-latte'],
         // themes: ['catppuccin-frappe'],
-        themes: ["catppuccin-macchiato"],
+        // themes: ["catppuccin-macchiato"],
       },
       social: [
         {
