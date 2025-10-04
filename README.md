@@ -19,6 +19,6 @@
 
 ```
 
-Proudly running on [Starlight](https://starlight.astro.build/) ⭐ 💫
+Ecstatically running on [Starlight](https://starlight.astro.build/) ⭐ 💫
 
 We love Astro <3
