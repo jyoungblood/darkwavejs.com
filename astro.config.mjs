@@ -14,7 +14,27 @@ export default defineConfig({
             {
               // optional
               label: "Docs",
-              link: "/getting-started",
+              link: "/docs",
+            },
+            {
+              label: "Components",
+              link: "/components",
+            },
+            {
+              label: "Admin",
+              link: "/admin",
+            },
+            {
+              label: "Field Guide",
+              link: "/fieldguide",
+            },
+            {
+              label: "Resources",
+              link: "/resources",
+            },
+            {
+              label: "Project",
+              link: "/project/roadmap",
             },
           ],
           //optional
@@ -102,6 +122,14 @@ export default defineConfig({
       ],
       head: [
         {
+          tag: "link",
+          attrs: {
+            rel: "icon",
+            type: "image/svg+xml",
+            href: "/favicon.svg",
+          },
+        },
+        {
           tag: "script",
           attrs: {
             src: "https://beamanalytics.b-cdn.net/beam.min.js",
@@ -113,6 +141,6 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [tailwindcss()],
+    // plugins: [tailwindcss()],
   },
 });

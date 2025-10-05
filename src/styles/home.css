@@ -1,0 +1,46 @@
+@import '@fontsource-variable/inter';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body, body p, body h1, body h2, body h3, body h4, body h5, body h6, body div, body span, body a, body li, body ul, body ol, body blockquote, body section, body article, body header, body footer, body nav, body main, body aside, body figure, body figcaption, body table, body th, body td, body tr, body thead, body tbody, body tfoot, body form, body input, body textarea, body select, body button, body label, body fieldset, body legend {
+  font-family: "Inter Variable", sans-serif !important;
+} */
+
+/* Ensure code elements keep their default font */
+/* .code, code, pre, .highlight, [class*="language-"] {
+  font-family: monospace !important;
+} */
+
+
+
+body * {
+  font-family: "Inter Variable", sans-serif;
+}
+
+
+.dw-purple {
+  color: #b97aa9;
+}
+
+.bg-dw-purple {
+  background-color: #b97aa9;
+}
+
+.dw-pink {
+  color: #d49ebe;
+}
+
+.bg-dw-pink {
+  background-color: #d49ebe;
+}
+
+
+.dw-green {
+  color: #c5fce2;
+}
+
+.bg-dw-green {
+  background-color: #c5fce2;
+}
