@@ -59,7 +59,7 @@ export default defineConfig({
       expressiveCode: {
         // Replace the default themes with a custom set of bundled themes:
         // "dracula" (a dark theme) and "solarized-light"
-        // themes: ['catppuccin-frappe', 'catppuccin-latte'],
+        themes: ['catppuccin-latte', 'catppuccin-frappe'],
         // themes: ['catppuccin-latte'],
         // themes: ['catppuccin-frappe'],
         // themes: ["catppuccin-macchiato"],
@@ -118,6 +118,7 @@ export default defineConfig({
             { label: "Roadmap", slug: "project/roadmap" },
             { label: "Contributing", slug: "project/contributing" },
             { label: "Colofon", slug: "project/colofon" },
+            { label: "Changelog", slug: "project/changelog" },
           ],
         },
       ],
