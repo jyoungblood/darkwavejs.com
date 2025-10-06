@@ -9,8 +9,56 @@
   font-family: monospace !important;
 } */
 
-
-
 body *:not(.expressive-code *) {
   font-family: "Inter Variable", sans-serif;
 }
+
+.breadcrumb {
+  display: none !important;
+}
+
+h4.entry-title {
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+/* nav a {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.35rem;
+} */
+
+/* nav a:hover {
+  background-color: var(--sl-color-white) !important;
+  color: var(--sl-color-black) !important;
+} */
+
+/* nav a.active {
+  background-color: var(--sl-color-white) !important;
+  color: var(--sl-color-black) !important;
+} */
+
+
+
+/* show/hide sidebar sections based on data attributes */
+/* Flexible approach: Hide sidebar sections based on URL path */
+/* This will be controlled by JavaScript that adds data attributes to sections */
+
+
+/* Conditional sidebar display based on current page */
+
+/* Hide sections that are marked as hidden by JavaScript */
+/* aside.aside [data-section-hidden="true"] {
+  display: none !important;
+} */
+
+/* Show sections that are marked as visible by JavaScript */
+/* aside.aside [data-section-visible="true"] {
+  display: block !important;
+} */
+
+/* Also show the section content when the title is visible */
+/* aside.aside [data-section-visible="true"] + * {
+  display: block !important;
+} */

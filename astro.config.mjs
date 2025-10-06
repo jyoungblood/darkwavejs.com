@@ -10,33 +10,33 @@ export default defineConfig({
     starlight({
       plugins: [
         starlightThemeBlack({
-          navLinks: [
-            {
-              // optional
-              label: "Docs",
-              link: "/docs",
-            },
-            {
-              label: "Components",
-              link: "/components",
-            },
-            {
-              label: "Admin",
-              link: "/admin",
-            },
-            {
-              label: "Field Guide",
-              link: "/fieldguide",
-            },
-            {
-              label: "Resources",
-              link: "/resources",
-            },
-            {
-              label: "Project",
-              link: "/project/roadmap",
-            },
-          ],
+          // navLinks: [
+          //   {
+          //     // optional
+          //     label: "Docs",
+          //     link: "/docs",
+          //   },
+          //   {
+          //     label: "Components",
+          //     link: "/components",
+          //   },
+          //   {
+          //     label: "Admin",
+          //     link: "/admin",
+          //   },
+          //   {
+          //     label: "Field Guide",
+          //     link: "/fieldguide",
+          //   },
+          //   {
+          //     label: "Resources",
+          //     link: "/resources",
+          //   },
+          //   {
+          //     label: "Project",
+          //     link: "/project/roadmap",
+          //   },
+          // ],
           //optional
           footerText:
             "<a href='https://jyoungblood.github.io/'>♥︎ JY</a>",
@@ -117,6 +117,7 @@ export default defineConfig({
           items: [
             { label: "Roadmap", slug: "project/roadmap" },
             { label: "Contributing", slug: "project/contributing" },
+            { label: "Colofon", slug: "project/colofon" },
           ],
         },
       ],
@@ -137,6 +138,75 @@ export default defineConfig({
             defer: true,
           },
         },
+        // Conditional sidebar display based on current page
+        // {
+        //   tag: "script",
+        //   attrs: {
+        //     type: "text/javascript",
+        //   },
+        //   content: `
+        //     // Conditional sidebar display based on current page
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //       const pathname = window.location.pathname;
+        //       const currentSection = pathname.split('/')[1] || 'docs';
+              
+        //       const sidebar = document.querySelector('aside.aside');
+        //       if (sidebar) {
+        //         // Try different selectors to find section headings
+        //         const possibleSelectors = ['h2', 'h3', '.sidebar-title', '[class*="title"]', 'strong', 'b'];
+        //         let headings = [];
+                
+        //         for (const selector of possibleSelectors) {
+        //           headings = sidebar.querySelectorAll(selector);
+        //           if (headings.length > 0) break;
+        //         }
+                
+        //         if (headings.length === 0) {
+        //           // Look for any elements that might contain section names
+        //           const allElements = sidebar.querySelectorAll('*');
+        //           headings = Array.from(allElements).filter(el => {
+        //             const text = el.textContent?.toLowerCase().trim();
+        //             return text && (
+        //               text.includes('documentation') || 
+        //               text.includes('components') || 
+        //               text.includes('tutorials') || 
+        //               text.includes('resources') || 
+        //               text.includes('project')
+        //             );
+        //           });
+        //         }
+                
+        //         headings.forEach((heading) => {
+        //           const sectionName = heading.textContent.toLowerCase().trim();
+        //           const sectionContainer = heading.closest('div') || heading.parentElement;
+                  
+        //           if (!sectionContainer) return;
+                  
+        //           // Determine which section should be visible
+        //           let shouldShow = false;
+                  
+        //           if (currentSection === 'docs' && sectionName.includes('documentation')) {
+        //             shouldShow = true;
+        //           } else if (currentSection === 'components' && sectionName.includes('components')) {
+        //             shouldShow = true;
+        //           } else if (currentSection === 'tutorials' && sectionName.includes('tutorials')) {
+        //             shouldShow = true;
+        //           } else if (currentSection === 'resources' && sectionName.includes('resources')) {
+        //             shouldShow = true;
+        //           } else if (currentSection === 'project' && sectionName.includes('project')) {
+        //             shouldShow = true;
+        //           }
+                  
+        //           if (shouldShow) {
+        //             sectionContainer.setAttribute('data-section-visible', 'true');
+        //           } else {
+        //             sectionContainer.setAttribute('data-section-hidden', 'true');
+        //           }
+        //         });
+        //       }
+        //     });
+        //   `,
+        // },
       ],
     }),
   ],
