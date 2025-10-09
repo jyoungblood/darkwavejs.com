@@ -1,5 +1,6 @@
 ---
 import "../styles/home.css";
+import SickTable from "../components/SickTable.astro";
 ---
 
 <!doctype html>
@@ -19,237 +20,95 @@ import "../styles/home.css";
   </head>
   <!-- <body class="font-sans h-100 bg-neutral-900 text-neutral-100"> -->
   <body class="font-sans h-100 bg-black text-neutral-100">
-    <div class="lg:p-20 p-6">
-      <div class="lg:text-8xl text-5xl dw-pink font-bold uppercase mb-12 w-2/3">
-        YES! YOU CAN BUILD WEB APPLICATIONS WITH ASTRO!
-      </div>
-
-      <img class="w-16 mb-2" src="/images/dw-triangles-white.svg" />
-
-      <div class="text-4xl font-semibold uppercase mb-2">Darkwave 0.7</div>
-
-      <div class="text-xl mb-12">Web application development kit</div>
-
-      <div style="max-width: 450px; ">
-        Darkwave is a "batteries-included" tool kit for building data-driven web
-        applications with Astro.<br /><br />
-
-        We have curated a selection of reliable and approachable tools to create
-        a professional-grade full-stack boilerplate with pre-wired functionality
-        and components for common SaaS and CRUD features.<br /><br />
-
-        DW facilitates a hyper-productive development workflow, helping
-        developers focus on delivering real value with ease.
-      </div>
-
-      <br /><br /><br />
-
-      <a
-        href="https://github.com/hxgf/darkwave/"
-        class="bg-dw-green text-neutral-900 py-2 px-3 rounded no-underline hover:underline text-sm inline-block"
+    <div class="w-full max-w-7xl mx-auto lg:p-20 md:p-12 p-6">
+      <div
+        class="lg:text-8xl md:text-7xl text-6xl text-dw-pink font-bold uppercase mb-16"
       >
-        <span class="flex items-center">
-          <svg
-            class="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            style="pointer-events: auto;"
-          >
-            <path
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-            ></path>
-          </svg>
-
-          <span class="pl-2">Source</span>
-        </span>
-      </a><br /><br /><br />
-
-      <a href="/docs" class="underline dw-purple font-semibold">Documentation</a
-      > &nbsp;&nbsp;&nbsp;&nbsp;
-
-      <a href="/components" class="underline dw-purple font-semibold"
-        >Components</a
-      > &nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="/fieldguide" class="underline dw-purple font-semibold"
-        >Field Guide</a
-      > &nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="/resources" class="underline dw-purple font-semibold"
-        >Resources</a
-      > &nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="/project/roadmap" class="underline dw-purple font-semibold"
-        >Project</a
-      >
-
-      <br /><br />
-      <br /><br />
-
-      <img src="./images/dw-scriptina.png" class="flex-shrink-0" />
-      <br /><br />
-      <br /><br />
-
-      Imagine this concept, but for web apps:<br /><br />
-
-      <div class="grid grid-cols-3 gap-1">
-        <div class="p-1">
-          <img src="./images/modular-vibes-1.webp" class="w-full" />
-        </div>
-        <div class="p-1">
-          <img src="./images/modular-vibes-2.webp" class="w-full" />
-        </div>
-        <div class="p-1">
-          <img src="./images/modular-vibes-3.webp" class="w-full" />
-        </div>
-        <div class="p-1">
-          <img src="./images/modular-vibes-4.webp" class="w-full" />
-        </div>
-        <div class="p-1">
-          <img src="./images/modular-vibes-5.webp" class="w-full" />
-        </div>
-        <div class="p-1">
-          <img src="./images/modular-vibes-6.webp" class="w-full" />
-        </div>
+        YES! YOU CAN BUILD WEB APPS WITH ASTRO!
       </div>
 
-      <br /><br /><br /><br /><br />
-
-      <div class="w-full max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 gap-6">
-          <div>
-            <div class="border border-white rounded-md">
-              <div class="border-b border-white text-center p-2 text-lg">
-                LADO A
-              </div>
-              <div class="text-sm p-3">
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="border border-white rounded-md">
-              <div class="border-b border-white text-center p-2 text-lg">
-                LADO B
-              </div>
-              <div class="text-sm p-3">
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full border border-white rounded-md mt-6 bg-neutral-900">
-          <div class="px-12 py-48 text-center">PIC HERE</div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-6 mt-6">
-
-            <div class="border border-white rounded-md">
-              <div class="grid grid-cols-2">
-                <div>
-                  <div class="border-b border-white text-center p-2">
-                    ZE EDUARDO NAZARIO
-                  </div>
-                  <div class="text-sm p-3">
-                    bateria<br />
-                    khena do laos<br />
-                    glockenspiel<br />
-                    kalimba<br />
-                    mrindangan<br />
-                    tabls<br />
-                    tubofone<br />
-                    xilofone<br />
-                    percussao<br />
-                    voz
-                  </div>
-                </div>
-                <div class="border-l border-white">
-                  <div class="border-b border-white text-center p-2">
-                    CONVIVADOS
-                  </div>
-                  <div class="text-sm p-3">
-                    CACAU<br />
-                    saxofone tenor<br />
-                    flauta (A)<br /><br />
-                    LELO NAZARIO<br />
-                    oberheim<br />
-                    piano<br />
-                    xilofone
-                  </div>
-                </div>
-              </div>
-
-              <div class="border-t border-white p-3">
-                <div class="flex justify-between items-center">
-                  <div class="text-xs">
-                    gravado nos estúdios JV em 23 e 30 de outubro de 1982<br />
-                    técnicos de aúdio: EDELHO GIANULLO • SERGIO SHAO-LIN<br />
-                    road manager: ALBERTO "BATATA" MONTEIRO <br />
-                    foto da capa: ROGERIO SANTOS arte final: SOMETIMES ALWAYS <br
-                    /><br />
-                    remasterizado por LELO NAZARIO relançado por LUGAR ALTO (LA-002)
-                    em 2019 <br />distribuido por HONEST JON'S
-                  </div>
-                  <div class="pl-8 pr-4">
-                    <img
-                      src="/images/dw-triangles-white.svg"
-                      class="h-32 w-auto"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <!-- 
-              <div class="border-b border-white text-center p-2 text-lg">
-                LADO A
-              </div>
-              <div class="text-sm p-3">
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-                <div class="flex justify-between">
-                  <div>ENERGIA DOS 3 MUNDOS</div>
-                  <div class="">ze eduardo nazario</div>
-                </div>
-              </div> -->
-            </div>
-
-
-
-            <div class="border border-white rounded-md bg-neutral-900">
-              <div class="px-12 py-48 text-center text-sm">PIC HERE TOO</div>
-            </div>
-
-        </div>
+      <div class="mb-16 md:w-1/2 w-2/3 pl-2">
+        <p class="mb-4">
+          Darkwave provides a flexible system for building
+          data-driven web applications with <a
+            href="https://astro.build"
+            class="text-dw-green underline hover:bg-dw-green hover:text-neutral-900"
+            >Astro</a
+          > and a curated bundle of tools and libraries.
+        </p>
+        <p class="mb-4">
+          It offers pre-wired functionality for common CRUD features,
+          making the development process fast, efficient, and fun!
+        </p>
       </div>
 
-      <br /><br /><br /><br /><br /><br /><br /><br />
-
-      <div class="clearfix">
-        <div class="text-xs">
-          <div class="mb-4">
-            <a
-              class="text-white no-underline hover:underline"
-              href="https://jyoungblood.github.io/">♥︎ JY</a
+      <div class="flex items-center gap-4 mb-16 pl-2">
+        <a
+          href="/docs"
+          class="border-2 border-dw-green bg-dw-green text-neutral-900 py-2 px-3 rounded hover:opacity-90 text-sm inline-block"
+        >
+          <span class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 448 512"
+              ><path
+                fill="currentColor"
+                d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-64c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32zm0 384h256v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32m32-240c0-8.8 7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16m16 48h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16"
+              ></path></svg
             >
+            <span class="pl-2">Learn More</span>
+          </span>
+        </a>
+
+        <a
+          href="https://github.com/hxgf/darkwave/"
+          target="_blank"
+          class="border-dw-green border-2 text-dw-green py-2 px-3 rounded hover:opacity-90 text-sm inline-block"
+        >
+          <span class="flex items-center">
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              style="pointer-events: auto;"
+            >
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+              ></path>
+            </svg>
+            <span class="pl-2">Source</span>
+          </span>
+        </a>
+      </div>
+<!-- 
+      <div class="mb-12">
+        <div class="flex items-center gap-3">
+          <img class="h-14 w-auto" src="/images/dw-triangles-white.svg" />
+          <div class="text-4xl font-semibold uppercase tracking-wide">
+            Darkwave
           </div>
         </div>
+        <div class="text-lg mb-12">Web application development kit</div>
+      </div> -->
+
+      <div class="mt-24 mb-24">
+        <img src="./images/dw-scriptina.png" class="flex-shrink-0 block mb-4" />
+        <div class="text opacity-50 italic uppercase tracking-wider">Web application development kit</div>
       </div>
+
+      <!-- <SickTable /> -->
+
+      <div class="text-right">
+        <a
+          class="text-xs text-white no-underline opacity-50 hover:opacity-100"
+          target="_blank"
+          href="https://jonathanyoungblood.com/studio">♥︎ JY</a
+        >
+      </div>
+
+      
     </div>
   </body>
 </html>

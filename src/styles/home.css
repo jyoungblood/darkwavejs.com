@@ -20,27 +20,32 @@ body * {
 }
 
 
-.dw-purple {
-  color: #b97aa9;
-}
+@layer utilities {
+  .text-dw-purple {
+    color: #b97aa9;
+  }
 
-.bg-dw-purple {
-  background-color: #b97aa9;
-}
+  .bg-dw-purple {
+    background-color: #b97aa9;
+  }
 
-.dw-pink {
-  color: #d49ebe;
-}
+  .text-dw-pink {
+    color: #d49ebe;
+  }
 
-.bg-dw-pink {
-  background-color: #d49ebe;
-}
+  .bg-dw-pink {
+    background-color: #d49ebe;
+  }
 
+  .text-dw-green {
+    color: #bbfdde;
+  }
 
-.dw-green {
-  color: #c5fce2;
-}
+  .bg-dw-green {
+    background-color: #bbfdde;
+  }
 
-.bg-dw-green {
-  background-color: #c5fce2;
+  .border-dw-green {
+    border-color: #bbfdde;
+  }
 }
