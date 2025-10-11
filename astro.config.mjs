@@ -21,18 +21,10 @@ export default defineConfig({
             // icon: "open-book",
             // icon: "information",
             items: [
-              { label: "Introduction", link: "/docs/docs/" },
-              { label: "What is it?", link: "/docs/docs/what/" },
-              { label: "Ethos", link: "/docs/docs/ethos/" },
-              { label: "Installation", link: "/docs/docs/installation/" },
-              { label: "Architecture", link: "/docs/docs/architecture/" },
-              { label: "Getting Started", link: "/docs/docs/getting-started/" },
-              { label: "Configuring Services", link: "/docs/docs/configuring/" },
-              { label: "Troubleshooting", link: "/docs/docs/troubleshooting/" },
-              { label: "CLI", link: "/docs/docs/cli/" },
-              { label: "Deployment", link: "/docs/docs/deployment/" },
-              { label: "Why?", link: "/docs/docs/why/" },
-              { label: "LLM Ergonomics", link: "/docs/docs/llms/" },
+              {
+                label: "Documentation",
+                autogenerate: { directory: "docs" },
+              },
             ],
           },
           {
@@ -66,10 +58,10 @@ export default defineConfig({
             label: "Project",
             link: "/project/roadmap/",
             items: [
-              { label: "Roadmap", link: "/project/roadmap/" },
-              { label: "Contributing", link: "/project/contributing/" },
-              { label: "Colofon", link: "/project/colofon/" },
-              // { label: "Changelog", link: "/project/changelog/" },
+              {
+                label: "Project",
+                autogenerate: { directory: "project" },
+              },
             ],
           },
         ]),
