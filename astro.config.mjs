@@ -3,7 +3,7 @@ import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import starlightThemeBlack from "starlight-theme-black";
 import starlightSidebarTopics from "starlight-sidebar-topics";
-import starlightChangelogs from "starlight-changelogs";
+// import starlightChangelogs from "starlight-changelogs";
 import favicons from "astro-favicons";
 
 // https://astro.build/config
@@ -13,7 +13,7 @@ export default defineConfig({
     favicons(),
     starlight({
       plugins: [
-        starlightChangelogs(),
+        // starlightChangelogs(),
         starlightSidebarTopics([
           {
             label: "Documentation",
@@ -21,18 +21,18 @@ export default defineConfig({
             // icon: "open-book",
             // icon: "information",
             items: [
-              { label: "Introduction", slug: "docs" },
-              { label: "What is it?", slug: "docs/what" },
-              { label: "Ethos", slug: "docs/ethos" },
-              { label: "Installation", slug: "docs/installation" },
-              { label: "Architecture", slug: "docs/architecture" },
-              { label: "Getting Started", slug: "docs/getting-started" },
-              { label: "Configuring Services", slug: "docs/configuring" },
-              { label: "Troubleshooting", slug: "docs/troubleshooting" },
-              { label: "CLI", slug: "docs/cli" },
-              { label: "Deployment", slug: "docs/deployment" },
-              { label: "Why?", slug: "docs/why" },
-              { label: "LLM Ergonomics", slug: "docs/llms" },
+              { label: "Introduction", link: "/docs/docs/" },
+              { label: "What is it?", link: "/docs/docs/what/" },
+              { label: "Ethos", link: "/docs/docs/ethos/" },
+              { label: "Installation", link: "/docs/docs/installation/" },
+              { label: "Architecture", link: "/docs/docs/architecture/" },
+              { label: "Getting Started", link: "/docs/docs/getting-started/" },
+              { label: "Configuring Services", link: "/docs/docs/configuring/" },
+              { label: "Troubleshooting", link: "/docs/docs/troubleshooting/" },
+              { label: "CLI", link: "/docs/docs/cli/" },
+              { label: "Deployment", link: "/docs/docs/deployment/" },
+              { label: "Why?", link: "/docs/docs/why/" },
+              { label: "LLM Ergonomics", link: "/docs/docs/llms/" },
             ],
           },
           {
@@ -66,10 +66,10 @@ export default defineConfig({
             label: "Project",
             link: "/project/roadmap/",
             items: [
-              { label: "Roadmap", slug: "project/roadmap" },
-              { label: "Contributing", slug: "project/contributing" },
-              { label: "Colofon", slug: "project/colofon" },
-              { label: "Changelog", link: "/project/changelog/" },
+              { label: "Roadmap", link: "/project/roadmap/" },
+              { label: "Contributing", link: "/project/contributing/" },
+              { label: "Colofon", link: "/project/colofon/" },
+              // { label: "Changelog", link: "/project/changelog/" },
             ],
           },
         ]),
