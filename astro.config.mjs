@@ -99,6 +99,55 @@ export default defineConfig({
         Sidebar: "./src/components/SidebarDropdown.astro",
       },
 
+      // sidebar: [
+      //   {
+      //     label: "Introduction",
+      //     collapsed: true,
+      //     items: [
+      //       {
+      //         label: "Introduction",
+      //         autogenerate: { directory: "docs" },
+      //       },
+      //       { 
+      //         label: "Getting Started", 
+      //         autogenerate: { directory: "getting-started" } 
+      //       },
+      //       { 
+      //         label: "Workflow", 
+      //         autogenerate: { directory: "workflow" } 
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     label: "Components",
+      //     collapsed: true,
+      //     autogenerate: { directory: "components" },
+      //   },
+      //   {
+      //     label: "Field Guide",
+      //     collapsed: true,
+      //     items: [
+      //       {
+      //         label: "Field Guide",
+      //         autogenerate: { directory: "fieldguide" },
+      //       },
+      //       { 
+      //         label: "Tutorials", 
+      //         autogenerate: { directory: "tutorials" } 
+      //       },
+      //       { 
+      //         label: "Resources", 
+      //         autogenerate: { directory: "resources" } 
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     label: "Project",
+      //     collapsed: true,
+      //     autogenerate: { directory: "project" },
+      //   }
+      // ],
+
       title: "Darkwave",
       // components: {
       //   TwoColumnContent: "/src/components/TwoColumnContent.astro",
@@ -116,10 +165,23 @@ export default defineConfig({
       expressiveCode: {
         // Replace the default themes with a custom set of bundled themes:
         // "dracula" (a dark theme) and "solarized-light"
-        themes: ["catppuccin-latte", "catppuccin-frappe"],
+        // themes: ["catppuccin-latte", "catppuccin-frappe"],
         // themes: ['catppuccin-latte'],
-        // themes: ['catppuccin-frappe'],
+        themes: ['catppuccin-frappe'],
         // themes: ["catppuccin-macchiato"],
+        styleOverrides: {
+          borderRadius: '0.25rem',
+          frames: {
+            shadowColor: 'transparent',
+          },
+          // Remove all italic styling
+          'code[data-theme]': {
+            fontStyle: 'normal',
+          },
+          'code': {
+            fontStyle: 'normal',
+          },
+        },
       },
       social: [
         {

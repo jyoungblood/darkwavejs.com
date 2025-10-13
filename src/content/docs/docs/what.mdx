@@ -1,0 +1,143 @@
+---
+title: What is it?
+sidebar:
+  order: 2
+---
+
+🚜
+
+
+In practice, Darkwave is just a starter kit for Astro. 
+
+At a higher level, however, it's [an entire paradigm](/docs/ethos) for building web applications.
+
+When combined, this boilerplate and philosophy enable a very efficient and enjoyable workflow.
+	{/* - a "happy path" for you to follow */}
+
+
+
+
+
+
+
+{/* "a great way to make crud apps" */}
+
+{/* (working theory, practice, philosophy, idology, etc)  */}
+
+{/* In practice it’s just an Astro theme & boilerplate, but in (theory/reality) it’s so much more.  */}
+
+{/* it's a very efficient workflow and conceptual (guideline, mental framework) */}
+
+{/* the boring problems are already solved - it aims to solve the boring problems (picking out the right basic technology and putting it together) */}
+
+{/* - Part technical framework, part methodology for development (guiding principles) (tied to a specific set of tools, adaptable and extendable boilerplate and scaffolding, pre-wired full stack components */}
+
+{/* - ( Conceptual ) full stack primitives for crud operations (components, functions, boilerplate code, conventions/opinions/guardrails) */}
+
+
+
+
+Building a reliable stack that makes it easy to take advantage of new opportunities (change directions, adapt to market shifts)
+Built to ship AND ALSO Built to last
+
+
+
+
+
+
+
+
+
+
+## The Stack
+
+Darkwave is primarily a "stack," or a pre-wired configuration of specific frameworks, libraries, and dev tools. We intentionally made straightforward responsible choices one might use to build a reliable CRUD app.
+
+You don't have to deal with the foundational minutae that comes with starting a new project. The boring problems are already solved: we've done the research, evaluated the available options, and gone to the trouble of putting together a good starting point to build an application.
+
+
+
+
+### Core Stack
+
+- [Astro](https://astro.build) (SSR w/ [Node.js](https://nodejs.org/) adapter and [TypeScript](https://www.typescriptlang.org/) support)
+- [MySQL](https://www.mysql.com/) (8.0) with [Kysely](https://kysely.dev/) query builder & cli
+- [Better-Auth](https://www.better-auth.com/)
+- [Tailwind CSS](https://tailwindcss.com/) with [FlyonUI](https://flyonui.com/)
+
+### Supporting Libraries
+
+- [Alpine.js](https://alpinejs.dev/)
+- [HTMX](https://htmx.org/)
+- [Cropper.js](https://fengyuanchen.github.io/cropperjs/)
+- [Dropzone](https://www.dropzone.dev/)
+- [SortableJS](https://sortablejs.github.io/Sortable/)
+- [Validator.js](https://github.com/validatorjs/validator.js)
+- [Iconify](https://iconify.design/)
+- [Nodemailer](https://nodemailer.com/)
+
+
+
+
+
+
+## The Boilerplate
+- app structure
+  - middleware
+  - config mgmt
+  - db schemas
+  - default CSP, CSRF validation for forms
+  - .env boilerplate & integration
+- astro config
+  - Alias imports (@/ path resolution)
+  - Development mode conveniences (local cookie handling)
+- auth system
+  - JWT-based authentication middleware
+  - role-based access control
+  - OAuth configured with Google login
+  - login/auth flow
+    - register/login templates and BE handlers wired with better-auth (& nodemailer)
+- components
+  - basic form ui
+  - form validation
+  - input validation
+  - integrated form handling with back-end components (buttons that submit forms in a specific way, back-end routes that handle the data in a specific way)
+  - fancier components - photo uploads, gallery, audio, text editors, etc
+    - File upload handling with storage providers for S3/R2, Bunny.net, and, local filesystem
+    - Image processing handlers (optimization, cropping)
+- backend
+  - helpers
+  - crud abstraction
+  - Email notifications TSX components
+- admin app
+  - wannabe wordpress admin
+  - simple base you can extend as needed
+  - you can ignore it, too, who cares
+
+
+
+
+
+## The Philosophy / Workflow
+
+
+- enough examples between the codebase and the docs for you to get the gist of how to build with this
+  - Clear coding standards and best practices
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
