@@ -1,243 +1,7 @@
 ---
-title: Introduction
+title: Hello, Cruel World
 sidebar:
   order: 1
----
-🚜
-
-I AM WRITING THE DOCS NOW
-
-NOTHING HERE IS COHERENT YET
-
-
-
-
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
-
-
-
-<CardGrid>
-  <Card title="Check this out" icon="open-book">
-    Interesting content you want to highlight.
-  </Card>
-  <Card title="Other feature" icon="information">
-    More information you want to share.
-  </Card>
-</CardGrid>
-
-
-
-
-
-
-
-
-
-
-
-![every app is just crud & permissions](/images/crud-busmeme.jpg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-
-# Prologue (need a diff name) - intro section
-
-
-
-
-
-(old readme)
-
-
-# ▲▼ D A R K W A V E
-
-### Web application development kit
-
-Darkwave is a "batteries-included" tool kit for building data-driven web applications with Astro. 
-
-We've curated a selection of reliable and approachable tools to create a professional-grade full-stack boilerplate with pre-wired functionality and components for common SaaS and CRUD features.
-
-DW facilitates a hyper-productive development workflow, helping developers focus on delivering real value with ease.
-
-
-Read the full documentation and user guide at [darkwavejs.com](https://darkwavejs.com/)
-
-
-## What's Included?
-
-### Core Stack
-
-- [Astro](https://astro.build) (SSR w/ Node.js adapter)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/) with [FlyonUI](https://flyonui.com/)
-- [Better-Auth](https://www.better-auth.com/) for authentication
-- [MySQL](https://www.mysql.com/) (8.0) with [Kysely](https://kysely.dev/) query builder & cli
-
-### Additional Utilities
-
-- [Alpine.js](https://alpinejs.dev/) - JavaScript framework for enhanced interactivity
-- [HTMX](https://htmx.org/) - Modern approach to dynamic content without writing JavaScript
-- [Cropper.js](https://fengyuanchen.github.io/cropperjs/) - Image cropping library
-- [Dropzone](https://www.dropzone.dev/) - Drag & drop file upload interface
-- [SortableJS](https://sortablejs.github.io/Sortable/) - Drag & drop sorting library
-- [Validator.js](https://github.com/validatorjs/validator.js) - String validation
-- [Iconify](https://iconify.design/) - Icon framework with Tabler icons set
-
-
-
-## Core Philosophy
-
-- Security and performance as top priorities
-- Professional, maintainable solutions without unnecessary complexity
-- Code that is easy to understand and maintain over clever solutions
-- Proven, stable patterns over bleeding-edge features
-- Long-term maintainability and reliability
-- Pragmatic solutions using "boring" techniques
-
-
-## Features
-
-### Infrastructure
-
-- Server-side rendering with Astro and Node.js adapter
-- TypeScript support with enhanced type safety
-- Tailwind CSS with FlyonUI theme integration
-- Better-Auth authentication system with role-based access control and OAuth configured with Google login
-- MySQL database integration with Kysely query builder
-- Comprehensive security configurations (CSP, CSRF protection)
-
-### Form Components
-
-- Text input fields with validation
-- Single and gallery photo upload with cropping
-- Select dropdown
-- Checkbox group
-- Submit and delete buttons with form validation
-- Textarea inputs
-
-### UI Components
-
-- Configurable alert system
-- Modal dialogs
-- Button links
-
-
-### Backend Architecture
-
-- JWT-based authentication middleware
-- Secure cookie handling
-- Role-based authorization system
-- CSRF protection middleware
-- Email notifications TSX components
-- File upload handling with storage providers for S3/R2, Bunny.net, and, local filesystem
-- Image processing handlers (optimization, cropping)
-- Configurable environment variables
-- Database schema management
-
-### Developer Ergonomics
-
-- Alias imports (@/ path resolution)
-- Organized project structure
-- Type definitions for enhanced IDE support
-- Development mode conveniences (local cookie handling)
-- Clear coding standards and best practices
-
-
-
-## Getting Started
-
-Clone the repository
-```bash
-npx degit jyoungblood/darkwave my-project
-cd my-project
-```
-
-Install dependencies
-```bash
-npm install
-```
-
-Initialize your database and SMTP account, have the credentials ready to add to your new .env file.
-
-Configure environment variables (add your database, mail server, etc)
-```bash
-mv .env.example .env
-```
-
-Generate [Better-Auth secret](https://www.better-auth.com/docs/installation) (save this to your .env file)
-```bash
-openssl rand -base64 32
-```
-
-Initialize the database (and optionally create admin user)
-```bash
-npm run init
-```
-
-Start development server
-```bash
-npm run dev
-```
-
-Refer to the [documentation](https://darkwavejs.com/) for next steps.
-
-
-## Project Structure
-
-```
-src/
-├── components/        # Reusable UI components
-│   ├── admin/         # Admin components
-│   ├── forms/         # Form-related components
-│   └── ui/            # General UI components
-├── config/            # Application configuration
-├── email-templates/   # Email templates
-├── layouts/           # Page layouts
-├── lib/               # Shared utilities and helpers
-├── middleware/        # Request middleware
-├── pages/             # Application routes & templates
-├── styles/            # Tailwind & FlyonUI integration, base component styles
-```
-
-
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
-
-## * . · : · . ☽ ✧ 
-- [DW Classic](https://github.com/jyoungblood/darkwave/tree/slime) - legacy PHP-based version
-
-
-
-
-
----
----
-
----
 ---
 
 
@@ -253,54 +17,30 @@ developers focus on delivering real value with ease.
 
 
 
----
+## Full sack web apps with Astro? You bet!
 
-
-what is it (introduction, core concepts, rationale/manifesto (why we chose certain tech))
-
-intro here - from the readme - https://github.com/jyoungblood/darkwave
-
-
-Full sack web apps with Astro? You bet!
-
-Building full stack apps with Astro can be fun and rewarding!
-
-DW = don't worry
-
-
-we've been slowly working on this thing for YEARS, and now it's at a point where i'm feeling comfortable building in public. while it's not quite ready for prime time yet, you're welcome to take a look and maybe give it a spin
+Building full stack apps with Astro can be fun and rewarding! Astro itself is beginner-friendly while being robust and capable of supporting professional funcitonality.
 
 
 
 
+## DW = don't worry
 
-
-in practice it's a starter kit for Astro
-in theory, it's a whole (working theory, practice, philosophy, idology, etc) (there's a single word for this that i can't think of at the moment)
-
-
-ITS ALL ABOUT THE WORKFLOW
-- technical components for sure, but it's less of a technical fw and more of a conceptual [workflow, perspective, ideaology] for how to build this kind of functionality in a modular way (with interchangable pieces) that is both maintainable and [makes sense, is fun to build, bla blah]
-- it's an ideology, it's a way of life
-- A pragmatic approach to developing high quality data-driven applications quickly and reliably
-
-
-
----
-
-
-
-
-
-`≸ ∅ ⌁ 🝊 🜩`
-
-
-`(.づ◡﹏◡)づ.`
-
-
-
----
-
-
-(something similar to this)
 "The value prop is simple: **We help you get started faster. You are purchasing time.** We've thought hard about all the problems like link routing, data-binding, undo and redo, for quite some time so that you can get to making your application faster and more reliable than otherwise." (https://x.com/simonsarris/status/1976357804492689576)
+
+We've been slowly working on this concept for YEARS, and now it's at a point where i'm feeling comfortable building in public. while it's not quite ready for prime time yet, you're welcome to take a look and maybe give it a spin
+
+
+
+
+
+
+## It's all about the workflow
+
+DW includes technical components for sure, but it's less of a technical framework and more of a conceptual ideology for how to build this kind of functionality in a modular way (with interchangable pieces) that is both understandable and maintainable.
+
+It's a pragmatic approach to developing high quality data-driven applications quickly and reliably.
+
+It's an ideology, it's a way of life.
+
+

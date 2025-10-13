@@ -1,0 +1,142 @@
+---
+title: Rationale
+sidebar:
+  order: 4
+---
+🚜
+
+
+
+
+
+## Why does this exist?
+
+I've been around a long time, and I've tried SO many Frameworks and CMS's over there years...and they ALL felt cumbersome and unwieldy.
+
+The last thing I wanted to do was build a framework, and I've given up on this ideas THOUSANDS of times over the years, but I keep coming back to it because nothing quite scratches my itch.
+
+Web development doesn't need to be so hard! Sure there's some level of complexity involved, but it doesn't need to be nearly difficult and complex as people make it. 
+
+The *majority* of development problems are already solved, and a clean system that combines (the basic funcitonality) will take care of 80% of the problems, letting you spend your energy on the things that matter most.
+
+![every app is just crud & permissions](/images/crud-busmeme.jpg)
+
+
+The real value of DW (and any framework) is that all the big decisions are made for you, and you don't have to spend time deciding which tech to use. I've thought long and hard about these solutions (and gone through the pain of integrating them together) and settled on good pragmatic decisions made with a few key principles in mind:
+- keep architecture as simple as possible
+- keep the workflow simple too
+- make boring decisions (avoid being overly clever)
+
+
+
+
+
+
+## Why do you do it like that?
+
+Why have we made the decisions we've made? Why choose these specific tools & libraries?
+
+I'm so glad you asked:
+
+
+
+
+
+
+
+### Why Astro?
+
+why astro?
+it's fucking easy
+- you want react components? You got it!
+  - vue? svelte?
+  - use anything you want!
+- easy dev workflow, easy (enough) deployment story
+
+
+Why Astro?
+CRUD apps with Astro? Don’t mind if I do!
+Clean organization & workflow, easy to understand , easy enough to make it what you need to be  
+Omg these components!  
+  Astro components are great, super easy  
+  Use anything else too! It works with everything! IT WORKS WITH EVERYTHING!!!!!
+it's a little heavier than it used to be (php put the files on your server & run the install script) (lot more files now) ... but it's worth it! this functionality can be pretty complex and this is the best way (imo) to manage it
+
+here's a more specific breakdown - https://strapi.io/blog/building-faster-content-driven-sites-with-astro
+same vibes here - https://developeraryan.in/blogs/astro-for-react-devs/
+
+
+
+
+### Why Node?
+Why node? It’s everywhere! (So many people have built integrations w services, easy pkg integration)
+Why node
+More secure on a vps (than php apps for sure)
+it's easy to set up on your local env, everyone has it anyway
+also, re: node, we're specifically using npm (cli) because it's the "normal" way to do this. fuck using pnpm or yarn or whatever else.
+
+
+
+
+### Why TypeScript?
+
+First, I want to be clear that I don't like TypeScript. If TS has 1 hater it's me. If TS has 0 haters, I'm dead.
+
+why js/ts/node?
+- ecosystem is HUGE, tons of people building stuff i can use for free
+- it's easier than it used to be (not ideal, but it works pretty well these days)
+- fast enough processing, reliable architecture etc
+- easy(-ish) turn-key functionality
+
+for like 10 years DW was written with php and it was great. i hate typescript and swore i would NEVER use it, but here i am, using typescript for new apps...and loving it!
+
+this toolkit was previously built on php (focusing on ease of deployment & dev workflow, but now node is really easy, MUCH easier to deploy w/ modern platforms, and older platforms [vps w/ hetzner, kh, do, linode, etc] is easy enough to set up too...modify for your needs)
+
+
+
+TS is GREAT for AI
+- you can write apps with this stack SO FREAKING FAST with claude & cursor 
+
+
+
+
+
+### Why Flyon?
+
+why flyon?
+- did a brief exploration of an implementation w/ just daisyui (because it's lighter and "simpler" and the "normal" go-to choice for a lot of devs)...not ideal
+	- concerned about accessibility issues
+		- flyon built on preline
+	- color contrast issues
+	- daisy just feels incomplete compared to flyon/preline
+- it feels COMPLETE
+  - there are like a million ui kits out there but they don't feel quite right, still a lot of rough edges that require time and effort to make them feel polished and professional
+  - we're grown up professionals with deadlines, and the whole point of using a ui kit is to have something that looks and feels COMPLETE and doesn't need additional work to make it look nice and coherent. it should JUST WORK
+- daisy is nice, basecoat is nice, but they're not the right choices
+- we need turn-key components that are ACCESSIBLE and COMPLETE feeling
+- maybe daisy will be it one day, but it's not it now
+- basecoat/shad is nice, but too much involved to get the functionality we want
+	- basecoat is sick and looks great by default, but it's "headless" w/ minimal style and limited components (less pre-built stuff)
+		- which is fine, but what we want here is pre-built components you can plug in and magically have a complete feeling thing that's accessible (enough)
+- https://flyonui.com/docs/getting-started/introduction/
+- it's built on daisy (decent aesthetic) AND preline (and iconify) ... concern for "finished" looking aesthetics and more accessible (headless) components
+
+- want to hear various 14yo’s criticism of flyon? check this out!
+  - misc flyon reddit crit:
+  - [https://www.reddit.com/r/tailwindcss/comments/1jlnw7l/flyonui_v2_open_source_tailwind_css_components/](https://www.reddit.com/r/tailwindcss/comments/1jlnw7l/flyonui_v2_open_source_tailwind_css_components/ "smartCard-inline")
+  - [https://www.reddit.com/r/tailwindcss/comments/1led4k0/flyonui_ultimate_tailwind_blocks_and_tailwind/](https://www.reddit.com/r/tailwindcss/comments/1led4k0/flyonui_ultimate_tailwind_blocks_and_tailwind/ "smartCard-inline")
+  - [https://www.reddit.com/r/sveltejs/comments/1g6cu3t/tailwind_css_components_library_for_svelte_flyonui/](https://www.reddit.com/r/sveltejs/comments/1g6cu3t/tailwind_css_components_library_for_svelte_flyonui/ "smartCard-inline")
+  - [https://www.reddit.com/r/tailwindcss/comments/1g0dz95/open_source_fully_free_components_library_for/](https://www.reddit.com/r/tailwindcss/comments/1g0dz95/open_source_fully_free_components_library_for/ "smartCard-inline")
+
+
+
+
+
+
+
+
+
+
+
+
+

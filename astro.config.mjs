@@ -16,15 +16,17 @@ export default defineConfig({
         // starlightChangelogs(),
         starlightSidebarTopics([
           {
-            label: "Documentation",
+            label: "Introduction",
             link: "/docs/",
             // icon: "open-book",
             // icon: "information",
             items: [
               {
-                label: "Documentation",
+                label: "Introduction",
                 autogenerate: { directory: "docs" },
               },
+              { label: "Getting Started", autogenerate: { directory: "getting-started" } },
+              { label: "Workflow", autogenerate: { directory: "workflow" } },
             ],
           },
           {
@@ -36,11 +38,6 @@ export default defineConfig({
                 autogenerate: { directory: "components" },
               },
             ],
-          },
-          {
-            label: "Admin",
-            link: "/admin/",
-            items: [{ label: "Admin", autogenerate: { directory: "admin" } }],
           },
           {
             label: "Field Guide",
@@ -66,35 +63,35 @@ export default defineConfig({
           },
         ]),
         // starlightThemeBlack({
-        //   // navLinks: [
-        //   //   {
-        //   //     // optional
-        //   //     label: "Docs",
-        //   //     link: "/docs",
-        //   //   },
-        //   //   {
-        //   //     label: "Components",
-        //   //     link: "/components",
-        //   //   },
-        //   //   {
-        //   //     label: "Admin",
-        //   //     link: "/admin",
-        //   //   },
-        //   //   {
-        //   //     label: "Field Guide",
-        //   //     link: "/fieldguide",
-        //   //   },
-        //   //   {
-        //   //     label: "Resources",
-        //   //     link: "/resources",
-        //   //   },
-        //   //   {
-        //   //     label: "Project",
-        //   //     link: "/project/roadmap",
-        //   //   },
-        //   // ],
+        //   navLinks: [
+        //     {
+        //       // optional
+        //       label: "Docs",
+        //       link: "/docs",
+        //     },
+        //     {
+        //       label: "Components",
+        //       link: "/components",
+        //     },
+        //     {
+        //       label: "Admin",
+        //       link: "/admin",
+        //     },
+        //     {
+        //       label: "Field Guide",
+        //       link: "/fieldguide",
+        //     },
+        //     {
+        //       label: "Resources",
+        //       link: "/resources",
+        //     },
+        //     {
+        //       label: "Project",
+        //       link: "/project/roadmap",
+        //     },
+        //   ],
         //   //optional
-        //   footerText: "<a href='https://jyoungblood.github.io/'>♥︎ JY</a>",
+        //   footerText: "<a href='https://jonathanyoungblood.com/studio' target='_blank'>♥︎ JY</a>",
         // }),
       ],
       components: {
@@ -114,7 +111,8 @@ export default defineConfig({
         // replacesTitle: true,
       },
       // customCss: ["./src/styles/tailwind.css", "./src/styles/custom.css"],
-      customCss: ["./src/styles/styles.css"],
+      // customCss: ["./src/styles/styles.css"],
+      customCss: ["./src/styles/styles-v0.css"],
       expressiveCode: {
         // Replace the default themes with a custom set of bundled themes:
         // "dracula" (a dark theme) and "solarized-light"
