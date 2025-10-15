@@ -10,6 +10,42 @@ title: .htaccess misc
 
 
 
+i love apache, this is what we set up (htaccess reverse proxy) to deploy on whm/cpanel vps
+
+
+```
+DirectoryIndex disabled
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
+RewriteRule ^/?(.*)$ http://localhost:6969/$1 [P,L]
+```
+
+
+
+
+
+
+
+---
+
+auto 404 wp probes
+(there's also an opportunity to fuck w/ wp hackers, but that's up to you)
+
+```
+# Drop obvious CMS probes
+RewriteRule ^(wp-admin|wp-login|wp-includes|xmlrpc\.php|wlwmanifest\.xml|media/system/js|\.env) - [F]
+
+# Fast 404s for specific paths
+RewriteRule ^media/system/js/core\.js$ - [R=404,L]
+RewriteRule ^media/wp-includes/wlwmanifest\.xml$ - [R=404,L]
+```
+
+
 
 
 
