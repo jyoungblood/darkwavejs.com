@@ -7,6 +7,11 @@ sidebar:
 🚜
 
 
+?? need to note requirements?
+- astro reqs (node, npm, npx, nvm) (min versions?)
+- mysql locally (8) (use dbngin, herd, mamp, xamp)
+
+
 Clone the repository
 ```bash frame="none"
 npx degit jyoungblood/darkwave my-project
@@ -19,6 +24,12 @@ npm install
 ```
 
 Initialize your database and SMTP account, have the credentials ready to add to your new .env file.
+
+
+(on your own) 
+- set up a mysql db, have the credentials ready to add to .env
+  - mysql 8, utf8mb4
+- same for SMTP
 
 Configure environment variables (add your database, mail server, etc)
 ```bash frame="none"
@@ -34,10 +45,14 @@ Initialize the database (and optionally create admin user)
 ```bash frame="none"
 npm run init
 ```
+?? need to have instructions for what to do in case of script failure? (manually run the BA/kysely init migration scripts)
+
 
 Start development server
 ```bash frame="none"
 npm run dev
 ```
 
-
+(stuff i like)
+- [ ] add deploy.sh
+- [ ] add monitor.sh
