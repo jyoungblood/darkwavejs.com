@@ -84,8 +84,8 @@ KH VPS DEPLOYMENT (easy)
 
 (root)
 - [x] ssh keys
-  - cp -R /home/hxgf/.ssh /home/workhole
-  - chown -R workhole:workhole .ssh
+  - cp -R /home/hxgf/.ssh /home/dwsite
+  - chown -R dwsite:dwsite .ssh
 
 (ssh user)
 - [ ] set up site on server
@@ -105,7 +105,7 @@ KH VPS DEPLOYMENT (easy)
 
 - [x] nvm install
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-  - node exe path: /home/workhole/.nvm/versions/node/v22.20.0/bin/node
+  - node exe path: /home/dwsite/.nvm/versions/node/v22.20.0/bin/node
 
 - [x] pm2 install
   - npm install pm2 -g
@@ -174,7 +174,13 @@ module.exports = {
     - [run the command it gives you as root]
     - will be something like `sudo env PATH=$PATH:/home/dwsite/.nvm/versions/node/v20.19.4/bin /home/dwsite/.nvm/versions/node/v20.19.4/lib/node_modules/pm2/bin/pm2 startup systemd -u dwsite --hp /home/dwsite`
     - use the "bin" version of pm2 (ex, replace '/home/dwsite/.nvm/versions/node/v20.19.4/lib/node_modules/pm2/bin/pm2' with '/home/dwsite/.nvm/versions/node/v20.19.4/bin/pm2')
-    - ugh this part sucks, i hate it
+      - remove the `lib/node_modules/pm2/` from the pm2 binary path
+      - use the same path that's shown if you run `which pm2` as the cpanel user
+      - fyi this hard-codes the node version (that pm2 uses), so if you update it at any point, you'll need to update the systemd service as well
+    - [ ] would LOVE to have a little script/utility where you enter the name of your app (as it is in pm2) and your node/pm2 binary path and it generates the CORRECT commands
+      - ?? can we do that with the info in the ecosystem file?
+      - ?? npm run pm2-startup
+    - (troubleshooting) ugh this part sucks, i hate it
       - systemctl status pm2-dwsite -- if it gives you shit:
         - systemctl stop pm2-dwsite || true
         - ```
@@ -355,3 +361,139 @@ exit
 
 
 ```
+
+
+
+
+----
+----
+----
+----
+
+
+
+
+### pm2 startup bullshit
+
+
+
+(after i ran)
+
+
+sudo env PATH=$PATH:/home/dwsite/.nvm/versions/node/v22.20.0/bin /home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 startup systemd -u dwsite --hp /home/dwsite
+
+
+systemctl enable pm2-dwsite
+systemctl start pm2-dwsite
+systemctl status pm2-dwsite
+
+
+
+systemctl stop pm2-dwsite
+
+# replace lib/node_modules/... with bin/pm2 on ExecStart/Reload/Stop
+sed -i 's#/home/dwsite/.nvm/versions/node/v22.20.0/lib/node_modules/pm2/bin/pm2#/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2#g' /etc/systemd/system/pm2-dwsite.service
+
+  # add a small delay after start (only once; safe to re-run)
+grep -q '^ExecStartPost=' /etc/systemd/system/pm2-dwsite.service || \
+    sed -i '/^ExecStart=.*resurrect/a ExecStartPost=/bin/sleep 1' /etc/systemd/system/pm2-dwsite.service
+
+  # optional: reduce restart hammering
+grep -q '^RestartSec=' /etc/systemd/system/pm2-dwsite.service || \
+  sed -i '/^Restart=on-failure/a RestartSec=1' /etc/systemd/system/pm2-dwsite.service
+
+
+
+(from cgpt)
+
+
+Good news: it’s actually **running fine**.
+
+From your `systemctl status`:
+
+* **Active: active (running)** ✅
+* PM2 daemon: **“PM2 v6.0.13: God Daemon (/home/dwsite/.pm2)”**
+* Your app process is up: `node /home/dwsite/dwsite_astro/dist/server/entry.mjs`
+
+That earlier “failed because the service did not take the steps required…” line can show up when:
+
+* you ran `start` once with an old/bad unit and then fixed it, or
+* systemd expected a different service “Type” (fork/notify) but PM2 is **simple** and didn’t “notify” quickly.
+
+The ASCII box-drawing gibberish (`<E2>...`) is just PM2’s table rendering in logs—harmless.
+
+## Make it clean & stable (quick checklist)
+
+1. **Reset any stale failed state** (optional, tidy):
+
+```bash
+sudo systemctl reset-failed pm2-dwsite
+```
+
+2. **Unit file sanity (recommended defaults)**
+   Open `/etc/systemd/system/pm2-dwsite.service` and make sure it looks like this (adjust the Node path if you upgrade later):
+
+```ini
+[Unit]
+Description=PM2 process manager
+Documentation=https://pm2.keymetrics.io/
+After=network.target
+
+[Service]
+Type=simple
+User=dwsite
+Environment=PM2_HOME=/home/dwsite/.pm2
+Environment=PATH=/home/dwsite/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+LimitNOFILE=infinity
+Restart=always
+RestartSec=2
+KillMode=process
+
+# If you use pm2 save / resurrect (what you’re doing now):
+ExecStart=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 resurrect
+ExecReload=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 reload all
+ExecStop=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 kill
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart pm2-dwsite
+sudo systemctl status pm2-dwsite -l
+```
+
+3. **Confirm PM2 sees your apps (as the user)**
+
+```bash
+sudo -u dwsite env PATH=/home/dwsite/.nvm/versions/node/v22.20.0/bin:$PATH pm2 list
+```
+
+4. **If you change Node versions later** (nvm install/use):
+
+* Re-run, as **dwsite**: `pm2 startup` (so it prints a new command with the new path)
+* Then, as **root**, run that printed `sudo env ... pm2 startup ...` again, or update the `PATH` in the unit to the new version
+* `pm2 save`, `systemctl daemon-reload`, `systemctl restart pm2-dwsite`
+
+## Optional hardening / quality-of-life
+
+* Add a **WorkingDirectory** line if you want all PM2 actions to assume a base path:
+
+  ```ini
+  WorkingDirectory=/home/dwsite
+  ```
+* If you ever move to an **ecosystem file** (nice for config):
+
+  ```ini
+  ExecStart=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 start /home/dwsite/ecosystem.config.js --env production
+  ExecStop=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 delete all
+  ```
+
+  (In that case you don’t need `resurrect`/`save`.)
+
+---
+
+If you still see a failure on `start` but it ends up “active (running)” immediately after, it’s just systemd being cranky with timing. The config above (Type=simple, Restart=always, proper PATH) usually clears that up.
