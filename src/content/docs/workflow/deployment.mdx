@@ -5,6 +5,24 @@ sidebar:
 ---
 🚜
 
+---
+
+break this page into several pages? (this is MOSTLY the VPS guide)
+
+
+
+
+dw docs - probably want to use railway or render or whatever (pretty easy to deploy to those platforms)
+BUT
+if you have a private vps with ssh (whm/cp), and want to follow some different instructions, it's actually pretty easy and fast to get it set up with pm2 on your machine
+
+it may seem daunting at first glance, but you can realistically do it in like 15 min…def less than an hour
+and i'm sure YOU could do it even faster, since you're so smart
+
+
+
+----
+
 - [ ] set up db on production server
 - [ ] set up SMTP & other services for production
 
@@ -43,6 +61,67 @@ this will work on "modern" infra too (host it with vercel or cloudflare, idgaf)
 ---
 
 
+0x00 deploy & ssh user setup - link / solution in dw docs in general purpose format
+
+
+
+misc dw deployment
+- https://github.com/jyoungblood/0x00
+- https://github.com/jyoungblood/0x00-astro-deploy
+
+
+nvm - https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
+pm2 - https://pm2.io/docs/runtime/guide/installation/
+
+
+
+
+
+
+
+
+KH VPS DEPLOYMENT (easy)
+
+(root)
+- [x] ssh keys
+  - cp -R /home/hxgf/.ssh /home/workhole
+  - chown -R workhole:workhole .ssh
+
+(ssh user)
+- [ ] set up site on server
+  - [x] git clone git@whatevergithuburl
+    - (already have ssh keys set up)
+  - [ ] npm install
+  - [ ] npm run build
+
+- [x] codebase update
+  - [x] deploy.sh
+    - touch deploy.sh && echo "\n/deploy.sh" >> .gitignore && chmod +x deploy.sh
+    - touch monitor.sh && echo "\n/monitor.sh" >> .gitignore && chmod +x monitor.sh
+  - [x] add ecosystem.config.cjs (for pm2)
+
+- [x] add production .env 
+- [x] add .htaccess to docroot
+
+- [x] nvm install
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  - node exe path: /home/workhole/.nvm/versions/node/v22.20.0/bin/node
+
+- [x] pm2 install
+  - npm install pm2 -g
+
+- [ ] pm2 config
+  - [ ] start app using ecosystem
+    - pm2 start ecosystem.config.cjs 
+    - pm2 save
+  - [ ] add to systemctl
+
+
+
+-----
+
+
+
 for this example, let's say the app is called dwsite
 
 
@@ -54,6 +133,41 @@ for this example, let's say the app is called dwsite
   - install pm2 for user
   - add all the ecosystem.config stuff (pm2 config) for astro locally (ok to put in repo, shouldn't ever need to change tho)
   - add codebase via git (set up .env w/ correct production settings)
+
+ecosystem.config.cjs
+```js
+module.exports = {
+  apps: [
+    {
+      name: "dwsite",
+      cwd: "/home/dwsite/dwsite_astro",
+      script: "dist/server/entry.mjs",
+      instances: 1,
+      exec_mode: "fork",
+    // to run in cluster mode:
+      // instances: 2, // or "max"
+      // exec_mode: "cluster", // switch from fork → cluster
+      watch: false,
+      interpreter: "/home/dwsite/.nvm/versions/node/v20.19.4/bin/node",
+      env: {
+        NODE_ENV: "production",
+        HOST: "127.0.0.1",
+        PORT: "6969",
+        // Increase Node.js body size limits for large uploads
+        NODE_OPTIONS: "--max-http-header-size=32768 --max-old-space-size=2048",
+      },
+      max_memory_restart: "1G",
+      error_file: "logs/error.log",
+      out_file: "logs/out.log",
+      log_file: "logs/combined.log",
+      time: true,
+    },
+  ],
+}; 
+```
+
+
+
 - pm2 start ecosystem.config.cjs
   - pm2 save
   - pm2 startup
@@ -92,6 +206,29 @@ for this example, let's say the app is called dwsite
   RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
   RewriteRule ^/?(.*)$ http://localhost:3669/$1 [P,L]
   ```
+
+
+updated htaccess proxy that 404s some wp & other cms probing attempts
+
+```
+DirectoryIndex disabled
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Drop obvious CMS probes
+RewriteRule ^(wp-admin|wp-login|wp-includes|xmlrpc\.php|wlwmanifest\.xml|media/system/js|\.env) - [F]
+
+# Fast 404s for specific paths
+RewriteRule ^media/system/js/core\.js$ - [R=404,L]
+RewriteRule ^media/wp-includes/wlwmanifest\.xml$ - [R=404,L]
+
+RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
+RewriteRule ^/?(.*)$ http://localhost:6969/$1 [P,L]
+```
+
 
 
 
@@ -148,7 +285,7 @@ dw - "deploy to render" solution
 
 ---
 
-
+touch deploy.sh && echo "\n/deploy.sh" >> .gitignore && chmod +x deploy.sh
 
 ./deploy.sh
 
@@ -185,7 +322,7 @@ git push origin $GIT_BRANCH
 
 
 ## Pull on remote via ssh
-ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "cd $DEPLOYMENT_PATH && git restore package-lock.json && git pull origin $GIT_BRANCH && npm install && npm run build && npm run migrate && pm2 reload lwoa"
+ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "cd $DEPLOYMENT_PATH && git restore package-lock.json && git pull origin $GIT_BRANCH && npm install && npm run build && npm run migrate && pm2 reload dwsite"
 
 
 
@@ -195,7 +332,7 @@ exit
 
 
 
-
+touch monitor.sh && echo "\n/monitor.sh" >> .gitignore && chmod +x monitor.sh
 
 ./monitor.sh
 
