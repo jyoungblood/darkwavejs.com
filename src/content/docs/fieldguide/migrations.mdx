@@ -4,13 +4,101 @@ title: Migrations
 🚜
 
 
+NOTE: MIGRATIONS ARE OPTIONAL
+you can still use kysely to handle data...it's just an interface for database operations
+
+fwiw, the schema is also optional, a default schema is included as a reference, add to it if you want (it is really helpful for llm-assisted development, as well as working on a team with multiple developers, so we'd recommend using it)
+
 - [ ] docs add instructions for adding migrations and updating the schema
   - migrations in `./migrations`
   - update schema in `./src/config/schema.ts`
 
-‌
+
+
 
 docs ref for migrations (using kysely!)
 
-- npx kysely migrate:make mms
-- npx kysely migrate:latest
+- `npx kysely migrate:make mms`
+- `npm run migrate` --> `npx kysely migrate:latest`
+
+
+migration ref:
+- see `./migrations/0000-00-00_create_custom_tables.ts` for an example of how we're doing it for the initial migration (default tables, admin acct)
+
+```typescript
+
+import { Kysely, sql, ColumnDefinitionBuilder } from 'kysely';
+
+export async function up(db: Kysely<any>): Promise<void> {
+
+  // Create links table
+  await db.schema
+    .createTable('links')
+    .addColumn('id', 'integer', (col: ColumnDefinitionBuilder) => col.primaryKey().autoIncrement())
+    .addColumn('uuid', 'varchar(255)', (col: ColumnDefinitionBuilder) => col.notNull())
+    .addColumn('created_at', 'timestamp', (col: ColumnDefinitionBuilder) => col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))
+    .addColumn('approved_at', 'timestamp')
+    .addColumn('user_id', 'varchar(255)', (col: ColumnDefinitionBuilder) => col.references('user.id').onDelete('set null'))
+    .addColumn('title', 'varchar(255)')
+    .addColumn('url', 'varchar(255)')
+    .addColumn('description', 'text')
+    .addColumn('type', 'varchar(255)')
+    .addColumn('deleted_at', 'timestamp')
+    .addColumn('photo_url', 'varchar(255)')
+    .addColumn('slug', 'varchar(255)')
+    .addColumn('updated_at', 'timestamp')
+    .addColumn('photo_url_parameters', 'text')
+    .execute();   
+}
+
+export async function down(db: Kysely<any>): Promise<void> {
+  await db.schema.dropTable('links').ifExists().execute();
+} 
+
+```
+
+
+note the import statement, it's different from the default:
+```typescript
+import { Kysely, sql, ColumnDefinitionBuilder } from 'kysely';
+```
+
+
+when you use the cli to generate a migration it will look like this
+
+```typescript
+
+import type { Kysely } from 'kysely'
+
+// `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
+export async function up(db: Kysely<any>): Promise<void> {
+	// up migration code goes here...
+	// note: up migrations are mandatory. you must implement this function.
+	// For more info, see: https://kysely.dev/docs/migrations
+
+
+  await db.schema
+    .alterTable('mms_questions')
+    .addColumn('title', 'varchar(255)')
+    .execute();
+
+
+}
+
+// `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
+export async function down(db: Kysely<any>): Promise<void> {
+	// down migration code goes here...
+	// note: down migrations are optional. you can safely delete this function.
+	// For more info, see: https://kysely.dev/docs/migrations
+}
+
+```
+
+
+
+
+for all the available methods & migration options available to you in this context, see kysely migration docs - https://kysely.dev/docs/migrations
+  specifically: https://kysely.dev/docs/migrations#postgresql-migration-example
+
+
+for now we need to manually update the schema whenever you make any changes to the db
