@@ -1,0 +1,14 @@
+---
+title: CRUD abstractions
+---
+🚜
+
+methods for saving (new/update) and doing soft deletes
+see routes in `/api/links/` to see how we're using them
+they check rbac rules for editing, and automatically handle all the db crud
+  there's just a lot of boilerplate that would otherwise need to be repeated, DRY version of same pattern reusable for several kinds of operations
+provided as a nicety, so if you're needing to do something similar with different constraints you'll want to see how we're doing stuff here and modify as needed
+
+
+- using crud helpers
+  - note that it expects to use a uuid if you want to use the saveHandler
