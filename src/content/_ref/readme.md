@@ -16,9 +16,9 @@ Read the full documentation and user guide at [darkwavejs.com](https://darkwavej
 
 ### Core Stack
 
-- [Astro](https://astro.build) (SSR w/ Node.js adapter)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/) with [FlyonUI](https://flyonui.com/)
+- [Astro](https://astro.build) (SSR w/ Node.js adapter and [TypeScript](https://www.typescriptlang.org/))
+- [Tailwind CSS](https://tailwindcss.com/) with [typography](https://github.com/tailwindlabs/tailwindcss-typography) and [forms](https://github.com/tailwindlabs/tailwindcss-forms) plugins available
+- [shadcn/ui](https://ui.shadcn.com/) UI components
 - [Better-Auth](https://www.better-auth.com/) for authentication
 - [MySQL](https://www.mysql.com/) (8.0) with [Kysely](https://kysely.dev/) query builder & cli
 
@@ -50,7 +50,7 @@ Read the full documentation and user guide at [darkwavejs.com](https://darkwavej
 
 - Server-side rendering with Astro and Node.js adapter
 - TypeScript support with enhanced type safety
-- Tailwind CSS with FlyonUI theme integration
+- Tailwind CSS with Shadcn theme integration
 - Better-Auth authentication system with role-based access control and OAuth configured with Google login
 - MySQL database integration with Kysely query builder
 - Comprehensive security configurations (CSP, CSRF protection)
@@ -145,7 +145,7 @@ src/
 ├── lib/               # Shared utilities and helpers
 ├── middleware/        # Request middleware
 ├── pages/             # Application routes & templates
-├── styles/            # Tailwind & FlyonUI integration, base component styles
+├── styles/            # Tailwind & Shadcn integration, base component styles
 ```
 
 

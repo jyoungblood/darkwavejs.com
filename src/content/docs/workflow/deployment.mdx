@@ -8,13 +8,16 @@ sidebar:
 ---
 
 break this page into several pages? (this is MOSTLY the VPS guide)
+- [ ] break out deploy docs into separate pages
+  - new cleaned up doc for pm2 setup
+
+(specifically for dw on vps) - astro SSR deploy w/ ssh for pm2
 
 
 
-
-dw docs - probably want to use railway or render or whatever (pretty easy to deploy to those platforms)
+dw docs - YOU probably want to use railway or render or whatever (pretty easy to deploy to those platforms)
 BUT
-if you have a private vps with ssh (whm/cp), and want to follow some different instructions, it's actually pretty easy and fast to get it set up with pm2 on your machine
+if you, like me, have a private vps with ssh (whm/cp), and want to follow some different instructions, it's actually pretty easy and fast to get it set up with pm2 on your machine
 
 it may seem daunting at first glance, but you can realistically do it in like 15 min…def less than an hour
 and i'm sure YOU could do it even faster, since you're so smart
@@ -298,6 +301,8 @@ dw - "deploy to render" solution
 
 touch deploy.sh && echo "\n/deploy.sh" >> .gitignore && chmod +x deploy.sh
 
+(raw script here - https://github.com/jyoungblood/0x00/blob/master/deploy/deploy-astro-vps-ssh.sh)
+
 ./deploy.sh
 
 ```bash
@@ -305,10 +310,11 @@ touch deploy.sh && echo "\n/deploy.sh" >> .gitignore && chmod +x deploy.sh
 
 GIT_BRANCH="main"
 COMMIT_MESSAGE="Updates - $(date +"%Y-%m-%d %T")"
-SSH_USER="dwsite"
-SSH_SERVER="xxx.xxx.xxx.xxx"
-SSH_PORT="22"
-DEPLOYMENT_PATH="/home/dwsite/astro"
+SSH_USER="xxxx"
+SSH_SERVER="xxxx"
+SSH_PORT="xxxx"
+DEPLOYMENT_PATH="/home/xxxx/xxxx"
+PM2_APP_NAME="xxxx"
 
 # (build step optional, uncomment to enable)
 
@@ -333,7 +339,7 @@ git push origin $GIT_BRANCH
 
 
 ## Pull on remote via ssh
-ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "cd $DEPLOYMENT_PATH && git restore package-lock.json && git pull origin $GIT_BRANCH && npm install && npm run build && npm run migrate && pm2 reload dwsite"
+ssh $SSH_USER@$SSH_SERVER -p $SSH_PORT -t "cd $DEPLOYMENT_PATH && git restore package-lock.json && git pull origin $GIT_BRANCH && npm install && npm run build && npm run migrate && pm2 reload $PM2_APP_NAME"
 
 
 
@@ -452,7 +458,7 @@ Environment=PATH=/home/dwsite/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/u
 LimitNOFILE=infinity
 Restart=always
 RestartSec=2
-KillMode=process
+KillMode=control-group
 
 # If you use pm2 save / resurrect (what you’re doing now):
 ExecStart=/home/dwsite/.nvm/versions/node/v22.20.0/bin/pm2 resurrect
