@@ -1,0 +1,33 @@
+---
+title: Database misc
+---
+🚜
+
+
+config ref
+
+
+recommend the default table encoding/charset to support emoji / int’l chars (whatever’s prob fine for just english, but, if you want better support this is the best option)
+- charset: utf8mb4 collation: utf8mb4_general_ci
+- prob also want to use innodb, but it doesn’t really matter (myisam or whatever default is fine)
+
+
+
+
+note standard for data fields (required & common patterns)
+
+- uuid, created\_at, updated\_at, title, slug, photo_url, etc
+- "the rules" - here's what the components expect, here's the "happy path" (structure your data like this and you're golden, it's all plug n play)
+
+
+
+---
+
+
+db design concept - include fields you KNOW you'll need at some point- https://www.scottantipa.com/yagri.html  
+- In general, these are some useful fields to store on almost any table:
+  - created\_at
+  - updated\_at
+  - deleted\_at (soft deletes)
+  - created\_by etc
+  - permission used during CRUD

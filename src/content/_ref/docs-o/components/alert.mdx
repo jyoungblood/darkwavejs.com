@@ -1,0 +1,145 @@
+---
+title: Alert / Dialog
+---
+🚜
+
+ui/script component
+
+
+this is a js component, call it with js
+
+
+```typescript
+<script>
+    import "@/components/ui/scripts/alert.js";
+</script>
+```
+
+```astro
+<button type="button" class="btn" onclick="errordialog()">dialog demo</button>
+
+<script is:inline>
+  function errordialog() {
+    window.showAlert({
+      type: "warning",
+      variant: "soft",
+      title: "Are you sure you want to remove this photo?",
+      text: false,
+      icon: true,
+      buttons: [
+        {
+          text: "No",
+          variant: "outline",
+          size: "sm",
+          type: "warning",
+        },
+        {
+          type: "warning",
+          text: "Yes",
+          variant: "solid",
+          size: "sm",
+          onClick: () => {
+            // continue with action
+          },
+        },
+      ],
+    });
+  }
+</script>
+
+```
+
+ERROR ALERT
+```astro
+<button type="button" class="btn" onclick="erroralert()">error alert</button>
+
+<script is:inline>
+  function erroralert() {
+    if (window.showAlert) {
+      window.showAlert({
+        type: "error",
+        variant: "soft",
+        title: "Error title",
+        text: "Error text goes here",
+        icon: true,
+        buttons: [
+          {
+            type: "error",
+            text: "OK",
+            variant: "solid",
+          },
+        ],
+      });
+    } else {
+      console.error("Alert system not initialized");
+    }
+  }
+</script>
+```
+
+
+
+FULL-ISH DIALOG DEMO
+```astro
+
+<button type="button" class="btn" onclick="testalert()">test alert (full-ish demo)</button>
+
+<script is:inline>
+  function testalert() {
+    if (window.showAlert) {
+      // Top-left info alert
+      window.showAlert({
+        type: "info",
+        variant: "soft",
+        title: "Processing",
+        text: "Starting the operation...",
+        icon: true,
+        duration: 3000,
+        position: { vertical: "top", horizontal: "left" },
+      });
+
+      // Center warning alert after 1 second
+      setTimeout(() => {
+        window.showAlert({
+          type: "warning",
+          variant: "soft",
+          title: "Attention",
+          text: "This operation requires confirmation",
+          icon: true,
+          // position: { vertical: 'middle', horizontal: 'center' },
+          position: { vertical: "top", horizontal: "left" },
+          buttons: [
+            {
+              text: "Cancel",
+              variant: "soft",
+              icon: "icon-[tabler--x]",
+              size: "sm",
+              type: "warning",
+            },
+            {
+              text: "Proceed",
+              variant: "solid",
+              icon: "icon-[tabler--check]",
+              size: "sm",
+              onClick: () => {
+                // Bottom-right success alert
+                window.showAlert({
+                  type: "success",
+                  variant: "soft",
+                  title: "Success",
+                  text: "Operation completed successfully!",
+                  icon: true,
+                  duration: 3000,
+                  position: { vertical: "bottom", horizontal: "right" },
+                });
+              },
+            },
+          ],
+        });
+      }, 1000);
+    } else {
+      console.error("Alert system not initialized");
+    }
+  }
+</script>
+```

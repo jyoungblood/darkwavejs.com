@@ -1,0 +1,79 @@
+---
+title: Frontend Snippets
+---
+🚜
+
+
+
+you can do this with tailwind, but you can also do this with css!
+
+
+
+quick vertical center on a blank page
+
+```html
+body {
+  display: grid;
+  place-items: center;
+}
+```
+
+
+
+
+
+sticky pancake stack (sticky header & footer, flexible main)
+
+```html
+<style>
+    body{
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+  </style>
+
+  <header></header>
+  <main></main>
+  <footer></footer>
+```
+
+
+
+classic holy grail (sticky left/right sidebar, sticky header/footer)
+
+```html
+<style>
+
+    body {
+      display: grid;
+      grid-template: auto 1fr auto / auto 1fr auto;
+    }
+
+    header {
+      padding: 2rem;
+      grid-column: 1 / 4;
+    }
+
+    left {
+      grid-column: 1 / 2;
+    }
+
+    main {
+      grid-column: 2 / 3;
+    }
+
+    right {
+      grid-column: 3 / 4;
+    }
+
+    footer {
+      grid-column: 1 / 4;
+    }
+  </style>
+
+  <header></header>
+  <left></left>
+  <main></main>
+  <right></right>
+  <footer></footer>
+```

@@ -1,0 +1,131 @@
+---
+title: sendEmail
+---
+🚜
+
+
+
+this is a backend typescript component/function
+
+
+send demo email w/ dw (to verify SMTP settings)
+
+
+```typescript
+
+import { sendEmail } from "@/lib/dw-email";
+
+const result = await sendEmail({
+  to: "jonathan.youngblood@gmail.com",
+  from: `Jonathan Youngblood (via ${import.meta.env.SITE_TITLE} contact form) <${import.meta.env.SMTP_USER}>`,
+  replyTo: "jonathan.youngblood@gmail.com",
+  subject: `[LWOA] Test`,
+  message: {
+    template: "@/email-templates/demo",
+    data: {
+      name: "Jonathan Youngblood",
+      email: "jonathan.youngblood@gmail.com",
+      subject: "Test",
+      message: "Test",
+      siteName: import.meta.env.SITE_TITLE,
+    },
+  },
+});
+
+```
+
+
+
+
+---
+
+
+
+
+# EMAIL
+NORMAL TSX VERSION
+```typescript
+
+import { sendEmail } from "@/lib/dw-email";
+
+const result = await sendEmail({
+  to: 'jonathan.youngblood@gmail.com',
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  subject: 'DEMO EMAIL',
+  message: {
+    template: '@/email-templates/demo', // ideal path, .tsx optional
+    // template: '@/email-templates/demo.tsx',
+    // template: 'src/email-templates/demo.tsx',
+    // template: './src/email-templates/demo.tsx',
+    // template: '../../src/email-templates/demo.tsx',
+    data: {
+      name: 'JY',
+      surname: 'HX',
+      email: 'jy@hxgf.io',
+      tel: '1234567890'
+    }
+  },
+});
+
+return new Response(JSON.stringify(result), {
+  status: result.success ? 200 : 500,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+```
+
+
+TEXT ONLY
+```typescript
+const result = await sendEmail({
+  to: 'jonathan.youngblood@gmail.com',
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  subject: 'DEMO EMAIL',
+  message: {
+    text: `nice shot (should be the only text) - from your friends at ${import.meta.env.SITE_TITLE}`,
+  },
+});
+```
+
+
+html only (no template)
+```typescript
+const result = await sendEmail({
+  to: 'jonathan.youngblood@gmail.com',
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  subject: 'DEMO EMAIL',
+  message: {
+    html: `<p>nice shot (should be the <b>only</b> text)</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
+    text: `SEPARATE TEXT FALLBACK - nice shot (should be the only text) from your friends at ${import.meta.env.SITE_TITLE}`,
+  },
+});
+```
+
+
+multiple recipients
+```typescript
+const result = await sendEmail({
+  to: ['jonathan.youngblood@gmail.com', 'icarus@dvst.cc', 'jy@hxgf.io'],
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  subject: 'DEMO EMAIL',
+  message: {
+    html: `<p>nice shot (should be the <b>only</b> text)</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
+  },
+});
+```
+
+cc & bcc & replyto
+```typescript
+const result = await sendEmail({
+  to: 'jonathan.youngblood@gmail.com',
+  cc: ['icarus@dvst.cc', 'jy@hxgf.io'],
+  bcc: 'jonathan@oceandev.com',
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  replyTo: 'jy@hxgf.io',
+  subject: 'DIFFERENT ANOTHER DEMO EMAIL - demo CC & BCC & replyto',
+  message: {
+    html: `<h1>👯‍♂️ HEY MAN 🤗</h1><p>nice shot</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
+  },
+});
+```

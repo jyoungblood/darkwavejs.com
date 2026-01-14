@@ -1,0 +1,210 @@
+---
+title: .htaccess misc
+---
+🚜
+
+
+
+
+
+
+
+
+i love apache, this is what we set up (htaccess reverse proxy) to deploy on whm/cpanel vps
+
+
+```
+DirectoryIndex disabled
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RequestHeader set X-Forwarded-Host "%{HTTP_HOST}e"
+RewriteRule ^/?(.*)$ http://localhost:6969/$1 [P,L]
+```
+
+
+
+
+
+
+
+---
+
+auto 404 wp probes
+(there's also an opportunity to fuck w/ wp hackers, but that's up to you)
+
+```
+# Drop obvious CMS probes
+RewriteRule ^(wp-admin|wp-login|wp-includes|xmlrpc\.php|wlwmanifest\.xml|media/system/js|\.env) - [F]
+
+# Fast 404s for specific paths
+RewriteRule ^media/system/js/core\.js$ - [R=404,L]
+RewriteRule ^media/wp-includes/wlwmanifest\.xml$ - [R=404,L]
+```
+
+
+
+
+
+
+---
+
+
+
+(idk if we need these, had them saved from the old php version)
+
+
+
+
+hide git via htacces
+
+```
+# RewriteRule "^(.*/)?\\\\.git/" - [F,L]
+RedirectMatch 404 /\\\\.git
+
+```
+
+
+
+
+rules you can add to htaccess to support h2 features for static files (h2 push resource)
+
+```html
+H2PushResource /css/build/tachyons.min.css
+H2PushResource /css/build/fontawesome.all.min.css
+H2PushResource /css/breakpoints.css
+H2PushResource /css/lib/gotham.css
+H2PushResource /css/styles.css
+
+H2PushResource /js/lib/jquery.min.js
+```
+
+htaccess security headers you could add
+
+```html
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header set X-XSS-Protection "1; mode=block"
+Header always append X-Frame-Options SAMEORIGIN
+Header set X-Content-Type-Options nosniff
+# Header add Content-Security-Policy "default-src 'unsafe-inline' port164.com mainstreetbusinessdistrict.com split-tokc.com mst.oceancompaniesok.com media.oceancompaniesok.com oceancompanies.s3.amazonaws.com *.googleapis.com *.frontapp.com sessions.bugsnag.com; frame-ancestors https://*.frontapp.com https://*.frontapplication.com;"
+```
+
+htaccess compression rules
+
+```html
+# AddType text/css cssgz
+# AddType text/javascript jsgz
+# AddEncoding x-gzip .cssgz .jsgz
+
+<ifmodule mod_deflate.c>
+  # Compress HTML, CSS, JavaScript, Text, XML and fonts
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font
+  AddOutputFilterByType DEFLATE application/x-font-opentype
+  AddOutputFilterByType DEFLATE application/x-font-otf
+  AddOutputFilterByType DEFLATE application/x-font-truetype
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE image/x-icon
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  # Remove browser bugs (only needed for really old browsers)
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\\.0[678] no-gzip
+  BrowserMatch \\bMSIE !no-gzip !gzip-only-text/html
+  Header append Vary User-Agent
+</ifmodule>
+```
+
+htaccess cache control headers
+
+```html
+<IfModule mod_expires.c>
+
+  # Automatically add the `Cache-Control` header (as well as the
+  # equivalent `Expires` header).
+
+    ExpiresActive on
+
+  # By default, inform user agents to cache all resources for 1 year.
+
+    ExpiresDefault                                   "access plus 1 year"
+
+  # Overwrite the previous for file types whose content usually changes
+  # very often, and thus, should not be cached for such a long period,
+  # or at all.
+
+    # AppCache manifest files
+
+        ExpiresByType text/cache-manifest            "access plus 0 seconds"
+
+    # /favicon.ico (cannot be renamed!)
+
+        # [!] If you have access to the main Apache configuration
+        #     file, you can match the root favicon exactly using the
+        #     `<Location>` directive. The same cannot be done inside
+        #     of a `.htaccess` file where only the `<Files>` directive
+        #     can be used, reason why the best that can be done is match
+        #     all files named `favicon.ico` (but that should work fine
+        #     if filename/path-based revving is used)
+        #
+        # See also: <https://httpd.apache.org/docs/current/sections.html#file-and-web>.
+
+        <Files "favicon.ico">
+            ExpiresByType image/x-icon               "access plus 1 hour"
+        </Files>
+
+    # Data interchange
+
+        ExpiresByType application/atom+xml           "access plus 1 hour"
+        ExpiresByType application/rdf+xml            "access plus 1 hour"
+        ExpiresByType application/rss+xml            "access plus 1 hour"
+
+        ExpiresByType application/json               "access plus 0 seconds"
+        ExpiresByType application/ld+json            "access plus 0 seconds"
+        ExpiresByType application/schema+json        "access plus 0 seconds"
+        ExpiresByType application/vnd.geo+json       "access plus 0 seconds"
+        ExpiresByType text/xml                       "access plus 0 seconds"
+
+    # HTML
+
+        ExpiresByType text/html                      "access plus 0 seconds"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Where needed add `immutable` value to the `Cache-Control` header
+
+    <IfModule mod_headers.c>
+
+        # Because `mod_headers` cannot match based on the content-type,
+        # the following workaround needs to be done.
+
+        # 1) Add the `immutable` value to the `Cache-Control` header
+        #    to all resources.
+
+        Header merge Cache-Control immutable
+
+        # 2) Remove the value for all resources that shouldn't be have it.
+
+        <FilesMatch "\\.(appcache|cur|geojson|ico|json(ld)?|x?html?|topojson|xml)$">
+            Header edit Cache-Control immutable ""
+        </FilesMatch>
+
+    </IfModule>
+
+</IfModule>
+```

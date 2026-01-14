@@ -1,0 +1,34 @@
+---
+title: Configuring Services
+sidebar:
+  order: 7
+---
+🚜
+
+
+mail, db, oauth, etc
+
+
+add notes to service config
+- r2 buckets
+- mailgun domains
+- cf domain setup (outside the scope of this, but i do it on every site, helpful)
+  - basic records (just the root @ i guess)
+  - mailgun dns
+  - dnssec
+
+
+
+
+
+
+?? docs need guide to setting up r2 buckets?
+- set up w/ custom domain
+- generate the api tokens (on the r2 buckets page)
+- save w/ .env
+
+S3_KEY="xxxxxxxxxxxxxxxx
+S3_SECRET="xxxxxxxxxxxxxxxx"
+S3_BUCKET="xxxx"
+S3_ENDPOINT="https://xxxxxxxxxxxxxx.r2.cloudflarestorage.com"
+S3_DOMAIN="https://media.xxxx.com"

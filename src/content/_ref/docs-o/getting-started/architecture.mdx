@@ -1,0 +1,62 @@
+---
+title: Architecture
+sidebar:
+  order: 5
+---
+🚜
+
+
+
+
+
+## Project Structure
+
+```
+src/
+├── components/        # Reusable UI components
+│   ├── admin/         # Admin components
+│   ├── forms/         # Form-related components
+│   └── ui/            # General UI components
+├── config/            # Application configuration
+├── email-templates/   # Email templates
+├── layouts/           # Page layouts
+├── lib/               # Shared utilities and helpers
+├── middleware/        # Request middleware
+├── pages/             # Application routes & templates
+├── styles/            # Tailwind & FlyonUI integration, base component styles
+```
+
+
+
+
+
+
+sorry about all the files, btw
+	that's file-based routing, babee
+	that's just he way it is, grow up
+
+
+
+
+
+diagrams, core concepts, etc
+honestly just the filetree thing would be fine for now
+
+Dw making architectural decisions that minimize technical debt (and encouraging you to do the same)
+
+
+middleware
+app config
+schema
+migrations
+
+auth + rbac
+crud helper
+
+
+---
+
+
+
+idea is to have modular interconnected full-stack components, extendable, built on a reasonable spec.
+

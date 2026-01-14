@@ -1,0 +1,197 @@
+---
+title: Why?
+sidebar:
+  order: 4
+---
+🚜
+
+
+## Why does this exist?
+
+
+I've been around a long time, and I've tried SO many Frameworks and CMS's over there years...and they ALL felt cumbersome and unwieldy.
+
+The last thing I wanted to do was build a framework, and I've given up on this ideas THOUSANDS of times over the years, but I keep coming back to it because nothing quite scratches my itch.
+
+Web development doesn't need to be so hard! Sure there's some level of complexity involved, but it doesn't need to be nearly difficult and complex as people make it. 
+
+The *majority* of development problems are already solved, and a clean system that combines (the basic funcitonality) will take care of 80% of the problems, letting you spend your energy on the things that matter most.
+
+
+
+The real value of DW (and any framework) is that all the big decisions are made for you, and you don't have to spend time deciding which tech to use. I've thought long and hard about these solutions (and gone through the pain of integrating them together) and settled on good pragmatic decisions made with a few key principles in mind:
+- keep architecture as simple as possible
+- keep the workflow simple too
+- make boring decisions (avoid being overly clever)
+
+
+
+
+fw written by (and for) someone who writes apps ... i'm not "a framework developer" (although i do plenty of thinking along these lines), at the end of the day, i'm an application developer and i care about solving the problems people pay me to solve
+	Tried a lot of shit I hated, know what works best for me, know the kind of workflow I want)
+
+
+
+
+
+
+### Focus on development speed, build something reliable
+- don't want to get lost in the weeds solving problems i don't need/want to solve
+  - don't want to fuck with infra or security AT ALL
+- want "table stakes" functionality that i don't have to "invent"
+  - 2fa, image uploads, job queues, email service, etc
+- focus on building complex features fast & shipping, building the "normal" kinds of apps everyone expects these days
+
+
+
+
+
+
+## Why would I use it?
+
+If you've bemoaned the amount of time and effort it's taken to set up and configure auth, this is for you. If you've thrown objects across the room in frustration while trying to get photo uploads to work (with cropping), this is for you. If a client has asked you to build a bespoke back office system that does...literally anything...this is for you.
+
+This is especially for you if you want to build something that's well-though-out and reliable WITHOUT having to think about it!!!
+
+
+dw components / auth/ boilerplate - you don't want to write this stuff yourself, but you don't want to use just anyone's stuff. you want something that is carefully constructed and thought-out. the problem i've run into over the years is that i DONT want to build all (really any) of this stuff, but the experience of trying to use someone else's stuff is maddening...and there's no guarantee that it's actually good. (ex, a lot of people make components, some of them are nice, a lot of them are shitty) (other people make something as a proof of concept or engagement bait and move on to their next project when they get bored with their partially-baked solutions). i want to use something that i didn't write, but i want it to be made by someone who's smarter than me, understands the problem, and has dedicated a lot of time and thought to solving the problem.
+i'm not saying that i'm necessarily smarter than you, but i am reasonably intelligent and i've thought long and hard about these problems. i'm offering my solutions as a benefit, saving you from going down the various rabbit holes while still providing a nice (reliable, polished, efficient, rugged) product
+
+(follow-up question) why not just use "____"? (radix/shad, react, postgres, drizzle, blah blah) ... i don't like them. you're welcome to use anything, of course, but if this is your line of thinking, this is not going to be a good fit for you. fortunately there are like a million other options, and you can always put your own solution together. you can just do things!
+
+
+
+
+
+
+## Why did you choose this technology?
+
+Why have we made the decisions we've made? Why choose these specific tools & libraries?
+
+I'm so glad you asked:
+
+
+
+
+
+
+
+### Why Astro?
+
+why astro?
+it's fucking easy
+- you want react components? You got it!
+  - vue? svelte?
+  - use anything you want!
+- easy dev workflow, easy (enough) deployment story
+
+
+Why Astro?
+CRUD apps with Astro? Don’t mind if I do!
+Clean organization & workflow, easy to understand , easy enough to make it what you need to be  
+Omg these components!  
+  Astro components are great, super easy  
+  Use anything else too! It works with everything! IT WORKS WITH EVERYTHING!!!!!
+it's a little heavier than it used to be (php put the files on your server & run the install script) (lot more files now) ... but it's worth it! this functionality can be pretty complex and this is the best way (imo) to manage it
+
+here's a more specific breakdown - https://strapi.io/blog/building-faster-content-driven-sites-with-astro
+same vibes here - https://developeraryan.in/blogs/astro-for-react-devs/
+
+
+
+astro / dw advantages (over laravel, rails)
+- jsx components!
+- plug & play w/ any framework components (can use react, vue, svelte)
+- easier deployment w/ modern platforms (and relatively easy vps setup, depending on your vps)
+- normal file based routing and (relatively) sane app org
+- tailwind integrated
+
+
+
+
+
+
+
+
+### Why Node?
+Why node? It’s everywhere! (So many people have built integrations w services, easy pkg integration)
+Why node
+More secure on a vps (than php apps for sure)
+it's easy to set up on your local env, everyone has it anyway
+also, re: node, we're specifically using npm (cli) because it's the "normal" way to do this. fuck using pnpm or yarn or whatever else.
+
+
+
+
+### Why TypeScript?
+
+First, I want to be clear that I don't like TypeScript. If TS has 1 hater it's me. If TS has 0 haters, I'm dead.
+
+why js/ts/node?
+- ecosystem is HUGE, tons of people building stuff i can use for free
+- it's easier than it used to be (not ideal, but it works pretty well these days)
+- fast enough processing, reliable architecture etc
+- easy(-ish) turn-key functionality
+
+for like 10 years DW was written with php and it was great. i hate typescript and swore i would NEVER use it, but here i am, using typescript for new apps...and loving it!
+
+this toolkit was previously built on php (focusing on ease of deployment & dev workflow, but now node is really easy, MUCH easier to deploy w/ modern platforms, and older platforms [vps w/ hetzner, kh, do, linode, etc] is easy enough to set up too...modify for your needs)
+
+
+
+TS is GREAT for AI
+- you can write apps with this stack SO FREAKING FAST with claude & cursor 
+
+
+"Hey bro, you tryna fuckin do drugs and fuckin write code? Like, welcome, it's JavaScript baby!"
+- Daniel colborne, nptm "back and better than ever"
+
+
+
+IDEs LOVE typescript, you got type definitions, click following function references (idk what they're called) (not ts-specific, but ts works great in this context)
+
+
+
+
+
+### Why Shadcn?
+
+- we gave up and embraced react (specifically so we could use shadcn)
+- "It's also a great example of why the React ecosystem is still so hard to beat. While tools like this eventually get ported to other frameworks, the React version is almost always the most well-designed, well-thought out version of any given tool" - [https://www.linkedin.com/posts/madsbrodt_the-goat-shadcn-has-been-cooking-again-activity-7406222865659764736-Fmuy/?utm_source=share&utm_medium=member_ios&rcm=ACoAAAECkawBllNcgCqUMY4Bnnr5M6iFnq1e9JI](https://www.linkedin.com/posts/madsbrodt_the-goat-shadcn-has-been-cooking-again-activity-7406222865659764736-Fmuy/?utm_source=share&utm_medium=member_ios&rcm=ACoAAAECkawBllNcgCqUMY4Bnnr5M6iFnq1e9JI "smartCard-inline")
+  - i want a LARGE ecosystem of turn-key components that i can just install in a given app and not worry about
+- maintaining your own component library is a form of torture and i want to avoid that at all costs. want to rely on the people who are doing this as their main focus and solving the hard problems with the “best in class” / “industry standard” solutions
+  - definitely don’t want to build my own lib that competes with any of the really good ones
+  - don’t want to use ones that feel janky over time
+  - want something that feels polished and complete with no effort on my part
+
+
+
+
+
+
+### Why the Curated tools bundle?
+
+There's so much stuff out there! Some of it's really good, a lot of it's really...not good.
+
+Dw carefully chosen (/vetted /curated) dependencies (/tools/solutions)
+Dw tried to make the most "normal" decisions (re: tooling solutions) (Astro tw daisy etc)
+Straightforward and obvious choices 
+  Not too clever or devious (nonstandard)
+
+do what you can (try to do everything) with the provided libs (alpine, tailwind, etc)
+
+carefully curated collection of libraries / packages and dev tools
+  Designed to provide facilitate productive and enjoyable workflow while building a strong reliable performant application, and having fun along the way!
+  Helps you build fast too! Easy to change adapt as business /client needs change
+
+Dw curation - most development problems are already solved
+We've wired together all the "best" ones (made some pretty good decisions about what to use and how to use it)
+Dw curation ethos
+Try to make the most normal and obvious decions (tailwind mysql etc)
+Straightforward and unsurprising, simple and clear, straightforward and understandable, smart but not overly clever)
+Professional grade 
+
+
+
+
+
