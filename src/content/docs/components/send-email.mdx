@@ -1,131 +1,80 @@
 ---
-title: sendEmail
+title: SendEmail
 ---
-🚜
 
+Backend TypeScript function for sending emails via SMTP.
 
-
-this is a backend typescript component/function
-
-
-send demo email w/ dw (to verify SMTP settings)
-
+## Basic Usage
 
 ```typescript
-
 import { sendEmail } from "@/lib/dw-email";
 
 const result = await sendEmail({
-  to: "jonathan.youngblood@gmail.com",
-  from: `Jonathan Youngblood (via ${import.meta.env.SITE_TITLE} contact form) <${import.meta.env.SMTP_USER}>`,
-  replyTo: "jonathan.youngblood@gmail.com",
-  subject: `[LWOA] Test`,
+  to: "user@example.com",
+  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
+  subject: "Welcome",
   message: {
-    template: "@/email-templates/demo",
+    template: "@/email-templates/welcome",
     data: {
-      name: "Jonathan Youngblood",
-      email: "jonathan.youngblood@gmail.com",
-      subject: "Test",
-      message: "Test",
+      name: "User",
       siteName: import.meta.env.SITE_TITLE,
     },
   },
 });
-
 ```
 
+## Text Only
 
-
-
----
-
-
-
-
-# EMAIL
-NORMAL TSX VERSION
-```typescript
-
-import { sendEmail } from "@/lib/dw-email";
-
-const result = await sendEmail({
-  to: 'jonathan.youngblood@gmail.com',
-  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
-  subject: 'DEMO EMAIL',
-  message: {
-    template: '@/email-templates/demo', // ideal path, .tsx optional
-    // template: '@/email-templates/demo.tsx',
-    // template: 'src/email-templates/demo.tsx',
-    // template: './src/email-templates/demo.tsx',
-    // template: '../../src/email-templates/demo.tsx',
-    data: {
-      name: 'JY',
-      surname: 'HX',
-      email: 'jy@hxgf.io',
-      tel: '1234567890'
-    }
-  },
-});
-
-return new Response(JSON.stringify(result), {
-  status: result.success ? 200 : 500,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
-```
-
-
-TEXT ONLY
 ```typescript
 const result = await sendEmail({
-  to: 'jonathan.youngblood@gmail.com',
+  to: "user@example.com",
   from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
-  subject: 'DEMO EMAIL',
+  subject: "Notification",
   message: {
-    text: `nice shot (should be the only text) - from your friends at ${import.meta.env.SITE_TITLE}`,
+    text: "Plain text message content",
   },
 });
 ```
 
+## HTML Only
 
-html only (no template)
 ```typescript
 const result = await sendEmail({
-  to: 'jonathan.youngblood@gmail.com',
+  to: "user@example.com",
   from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
-  subject: 'DEMO EMAIL',
+  subject: "Notification",
   message: {
-    html: `<p>nice shot (should be the <b>only</b> text)</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
-    text: `SEPARATE TEXT FALLBACK - nice shot (should be the only text) from your friends at ${import.meta.env.SITE_TITLE}`,
+    html: "<p>HTML message content</p>",
+    text: "Fallback plain text",
   },
 });
 ```
 
+## Multiple Recipients
 
-multiple recipients
 ```typescript
 const result = await sendEmail({
-  to: ['jonathan.youngblood@gmail.com', 'icarus@dvst.cc', 'jy@hxgf.io'],
+  to: ["user1@example.com", "user2@example.com"],
+  cc: ["cc@example.com"],
+  bcc: "bcc@example.com",
+  replyTo: "reply@example.com",
   from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
-  subject: 'DEMO EMAIL',
+  subject: "Team Update",
   message: {
-    html: `<p>nice shot (should be the <b>only</b> text)</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
+    template: "@/email-templates/update",
+    data: { /* ... */ },
   },
 });
 ```
 
-cc & bcc & replyto
-```typescript
-const result = await sendEmail({
-  to: 'jonathan.youngblood@gmail.com',
-  cc: ['icarus@dvst.cc', 'jy@hxgf.io'],
-  bcc: 'jonathan@oceandev.com',
-  from: `${import.meta.env.SITE_TITLE} <${import.meta.env.SMTP_USER}>`,
-  replyTo: 'jy@hxgf.io',
-  subject: 'DIFFERENT ANOTHER DEMO EMAIL - demo CC & BCC & replyto',
-  message: {
-    html: `<h1>👯‍♂️ HEY MAN 🤗</h1><p>nice shot</p> <p>from your friends at ${import.meta.env.SITE_TITLE}</p>`,
-  },
-});
-```
+## Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `to` | string \| array | Recipient email(s) |
+| `from` | string | Sender address |
+| `subject` | string | Email subject |
+| `message` | object | Message content |
+| `cc` | string \| array | CC recipients |
+| `bcc` | string \| array | BCC recipients |
+| `replyTo` | string | Reply-to address |

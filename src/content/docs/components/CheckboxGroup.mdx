@@ -1,6 +1,28 @@
 ---
 title: CheckboxGroup
 ---
-🚜
 
-ui/form component
+Multiple checkbox selection component.
+
+## Usage
+
+```astro
+<CheckboxGroup
+  label="Interests"
+  name="interests"
+  options={[
+    { value: "tech", label: "Technology" },
+    { value: "design", label: "Design" },
+    { value: "music", label: "Music" },
+  ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Group label text |
+| `name` | string | Input name attribute |
+| `options` | array | Array of `{ value, label }` objects |
+| `value` | array | Array of selected values |

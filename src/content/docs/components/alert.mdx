@@ -1,145 +1,81 @@
 ---
 title: Alert / Dialog
 ---
-🚜
 
-ui/script component
+JavaScript alert and dialog system.
 
+## Setup
 
-this is a js component, call it with js
+Import the alert script in your page:
 
-
-```typescript
+```astro
 <script>
-    import "@/components/ui/scripts/alert.js";
+  import "@/components/ui/scripts/alert.js";
 </script>
 ```
 
-```astro
-<button type="button" class="btn" onclick="errordialog()">dialog demo</button>
+## Basic Alert
 
-<script is:inline>
-  function errordialog() {
-    window.showAlert({
+```javascript
+window.showAlert({
+  type: "success",
+  variant: "soft",
+  title: "Success",
+  text: "Operation completed successfully!",
+  icon: true,
+  duration: 3000,
+});
+```
+
+## Confirmation Dialog
+
+```javascript
+window.showAlert({
+  type: "warning",
+  variant: "soft",
+  title: "Are you sure?",
+  text: "This action cannot be undone.",
+  icon: true,
+  buttons: [
+    {
+      text: "Cancel",
+      variant: "outline",
+      size: "sm",
       type: "warning",
-      variant: "soft",
-      title: "Are you sure you want to remove this photo?",
-      text: false,
-      icon: true,
-      buttons: [
-        {
-          text: "No",
-          variant: "outline",
-          size: "sm",
-          type: "warning",
-        },
-        {
-          type: "warning",
-          text: "Yes",
-          variant: "solid",
-          size: "sm",
-          onClick: () => {
-            // continue with action
-          },
-        },
-      ],
-    });
-  }
-</script>
-
+    },
+    {
+      text: "Confirm",
+      variant: "solid",
+      size: "sm",
+      type: "warning",
+      onClick: () => {
+        // Handle confirmation
+      },
+    },
+  ],
+});
 ```
 
-ERROR ALERT
-```astro
-<button type="button" class="btn" onclick="erroralert()">error alert</button>
+## Options
 
-<script is:inline>
-  function erroralert() {
-    if (window.showAlert) {
-      window.showAlert({
-        type: "error",
-        variant: "soft",
-        title: "Error title",
-        text: "Error text goes here",
-        icon: true,
-        buttons: [
-          {
-            type: "error",
-            text: "OK",
-            variant: "solid",
-          },
-        ],
-      });
-    } else {
-      console.error("Alert system not initialized");
-    }
-  }
-</script>
-```
+| Option | Type | Description |
+|--------|------|-------------|
+| `type` | string | Alert type (success, error, warning, info) |
+| `variant` | string | Style variant (soft, solid) |
+| `title` | string | Alert title |
+| `text` | string | Alert message |
+| `icon` | boolean | Show type icon |
+| `duration` | number | Auto-dismiss in milliseconds |
+| `position` | object | `{ vertical, horizontal }` |
+| `buttons` | array | Button configurations |
 
+## Button Options
 
-
-FULL-ISH DIALOG DEMO
-```astro
-
-<button type="button" class="btn" onclick="testalert()">test alert (full-ish demo)</button>
-
-<script is:inline>
-  function testalert() {
-    if (window.showAlert) {
-      // Top-left info alert
-      window.showAlert({
-        type: "info",
-        variant: "soft",
-        title: "Processing",
-        text: "Starting the operation...",
-        icon: true,
-        duration: 3000,
-        position: { vertical: "top", horizontal: "left" },
-      });
-
-      // Center warning alert after 1 second
-      setTimeout(() => {
-        window.showAlert({
-          type: "warning",
-          variant: "soft",
-          title: "Attention",
-          text: "This operation requires confirmation",
-          icon: true,
-          // position: { vertical: 'middle', horizontal: 'center' },
-          position: { vertical: "top", horizontal: "left" },
-          buttons: [
-            {
-              text: "Cancel",
-              variant: "soft",
-              icon: "icon-[tabler--x]",
-              size: "sm",
-              type: "warning",
-            },
-            {
-              text: "Proceed",
-              variant: "solid",
-              icon: "icon-[tabler--check]",
-              size: "sm",
-              onClick: () => {
-                // Bottom-right success alert
-                window.showAlert({
-                  type: "success",
-                  variant: "soft",
-                  title: "Success",
-                  text: "Operation completed successfully!",
-                  icon: true,
-                  duration: 3000,
-                  position: { vertical: "bottom", horizontal: "right" },
-                });
-              },
-            },
-          ],
-        });
-      }, 1000);
-    } else {
-      console.error("Alert system not initialized");
-    }
-  }
-</script>
-```
+| Option | Type | Description |
+|--------|------|-------------|
+| `text` | string | Button text |
+| `variant` | string | Style (solid, outline, soft) |
+| `size` | string | Size (sm, md, lg) |
+| `type` | string | Color type |
+| `icon` | string | Icon class |
+| `onClick` | function | Click handler |

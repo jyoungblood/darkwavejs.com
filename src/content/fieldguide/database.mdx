@@ -1,0 +1,46 @@
+---
+title: Database
+---
+
+Database configuration and conventions for DW projects.
+
+## Recommended Settings
+
+- **Charset**: `utf8mb4`
+- **Collation**: `utf8mb4_general_ci`
+- **Engine**: InnoDB (recommended)
+
+These settings support emoji and international characters.
+
+## Standard Fields
+
+Include these fields on most tables:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `uuid` | varchar(36) | Primary identifier |
+| `created_at` | datetime | Creation timestamp |
+| `updated_at` | datetime | Last modification |
+| `deleted_at` | datetime | Soft delete timestamp |
+
+## Common Patterns
+
+### Photo Fields
+
+```sql
+photo_url VARCHAR(255),
+photo_url_parameters TEXT
+```
+
+### Content Fields
+
+```sql
+title VARCHAR(255),
+slug VARCHAR(255) UNIQUE,
+content TEXT,
+status ENUM('draft', 'published')
+```
+
+## Design Philosophy
+
+Include fields you know you'll need eventually. Soft deletes (`deleted_at`) are the default pattern - never hard delete data.

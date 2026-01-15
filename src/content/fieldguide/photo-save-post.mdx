@@ -1,0 +1,78 @@
+---
+title: Photo Upload on Save
+---
+
+Alternative pattern for handling photo uploads after form submission instead of real-time.
+
+## When to Use
+
+This approach processes photos after the record is saved, rather than uploading during form interaction. Useful when you want to:
+
+- Batch process uploads with the save operation
+- Handle file replacement/deletion atomically
+- Integrate with existing CRUD handlers
+
+## Implementation
+
+```typescript
+import { dwStorage } from '@/lib/dw/storage';
+
+interface PhotoData {
+  [key: string]: string | null;
+}
+
+/**
+ * Handles deletion of old photo files when replaced or removed
+ */
+async function handlePhotoUpdates(
+  currentData: PhotoData,
+  newData: PhotoData,
+  photoFields: string[]
+): Promise<string[]> {
+  const deletionErrors: string[] = [];
+
+  for (const field of photoFields) {
+    const currentUrl = currentData[field];
+    const newUrl = newData[field];
+
+    // Delete old file if URL changed
+    if (currentUrl && currentUrl !== newUrl) {
+      const deleteSuccess = await dwStorage.deleteFile(currentUrl);
+      if (!deleteSuccess) {
+        deletionErrors.push(`Failed to delete old photo for ${field}`);
+      }
+    }
+  }
+
+  return deletionErrors;
+}
+```
+
+## Usage with CRUD Handler
+
+```typescript
+// In your save handler
+if (options.photoFields?.length) {
+  const photoData: PhotoData = {};
+  options.photoFields.forEach(field => {
+    photoData[field] = formData.get(field)?.toString() || null;
+  });
+
+  if (uuid) {
+    // Fetch current record to compare photos
+    const currentRecord = await db
+      .selectFrom(options.table)
+      .select(options.photoFields)
+      .where('uuid', '=', uuid)
+      .executeTakeFirst();
+
+    if (currentRecord) {
+      await handlePhotoUpdates(currentRecord, photoData, options.photoFields);
+    }
+  }
+
+  Object.assign(options.recordData, photoData);
+}
+```
+
+For real-time uploads during form interaction, use the file upload components with `directUpload={true}` instead.

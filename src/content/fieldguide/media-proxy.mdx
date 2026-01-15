@@ -1,0 +1,25 @@
+---
+title: Media Proxy
+---
+
+The media proxy includes SSRF protection. Configure allowed domains in your environment.
+
+## Domain Allowlist
+
+Add trusted domains to prevent server-side request forgery:
+
+```bash
+# R2/S3 storage
+S3_DOMAIN="https://media.yourdomain.com"
+
+# Cloudflare R2
+CLOUDFLARE_DOMAIN="https://your-bucket.r2.cloudflarestorage.com"
+
+# Bunny CDN
+BUNNY_STORAGE_URL="https://ny.storage.bunnycdn.com/your-bucket"
+
+# imgix
+IMGIX_DOMAIN="https://your-company.imgix.net"
+```
+
+Only domains in the allowlist can be proxied through the media endpoint.

@@ -1,0 +1,73 @@
+---
+const title = "Project";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Darkwave</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="/styles/styles-v0.css" rel="stylesheet" />
+    <script src="https://beamanalytics.b-cdn.net/beam.min.js" data-token="4345c349-059a-42dd-8483-67b7c0730da6" defer></script>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 min-h-screen">
+    <div class="max-w-3xl mx-auto px-6 py-16">
+      <a href="/" class="block mb-12">
+        <img src="/src/assets/dw-triangles-white.svg" alt="Darkwave" class="h-8" />
+      </a>
+
+      <article class="prose prose-invert prose-zinc max-w-none">
+        <h1>Project</h1>
+
+        <section id="roadmap" class="mb-12">
+          <h2>Roadmap</h2>
+          <p>
+            Check the <a href="https://trello.com/b/pWMOuOe4/dwjs">Trello board</a> for current development progress.
+          </p>
+          <ul>
+            <li><strong>0.7.5</strong> - Streamlined existing functionality, everything working and debugged</li>
+            <li><strong>0.8</strong> - GA release with separate npm packages for DW libraries/utilities</li>
+          </ul>
+        </section>
+
+        <section id="history" class="mb-12">
+          <h2>History</h2>
+          <p>
+            See the <a href="https://github.com/jyoungblood/darkwave/releases">changelog</a> for release history.
+          </p>
+          <p>
+            <a href="https://github.com/jyoungblood/darkwave/tree/slime">DW Classic</a> - The legacy PHP-based version.
+          </p>
+          <p class="text-zinc-400 text-sm">
+            Darkwave has been in development for over a decade, quietly evolving in the background.
+          </p>
+        </section>
+
+        <section id="contributing" class="mb-12">
+          <h2>Contributing</h2>
+          <p>
+            Not accepting contributions at this time. When the project opens up to contributors, the main guideline will be: don't be a dick.
+          </p>
+        </section>
+
+        <section id="colofon" class="mb-12">
+          <h2>Colofon</h2>
+          <p>Thanks to the projects that make this possible:</p>
+          <ul>
+            <li><a href="https://starlight.astro.build/">Starlight</a> - Documentation framework</li>
+            <li><a href="https://fontsource.org/fonts/inter">Inter</a> - Typeface</li>
+            <li><a href="https://catppuccin.com/">Catppuccin</a> - Code themes</li>
+          </ul>
+        </section>
+
+        <div class="mt-16 pt-8 border-t border-zinc-800">
+          <a href="/docs/" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+            Back to Docs
+          </a>
+        </div>
+      </article>
+    </div>
+  </body>
+</html>

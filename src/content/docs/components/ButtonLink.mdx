@@ -1,6 +1,24 @@
 ---
 title: ButtonLink
 ---
-🚜
 
-ui component
+Styled anchor link component.
+
+## Usage
+
+```astro
+<ButtonLink
+  href="/dashboard"
+  text="Go to Dashboard"
+  variant="primary"
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `href` | string | Link destination |
+| `text` | string | Link text |
+| `variant` | string | Style variant (primary, secondary, outline) |
+| `target` | string | Link target (_blank, etc.) |

@@ -1,6 +1,27 @@
 ---
 title: ButtonDelete
 ---
-🚜
 
-ui/form component
+Delete button with confirmation dialog.
+
+## Usage
+
+```astro
+<ButtonDelete
+  text="Delete"
+  confirmTitle="Are you sure?"
+  confirmText="This action cannot be undone."
+  endpoint="/api/delete"
+  redirectUrl="/items"
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `text` | string | Button text |
+| `confirmTitle` | string | Confirmation dialog title |
+| `confirmText` | string | Confirmation dialog message |
+| `endpoint` | string | API endpoint for deletion |
+| `redirectUrl` | string | URL to redirect after deletion |

@@ -1,40 +1,45 @@
 ---
 title: Photo Uploader
 ---
-🚜
 
+Photo uploads made easy. Works with cloud image providers (Cloudflare R2, Bunny.net) or local storage.
 
-"photo uploads used to be hard ... now they're not"
+## Database Fields
 
+Add these fields to your table for photo uploads:
+- `photo_url` - Image URL
+- `photo_url_parameters` - Processing parameters
 
+## Single Photo Upload
 
-dw designed to work with cloud image providers (also works locally w/ image service fallback, but prefer bunny or cf images for various reasons ... this biggest of which is that you don't have to worry about building enterprise-grade solutions, but get the value of using them)
-
-
-
-add photo/gallery uploads to any table, just add these fields, then add them to your form
-- photo\_url, photo\_url_parameters
-- ?? (i forget what for gallery…maybe nothing)
-
-
-
-#### PHOTO UPLOAD - SINGLE
-
-```
+```astro
 <PhotoUploadSingle
-  related_id={link?.uuid}
-  related_table="links"            
-  related_column="alt_photo_url"
-  url={link?.alt_photo_url}
-  url_parameters={link?.alt_photo_url_parameters}
-  upload_path="/links/alt"
+  related_id={item?.uuid}
+  related_table="items"
+  related_column="photo_url"
+  url={item?.photo_url}
+  url_parameters={item?.photo_url_parameters}
+  upload_path="/items"
   file_limit_size={1}
   file_formats="image/jpeg"
-  dz_icon="tabler--cloud-upload"
 />
 ```
 
+## Props
 
+| Prop | Type | Description |
+|------|------|-------------|
+| `related_id` | string | ID of the parent record |
+| `related_table` | string | Database table name |
+| `related_column` | string | Column prefix for URL fields |
+| `url` | string | Existing image URL |
+| `url_parameters` | string | Existing parameters |
+| `upload_path` | string | Storage path prefix |
+| `file_limit_size` | number | Max file size in MB |
+| `file_formats` | string | Allowed MIME types |
+| `dz_icon` | string | Dropzone icon class |
 
-[ ] example of multiple uploader
-[ ] ref for all the potential prop values
+## See Also
+
+- [PhotoUploadSingle](/components/photouploadsingle/) - Single image component
+- [PhotoUploadGallery](/components/photouploadgallery/) - Multiple images component

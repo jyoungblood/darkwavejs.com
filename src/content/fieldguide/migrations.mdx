@@ -1,0 +1,68 @@
+---
+title: Migrations
+---
+
+Database migrations using Kysely.
+
+**Note:** Migrations are optional. You can use Kysely for database operations without migrations. The schema file is also optional but recommended for LLM-assisted development and team collaboration.
+
+## Commands
+
+```bash
+# Create a new migration
+npx kysely migrate:make my_migration_name
+
+# Run all pending migrations
+npm run migrate
+```
+
+## Migration Example
+
+```typescript
+import { Kysely, sql, ColumnDefinitionBuilder } from 'kysely';
+
+export async function up(db: Kysely<any>): Promise<void> {
+  await db.schema
+    .createTable('posts')
+    .addColumn('id', 'integer', (col: ColumnDefinitionBuilder) =>
+      col.primaryKey().autoIncrement())
+    .addColumn('uuid', 'varchar(255)', (col: ColumnDefinitionBuilder) =>
+      col.notNull())
+    .addColumn('created_at', 'timestamp', (col: ColumnDefinitionBuilder) =>
+      col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))
+    .addColumn('user_id', 'varchar(255)', (col: ColumnDefinitionBuilder) =>
+      col.references('user.id').onDelete('set null'))
+    .addColumn('title', 'varchar(255)')
+    .addColumn('content', 'text')
+    .addColumn('deleted_at', 'timestamp')
+    .addColumn('updated_at', 'timestamp')
+    .execute();
+}
+
+export async function down(db: Kysely<any>): Promise<void> {
+  await db.schema.dropTable('posts').ifExists().execute();
+}
+```
+
+## Adding a Column
+
+```typescript
+export async function up(db: Kysely<any>): Promise<void> {
+  await db.schema
+    .alterTable('posts')
+    .addColumn('status', 'varchar(255)')
+    .execute();
+}
+```
+
+## Workflow
+
+1. Create migration: `npx kysely migrate:make add_status_to_posts`
+2. Edit the migration file in `./migrations/`
+3. Run migration: `npm run migrate`
+4. Update schema in `./src/config/schema.ts`
+
+## Resources
+
+- [Kysely Migration Docs](https://kysely.dev/docs/migrations)
+- See `./migrations/` for examples

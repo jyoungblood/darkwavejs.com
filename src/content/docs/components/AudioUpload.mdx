@@ -1,10 +1,32 @@
 ---
-title: Audio Upload
+title: AudioUpload
 ---
-🚜
 
-docs note - AudioUpload - related_column is a prefix, all the audio metadata fields are required (put them in your db table)
-audio_url
-audio_length
-audio_mime
-audio_duration
+Audio file upload component with metadata extraction.
+
+## Usage
+
+```astro
+<AudioUpload
+  label="Audio File"
+  name="audio"
+  endpoint="/api/upload-audio"
+/>
+```
+
+## Database Fields
+
+The component stores audio metadata using a column prefix. Required fields:
+
+| Field | Description |
+|-------|-------------|
+| `{prefix}_url` | Audio file URL |
+| `{prefix}_length` | File size in bytes |
+| `{prefix}_mime` | MIME type |
+| `{prefix}_duration` | Duration in seconds |
+
+For example, with `name="audio"`, your table needs:
+- `audio_url`
+- `audio_length`
+- `audio_mime`
+- `audio_duration`

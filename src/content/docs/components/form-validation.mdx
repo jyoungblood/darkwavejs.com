@@ -1,13 +1,26 @@
 ---
 title: Form Validation
 ---
-🚜
 
+Form components include built-in validation that runs on submit.
 
+## How It Works
 
-the form components have built in validation that runs when you hit "submit", here's how it works and how to attach specific fields on your forms
+Add the `required` attribute to make fields mandatory. The form won't submit until all required fields are filled.
 
-- required
-- ?? content?
+```astro
+<InputText
+  label="Email"
+  name="email"
+  type="email"
+  required
+/>
+```
 
-(honestly i forget how it works, that's why i'm making the docs)
+## Validation Behavior
+
+1. On submit, all required fields are checked
+2. Invalid fields show error messages
+3. Form only submits when all validations pass
+
+See [Input Validation](/components/input-validation/) for field-level validation rules.

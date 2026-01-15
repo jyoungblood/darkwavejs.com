@@ -1,0 +1,44 @@
+---
+title: CRUD Abstractions
+---
+
+Helper methods for common database operations.
+
+## What's Included
+
+Methods for:
+- Creating records
+- Updating records
+- Soft deletes (setting `deleted_at`)
+
+These helpers check RBAC rules automatically and handle the database operations. They reduce boilerplate code for common patterns.
+
+## Usage
+
+See the routes in `/api/links/` for implementation examples.
+
+```typescript
+import { saveHandler, deleteHandler } from '@/lib/crud';
+
+// Save (create or update)
+const result = await saveHandler({
+  table: 'posts',
+  data: formData,
+  uuid: existingUuid, // omit for new records
+});
+
+// Soft delete
+const deleted = await deleteHandler({
+  table: 'posts',
+  uuid: recordUuid,
+});
+```
+
+## Requirements
+
+- Tables must have a `uuid` column to use `saveHandler`
+- Tables must have a `deleted_at` column for soft deletes
+
+## Customization
+
+These are provided as a convenience. For operations with different constraints, use Kysely directly and reference these helpers as a starting point.

@@ -4,67 +4,61 @@ sidebar:
   order: 1
 ---
 
-🚜
+## Requirements
 
+- Node.js (check [Astro's requirements](https://docs.astro.build/en/install-and-setup/))
+- MySQL 8.0 (locally via DBngin, Herd, MAMP, or similar)
 
-?? need to note requirements?
-- astro reqs (node, npm, npx, nvm) (min versions?)
-- mysql locally (8) (use dbngin, herd, mamp, xamp)
+## Quick Start
 
-
-Clone the repository
+Clone the repository:
 ```bash frame="none"
 npx degit jyoungblood/darkwave my-project
 cd my-project
 ```
 
-Install dependencies
+Install dependencies:
 ```bash frame="none"
 npm install
 ```
 
-Initialize your database and SMTP account, have the credentials ready to add to your new .env file.
+## Configuration
 
+Set up your services before continuing:
+- Create a MySQL database (MySQL 8, utf8mb4 charset)
+- Set up an SMTP account for email
 
-(on your own) 
-- set up a mysql db, have the credentials ready to add to .env
-  - mysql 8, utf8mb4
-- same for SMTP
-
-Configure environment variables (add your database, mail server, etc)
+Configure environment variables:
 ```bash frame="none"
 mv .env.example .env
 ```
 
-Generate [Better-Auth secret](https://www.better-auth.com/docs/installation) (save this to your .env file)
+Generate a [Better-Auth secret](https://www.better-auth.com/docs/installation):
 ```bash frame="none"
 openssl rand -base64 32
 ```
 
-Initialize the database (and optionally create admin user)
+Add the generated secret and your database/SMTP credentials to `.env`.
+
+## Initialize
+
+Run the database initialization:
 ```bash frame="none"
 npm run init
 ```
-?? need to have instructions for what to do in case of script failure? (manually run the BA/kysely init migration scripts)
 
-
-Start development server
+Start the development server:
 ```bash frame="none"
 npm run dev
 ```
 
-(stuff i like)
-- [ ] add deploy.sh
-- [ ] add monitor.sh
+## Maintenance
 
+After installation, you may need to update dependencies:
 
+```bash frame="none"
+npm audit --fix
+npx @astrojs/upgrade
+```
 
----
-
-
-also you might need to do some software updates out of the box (that's just how this shit goes)
-follow instructions if there are any alerts after you do `npm run dev` or `npm run build`
-
-do an `npm audit` too, just for kicks
-
-typically need to run `npm audit --fix`, `npx @astrojs/upgrade`, `npm install kysely@lates`, etc
+Follow any upgrade instructions that appear when running `npm run dev` or `npm run build`.

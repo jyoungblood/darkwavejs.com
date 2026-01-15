@@ -1,0 +1,38 @@
+---
+title: Email Templates
+---
+
+Resources for building transactional and notification emails.
+
+## Template Types
+
+Common email templates you might need:
+
+- **Transactional**: Order confirmations, receipts
+- **Notifications**: Activity updates, alerts
+- **Authentication**: Password reset, email verification
+- **Marketing**: Newsletters, announcements
+
+## Preview Text
+
+Add hidden preview text that appears in email clients:
+
+```html
+<div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+  Preview text goes here
+</div>
+```
+
+See [Litmus's guide on preview text](https://www.litmus.com/blog/the-little-known-preview-text-hack-you-may-want-to-use-in-every-email) for the full technique.
+
+## Email Editors
+
+Visual editors for creating email templates:
+
+- [Mailo](https://mailo.app/) - Quick email design tool
+- [Maily](https://maily.to/) - Open-source email editor
+
+## Resources
+
+- Check `src/emails/` in DW for template examples
+- Test emails with [Litmus](https://litmus.com/) or [Email on Acid](https://www.emailonacid.com/)

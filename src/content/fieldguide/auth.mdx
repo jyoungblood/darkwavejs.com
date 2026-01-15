@@ -1,0 +1,56 @@
+---
+title: Authentication
+---
+
+DW uses [Better-Auth](https://www.better-auth.com/) for authentication and authorization. Middleware, login/registration flows, and RBAC utilities are pre-configured.
+
+## Configuration
+
+Auth roles are defined in `src/config/auth.ts`. Modify this file to add or change roles.
+
+## Adding a New Collection
+
+When adding a new database collection that needs auth:
+
+1. Create the migration
+2. Update the schema in `src/config/schema.ts`
+3. Add auth roles in `src/config/auth.ts`
+4. Configure ownership rules
+
+## RBAC Patterns
+
+### Simple Ownership
+
+User owns their own content directly:
+
+```typescript
+{
+  collection: 'posts',
+  ownership: 'direct',
+  field: 'user_id'
+}
+```
+
+### Complex Ownership
+
+Content owned through relationships (teams, organizations):
+
+```typescript
+{
+  collection: 'team_posts',
+  ownership: 'relationship',
+  // Custom ownership check logic
+}
+```
+
+## OAuth Setup
+
+For social login providers, you'll need to:
+1. Create an app in the provider's developer console
+2. Get client ID and secret
+3. Add credentials to `.env`
+4. Configure the provider in Better-Auth
+
+## 2FA
+
+Two-factor authentication is available via Better-Auth. Requires additional forms and flows - see the Better-Auth documentation.

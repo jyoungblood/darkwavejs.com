@@ -1,13 +1,42 @@
 ---
 title: PhotoUploadGallery
 ---
-🚜
 
-ui/form component
+Multiple image upload component with drag-and-drop reordering.
 
-[] show all the props and example implementation
-?? maybe a screenshot of what it's supposed to look like? (i don't think we can have demos)
+## Usage
 
-new props:
-- `compression={{ format: 'webp', size: 2048, quality: 85 }}`
-  - intended for s3/r2 uploads (not sure about the rest)
+```astro
+<PhotoUploadGallery
+  label="Gallery"
+  name="photos"
+  endpoint="/api/upload"
+  maxFiles={10}
+/>
+```
+
+## With Compression
+
+```astro
+<PhotoUploadGallery
+  label="Gallery"
+  name="photos"
+  endpoint="/api/upload"
+  compression={{
+    format: 'webp',
+    size: 2048,
+    quality: 85
+  }}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Upload label text |
+| `name` | string | Field name for form data |
+| `endpoint` | string | Upload API endpoint |
+| `maxFiles` | number | Maximum number of files |
+| `value` | array | Existing image URLs |
+| `compression` | object | Compression settings |

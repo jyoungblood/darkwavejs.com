@@ -3,12 +3,28 @@ title: CLI
 sidebar:
   order: 2
 ---
-🚜
 
+DW includes several npm scripts for common tasks.
 
-sure, we've got a CLI, why not?
+## Available Commands
 
+```bash
+# Development
+npm run dev          # Start development server
 
-- note custom package.json commands
-  - npm run migrate
-  - npm run init
+# Build
+npm run build        # Build for production
+
+# Database
+npm run init         # Initialize database (first time setup)
+npm run migrate      # Run database migrations
+```
+
+## Astro Commands
+
+All standard Astro CLI commands are available:
+
+```bash
+npx astro check      # Type-check your project
+npx astro preview    # Preview production build locally
+```

@@ -1,0 +1,39 @@
+---
+title: CORS for R2/S3 Buckets
+---
+
+CORS configuration for direct uploads to cloud storage.
+
+## When You Need This
+
+If you're using the `audioUpload` or other file upload components with `directUpload={true}`, your bucket needs CORS rules configured.
+
+## R2 CORS Configuration
+
+```json
+[
+  {
+    "AllowedOrigins": ["*"],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedHeaders": ["*"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  },
+  {
+    "AllowedOrigins": [
+      "http://localhost:4321",
+      "http://localhost:3000",
+      "https://yourdomain.com",
+      "https://www.yourdomain.com"
+    ],
+    "AllowedMethods": ["PUT", "POST", "DELETE"],
+    "AllowedHeaders": ["*"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+## Before Deploying
+
+Remove localhost origins from the PUT/POST/DELETE rule before going to production. Only keep your actual domains.

@@ -1,14 +1,43 @@
 ---
 title: PhotoUploadSingle
 ---
-🚜
 
-ui/form component
+Single image upload component with optional cropping and compression.
 
+## Usage
 
-[] show all the props and example implementation
-?? maybe a screenshot of what it's supposed to look like? (i don't think we can have demos)
+```astro
+<PhotoUploadSingle
+  label="Profile Photo"
+  name="photo_url"
+  endpoint="/api/upload"
+/>
+```
 
-new props:
-- `compression={{ format: 'webp', size: 2048, quality: 85 }}`
-  - intended for s3/r2 uploads (not sure about the rest)
+## With Compression
+
+```astro
+<PhotoUploadSingle
+  label="Profile Photo"
+  name="photo_url"
+  endpoint="/api/upload"
+  compression={{
+    format: 'webp',
+    size: 2048,
+    quality: 85
+  }}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Upload label text |
+| `name` | string | Field name for form data |
+| `endpoint` | string | Upload API endpoint |
+| `value` | string | Existing image URL |
+| `compression` | object | Compression settings |
+| `compression.format` | string | Output format (webp, jpeg, png) |
+| `compression.size` | number | Max dimension in pixels |
+| `compression.quality` | number | Quality (1-100) |

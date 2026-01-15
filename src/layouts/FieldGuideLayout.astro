@@ -1,0 +1,39 @@
+---
+import FieldGuideNav from '../components/FieldGuideNav.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Field Guide | Darkwave</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="/styles/styles-v0.css" rel="stylesheet" />
+    <script src="https://beamanalytics.b-cdn.net/beam.min.js" data-token="4345c349-059a-42dd-8483-67b7c0730da6" defer></script>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100 min-h-screen">
+    <div class="flex">
+      <aside class="w-64 border-r border-zinc-800 min-h-screen p-6 sticky top-0">
+        <a href="/" class="block mb-8">
+          <img src="/src/assets/dw-triangles-white.svg" alt="Darkwave" class="h-8" />
+        </a>
+        <FieldGuideNav />
+      </aside>
+      <main class="flex-1 p-8 max-w-4xl">
+        <article class="prose prose-invert prose-zinc max-w-none">
+          <h1>{title}</h1>
+          <slot />
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

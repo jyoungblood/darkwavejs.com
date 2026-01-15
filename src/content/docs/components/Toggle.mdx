@@ -1,6 +1,23 @@
 ---
 title: Toggle
 ---
-🚜
 
-ui/form component
+Boolean switch component.
+
+## Usage
+
+```astro
+<Toggle
+  label="Enable notifications"
+  name="notifications"
+  checked={true}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Toggle label text |
+| `name` | string | Input name attribute |
+| `checked` | boolean | Whether toggle is on |

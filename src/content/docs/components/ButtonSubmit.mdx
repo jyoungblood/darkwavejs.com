@@ -1,18 +1,31 @@
 ---
 title: ButtonSubmit
 ---
-🚜
 
-ui/form component
+Form submission button with loading states and success feedback.
 
-```jsx
-          <ButtonSubmit
-            text="Save"
-            workingText="Saving..."
-            showSuccessAlert={false}
-            successButtonText="✓ Changes Saved"
-            successButtonResetDelayMs={3000}
-            form="[data-form]"
-            endpoint="/api/metamorphosis/save"
-          />
+## Usage
+
+```astro
+<ButtonSubmit
+  text="Save"
+  workingText="Saving..."
+  showSuccessAlert={false}
+  successButtonText="Saved"
+  successButtonResetDelayMs={3000}
+  form="[data-form]"
+  endpoint="/api/save"
+/>
 ```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `text` | string | Button text |
+| `workingText` | string | Text shown while submitting |
+| `showSuccessAlert` | boolean | Show success alert |
+| `successButtonText` | string | Text after successful submit |
+| `successButtonResetDelayMs` | number | Delay before resetting button |
+| `form` | string | Form selector |
+| `endpoint` | string | API endpoint for submission |

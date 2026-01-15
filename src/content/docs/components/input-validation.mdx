@@ -1,52 +1,25 @@
 ---
 title: Input Validation
 ---
-🚜
 
+Field-level validation with real-time feedback.
 
+## Basic Validation
 
-
-?? custom validation?
-
-- see equipost: `@/lib/validation/newhorse`
-
-ref - twilio helper in LWOA - `@/lib/twilio`
-
-i forget if this is part of the form or input...but we did it because we had the need for it
-
----
-
-
-#### INPUT VALIDATION - (i think all?)
-see 'validate-input.js' for all potential rules
-```jsx
+```astro
 <InputText
-  label="Registered Name"
-  sublabel="<span class='text-red-500 text-xs font-bold'>* Required</span>"
-  name="name"
-  value={link?.name}
+  label="Email"
+  name="email"
   required
   validation={{
-    types: ["alphanumericWithSpaces"],
-    unique: {
-      collection: "links",
-      field: "name",
-      errorMessage: "This name is already registered",
-      exempt: link
-        ? {
-            uuid: link.uuid,
-          }
-        : undefined,
-    },
-    // success: { message: '✅ Name looks good!' }
-    // success: true
+    types: ["email"],
   }}
 />
 ```
 
+## Multiple Rules
 
-#### INPUT VALIDATION - multiple rules, required + isemail + unique email
-```
+```astro
 <InputText
   label="Email"
   name="email"
@@ -58,14 +31,6 @@ see 'validate-input.js' for all potential rules
         errorMessage: "Please enter a valid email address",
       },
     ],
-    unique: {
-      collection: "user",
-      field: "email",
-      errorMessage: "This email is already registered",
-      // exempt:{
-      //   "id": "J5iDwysuwswSxhOeMgqldXCNXrZRQxBc"
-      // }
-    },
     success: {
       message: "Email looks good!",
     },
@@ -73,102 +38,40 @@ see 'validate-input.js' for all potential rules
 />
 ```
 
+## Unique Validation
 
-#### INPUT VALIDATION - simple validation w/ strings in array
-```
+Check if a value already exists in the database:
+
+```astro
 <InputText
-  label="Email"
-  name="email"
+  label="Username"
+  name="username"
   required
   validation={{
-    types: ["email", "alphanumeric"],
-  }}
-/>
-```
-
-
-#### INPUT VALIDATION - multiple rules/types (not entirely sensical example)
-```
-validation={{
-  rules: [
-    {
-      type: 'email',
-      options: { allow_display_name: true },
-      errorMessage: 'Custom error message'
+    unique: {
+      collection: "users",
+      field: "username",
+      errorMessage: "This username is already taken",
+      exempt: existingUser ? { uuid: existingUser.uuid } : undefined,
     },
-    {
-      type: 'mobilePhone',
-      locale: 'en-US',
-      options: { strictMode: true }
-    }
-  ]
-}}
-```
-
-
-MISC VALIDATION RULES
-```
-// Email with options
-{
-  type: 'email',
-  options: { allow_display_name: true, require_display_name: true },
-  errorMessage: 'Please enter a valid email address'
-}
-
-// Mobile phone with locale and options
-{
-  type: 'mobilePhone',
-  locale: 'en-US',
-  options: { strictMode: true },
-  errorMessage: 'Please enter a valid US phone number'
-}
-
-// Strong password with options
-{
-  type: 'strongPassword',
-  options: {
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1,
-    minNumbers: 1,
-    minSymbols: 1
-  },
-  errorMessage: 'Password must be stronger'
-}
-```
-
-
-PATTERN NAMES
-```
-<InputText
-  label="Username"
-  name="username"
-  validation={{
-    types: ["simpleUsername"],
-  }}
-/>
-
-
-<InputText
-  label="Username"
-  name="username"
-  validation={{
-    rules: [
-      {
-        type: "pattern",
-        pattern: "simpleUsername",
-        errorMessage:
-          "Please enter a valid username (letters, numbers, hyphens, and underscores only)",
-      },
-    ],
   }}
 />
 ```
 
+## Validation Types
 
+Common validation types:
+- `email` - Valid email format
+- `mobilePhone` - Phone number
+- `strongPassword` - Password strength
+- `alphanumeric` - Letters and numbers only
+- `alphanumericWithSpaces` - Letters, numbers, and spaces
+- `simpleUsername` - Letters, numbers, hyphens, underscores
+- `number` - Numeric with optional min/max
 
-NUMBER VALIDATION WITH SUCCESS MESSAGE
-```
+## Number Validation
+
+```astro
 <InputText
   label="Age"
   name="age"
@@ -181,63 +84,43 @@ NUMBER VALIDATION WITH SUCCESS MESSAGE
         errorMessage: "Age must be between 18 and 120",
       },
     ],
-    success: {
-      message: "Age is valid!",
-    },
   }}
 />
 ```
 
+## Password Validation
 
-WITH/WITHOUT SUCCESS/ERROR MESSAGE
-```
-
-<!-- Show success UI with a message -->
+```astro
 <InputText
-  label="Email"
-  name="email"
-  required
+  label="Password"
+  name="password"
+  type="password"
   validation={{
     rules: [
       {
-        type: "email",
-        errorMessage: "Please enter a valid email address",
-      },
-    ],
-    success: { message: "Email looks good!" },
-  }}
-/>
-
-<!-- Show success UI without a message -->
-<InputText
-  label="Age"
-  name="age"
-  validation={{
-    rules: [
-      {
-        type: "number",
-        min: 18,
-        max: 120,
-        errorMessage: "Age must be between 18 and 120",
-      },
-    ],
-    success: true,
-  }}
-/>
-
-<!-- Show success UI with a message -->
-<InputText
-  label="Email"
-  name="email"
-  required
-  validation={{
-    rules: [
-      {
-        type: "email",
-        errorMessage: "Please enter a valid email address",
+        type: "strongPassword",
+        options: {
+          minLength: 8,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        },
+        errorMessage: "Password must be stronger",
       },
     ],
   }}
 />
 ```
 
+## Success Messages
+
+Show feedback when validation passes:
+
+```astro
+<!-- With message -->
+validation={{ success: { message: "Looks good!" } }}
+
+<!-- Without message (just visual indicator) -->
+validation={{ success: true }}
+```

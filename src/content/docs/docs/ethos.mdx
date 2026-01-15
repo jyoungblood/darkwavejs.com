@@ -3,113 +3,35 @@ title: Ethos
 sidebar:
   order: 5
 ---
-🚜
 
+**On a scale of skateboard to aircraft carrier, it's a cargo van.**
 
+DW doesn't solve every problem, but it has really good solutions for the problems it does solve. Think Toyota 4Runner: reliable, dependable, useful, just works, still a delight to use.
 
-**on a scale of skateboard to aircraft carrier, it's a cargo van**
-- it doesn't solve EVERY problem, but it has really good solutions for the problems it does solve.
+## Guiding Principles
 
+- **Pragmatic solutions using boring techniques** - Professional, maintainable solutions without unnecessary complexity
+- **Code that is easy to understand** - Clarity over cleverness
+- **Proven, stable patterns** - Over bleeding-edge features
+- **Long-term maintainability and reliability**
 
+Code should be easy to write and easy to read. Basic and simple, no frills.
 
+## Conventions over Configuration
 
-(document design desicions, guiding principles, etc)
+DW sets standards: we use Kysely, MySQL, Tailwind, shadcn. If you're using DW, you're not using Prisma or Drizzle.
 
+## Design Goals
 
+- Easy to learn (help teams get up to speed quickly)
+- Efficient (enable tasks to be completed as quickly as possible)
+- Consistent (prevent teams from wasting time relearning)
+- Transparent (allow bugs to be diagnosed and solved easily)
+- Resilient (ensure what works today also works next year)
+- Perfectly suited for quick prototyping with reliable results
 
-equivalent of Toyota 4Runner / sequoia
-  Reliable dependable useful thing that just works but is still a delight to use (good style, works real good, no bullshit)
+## What We're Building
 
+A robust system boilerplate that's easy to modify and maintain. Do the predictable obvious thing, nothing too clever. Designed to be flexible enough to fit a variety of use cases and work with a variety of services (hosting providers, CDN, image storage, mailers).
 
-focus on being minimal, small, lightweight, fast (performance), fast (development speed), easy & cheap to deploy
-
-
-
-- code should be easy to write, easy to read (easy to understand what’s happening) … basic and simple, no frills
-
-
-{/* 
-
-Dw ethos - opposite of this galaxy brained shit https://twitter.com/pixperk/status/1972338817458917538?s=46&t=l7wRi4wE6KFhNZJNnPZNmg
-	"a very good thing to move forward from cruds is to start caching and handle cache invalidations very well.
-		- separate all concerns. [repository for db calls, config, service for business logic, router and handler]
-		- writing good middlewares (auth, logger, rate limiters)
-		- metrics with prometheus 
-		- use mqs for asynchronousity
-		- can write some microservices too
-		- grpc"
-	if you want to move on from crud apps, that's the direction to go, sure, but like, (let's say) 80% of developers never will need to do that (and honestly it's probably a lot more). naive teenage view thinking that THOSE are the skills you NEED to pursue
-	in the comments, everyone is like "but everything is crud apps, you're just talking about distributed crud apps"
- */}
-
-
-
-
-focus on creating readable code that's clear at a glance what it does - Accessible for non-expert users Minimal abstraction and magic Even if it's more verbose and not the *best* way to do something Aiming to build something that's pragmatic and just works Providing value, solving problems (for customers)
-
-for creating web apps that are Reliable Maintainable Low effort Flexible Valuable - above all, highly usable and focused on solving problems for users Doing what they need to in a pleasant (joy sparking) way (at most a delight to use, at least not frustrating)
-
-
-
-
-
-it's also: conventions (vs config) - Sets conventions/standards (we use kysely, mysql, tailwind, etc)
-Like You’re not gonna use something else if you’re using dw (you're not gonna use prisma or drizzle...fuck off)
-
-
----
-
-
-guiding principles
-
-- Pragmatic solutions using "boring" techniques
-  - Professional, maintainable solutions without unnecessary complexity
-  - Code that is easy to understand and maintain over clever solutions
-  - Proven, stable patterns over bleeding-edge features
-- Long-term maintainability and reliability
-
-
-
-
-
-
-
-
----
-
-
-
-
-
-DW DX/workflow goals ... want to be
-
-- easy to learn (to help teams get up to speed quickly)
-- efficient (to enable tasks to be completed as quickly as possible)
-- consistent (to prevent teams from wasting time relearning how to do their work)
-- transparent (to allow bugs to be diagnosed and solved easily)
-- resilient (to ensure what works today also works next year)
-- perfectly suited for quick prototyping - able to produce usable functionality quickly without the fear of it breaking unexpectedly (reliable and fast to produce)
-
-
-
-
-Dw goal - build a robust system boilerplate that’s easy to modify & maintain
-	guiding principles / Design decisions - do the predictable obvious thing, nothing too clever (makes debugging & maintenance easier, onboarding new devs, etc)
-	designed to be flexible enough to fit a variety of use cases and architectures, work with a variety of services (hosting providers, cdn, images, mailers, etc)
-
-
-
-goal: easier (as easy as) installation/deployment than wordpress ... esp want to be easier than laravel
-
-Dw goal - make it just as easy to build a custom crud app as it is to configure a generic 3rd party cms to suit your needs
-  if you've evaluated any cms, you've likely hit the frustration of the various configuration nightmares and learning new concepts and thought "i could just build something like this in the same amount of time as it would take to learn it)
-
-
-
-
-
----
-
-
-
-
+Goal: make it just as easy to build a custom CRUD app as it is to configure a generic CMS.

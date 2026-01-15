@@ -1,0 +1,66 @@
+---
+title: HTMX
+---
+
+HTMX patterns for adding interactivity to DW applications.
+
+HTMX is a great fit with Astro - it lets you add dynamic behavior without writing JavaScript. See [Why HTMX + Astro work well together](https://jhuleatt.com/posts/astro-htmx).
+
+## Load More Pattern
+
+```html
+<button
+  class="btn btn-outline"
+  hx-get="/partials/more-items"
+  hx-target="#items"
+  hx-swap="beforeend"
+>
+  Load More
+</button>
+
+<div id="items"></div>
+```
+
+## Load on Page Load
+
+```html
+<div hx-get="/partials/sidebar" hx-trigger="load"></div>
+```
+
+## Partial Template
+
+Create a partial in `src/pages/partials/`:
+
+```astro
+---
+export const partial = true;
+import { db } from "@/lib/db";
+
+const items = await db
+  .selectFrom('items')
+  .selectAll()
+  .where('deleted_at', 'is', null)
+  .orderBy('created_at')
+  .execute();
+---
+
+{items.map((item) => (
+  <div class="p-2 border-b">
+    <a href={`/items/${item.uuid}`}>{item.title}</a>
+  </div>
+))}
+```
+
+## Common Triggers
+
+- `hx-trigger="load"` - Load immediately
+- `hx-trigger="click"` - On click (default for buttons)
+- `hx-trigger="revealed"` - When scrolled into view
+- `hx-trigger="every 5s"` - Poll every 5 seconds
+
+## Swap Options
+
+- `hx-swap="innerHTML"` - Replace content (default)
+- `hx-swap="beforeend"` - Append to end
+- `hx-swap="afterbegin"` - Prepend to start
+- `hx-swap="outerHTML"` - Replace entire element

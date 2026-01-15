@@ -1,0 +1,39 @@
+---
+title: Open Graph Tags
+---
+
+Open Graph meta tags for social media previews.
+
+## Basic Setup
+
+Add OG tags to your page's `<head>`:
+
+```html
+<meta property="og:title" content="Page Title" />
+<meta property="og:description" content="Page description" />
+<meta property="og:image" content="https://example.com/image.jpg" />
+<meta property="og:url" content="https://example.com/page" />
+<meta property="og:type" content="website" />
+```
+
+## Dynamic Pages
+
+For dynamic content, generate OG tags in your Astro frontmatter:
+
+```astro
+---
+const { title, description, image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<head>
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content={canonicalURL} />
+</head>
+```
+
+## Testing
+
+Use the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) or [Twitter Card Validator](https://cards-dev.twitter.com/validator) to preview how your pages appear when shared.

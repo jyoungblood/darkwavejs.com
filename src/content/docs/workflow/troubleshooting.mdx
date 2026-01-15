@@ -3,14 +3,40 @@ title: Troubleshooting
 sidebar:
   order: 3
 ---
-🚜
 
+Common problems and how to address them.
 
-common problems, how to address them, and where to look for more info / help
+## Dependency Updates
 
+You may periodically need to run updates:
 
- 
-- docs note: you may periodically need to run updates (npm audit --fix, npm install kysely@latest, etc)
-  - if you're not familiar with js dev, this can seem kinda suspect/overwhelming (or like everything is breaking)
-  - this is normal, this is fine, welcome to the world of js dev
-  - DONT BE ALARMED
+```bash
+npm audit --fix
+npm install kysely@latest
+npx @astrojs/upgrade
+```
+
+If you're not familiar with JS development, this can seem overwhelming. This is normal. Don't be alarmed.
+
+## Common Issues
+
+### Build Errors
+
+If `npm run build` fails:
+1. Check for TypeScript errors with `npx astro check`
+2. Ensure all dependencies are installed with `npm install`
+3. Check that your `.env` file has all required variables
+
+### Database Connection
+
+If the app can't connect to the database:
+1. Verify your database credentials in `.env`
+2. Make sure MySQL is running
+3. Check that the database exists and the user has proper permissions
+
+### Auth Issues
+
+If authentication isn't working:
+1. Verify `BETTER_AUTH_SECRET` is set in `.env`
+2. Check that the auth tables were created with `npm run init`
+3. For OAuth, ensure your provider credentials are configured correctly

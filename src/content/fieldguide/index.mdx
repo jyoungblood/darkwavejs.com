@@ -1,0 +1,41 @@
+---
+title: Field Guide
+---
+
+Practical solutions and recipes for common tasks using the DW toolkit.
+
+This section includes endorsed solutions for common problems. The technology used isn't always part of the toolkit itself, but these are the "if you asked me how to do X, this is what I'd do" solutions.
+
+## What's Here
+
+- **Authentication** - Better-Auth setup and RBAC configuration
+- **Database** - Schema conventions and migrations
+- **File Uploads** - Photo and media handling
+- **Email** - Sending transactional emails
+- **Frontend** - Common patterns and snippets
+- **Deployment** - VPS and platform setup
+
+## Philosophy
+
+DW aims to have a "go-to" solution for everything you'd want to do with this stack. Vetted solutions that work nicely together.
+
+## Common Patterns
+
+### Database Conventions
+
+Standard fields for every table:
+- `uuid` - Primary identifier
+- `created_at` - Creation timestamp
+- `updated_at` - Last modified timestamp
+- `deleted_at` - Soft delete timestamp
+
+### Photo Upload Fields
+
+For tables with images:
+- `photo_url` - Image URL
+- `photo_url_parameters` - Processing params
+
+### Gallery Fields
+
+For tables with multiple images:
+- `gallery_content` - JSON array of image data

@@ -1,0 +1,29 @@
+---
+title: CORS
+---
+
+Cross-Origin Resource Sharing configuration.
+
+## Default Setting
+
+CORS is disabled by default in DW:
+
+```js
+// astro.config.mjs
+security: {
+  checkOrigin: false,
+},
+```
+
+## Enabling CORS
+
+If you need CORS protection, follow the [Astro security configuration guide](https://docs.astro.build/en/reference/configuration-reference/#security).
+
+## When to Enable
+
+Consider enabling CORS if:
+- Your API is accessed from different domains
+- You need to restrict which origins can make requests
+- You're building a public API
+
+For internal applications on a single domain, the default setting is fine.

@@ -3,32 +3,27 @@ title: Configuring Services
 sidebar:
   order: 7
 ---
-🚜
 
+DW works with various external services for storage, email, and authentication.
 
-mail, db, oauth, etc
+## Cloudflare R2 (File Storage)
 
+1. Create an R2 bucket with a custom domain
+2. Generate API tokens from the R2 buckets page
+3. Add to `.env`:
 
-add notes to service config
-- r2 buckets
-- mailgun domains
-- cf domain setup (outside the scope of this, but i do it on every site, helpful)
-  - basic records (just the root @ i guess)
-  - mailgun dns
-  - dnssec
+```txt
+S3_KEY="your-access-key"
+S3_SECRET="your-secret-key"
+S3_BUCKET="your-bucket-name"
+S3_ENDPOINT="https://your-account-id.r2.cloudflarestorage.com"
+S3_DOMAIN="https://media.yourdomain.com"
+```
 
+## Email (SMTP)
 
+Configure your SMTP provider credentials in `.env`. Works with services like Mailgun, Resend, or any SMTP provider.
 
+## OAuth (Google)
 
-
-
-?? docs need guide to setting up r2 buckets?
-- set up w/ custom domain
-- generate the api tokens (on the r2 buckets page)
-- save w/ .env
-
-S3_KEY="xxxxxxxxxxxxxxxx
-S3_SECRET="xxxxxxxxxxxxxxxx"
-S3_BUCKET="xxxx"
-S3_ENDPOINT="https://xxxxxxxxxxxxxx.r2.cloudflarestorage.com"
-S3_DOMAIN="https://media.xxxx.com"
+Set up Google OAuth credentials for social login. See the [Better-Auth documentation](https://www.better-auth.com/docs/authentication/social-sign-in) for setup instructions.

@@ -1,6 +1,27 @@
 ---
 title: Textarea
 ---
-🚜
 
-ui/form component
+Multi-line text input component.
+
+## Usage
+
+```astro
+<Textarea
+  label="Description"
+  name="description"
+  placeholder="Enter description..."
+  rows={4}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Input label text |
+| `name` | string | Input name attribute |
+| `placeholder` | string | Placeholder text |
+| `rows` | number | Number of visible rows |
+| `required` | boolean | Whether input is required |
+| `value` | string | Default value |

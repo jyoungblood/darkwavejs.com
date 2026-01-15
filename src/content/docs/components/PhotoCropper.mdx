@@ -1,6 +1,23 @@
 ---
 title: PhotoCropper
 ---
-🚜
 
-ui/form component
+Image cropping utility component using [Cropper.js](https://fengyuanchen.github.io/cropperjs/).
+
+## Usage
+
+```astro
+<PhotoCropper
+  image={imageUrl}
+  aspectRatio={1}
+  onCrop={handleCrop}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `image` | string | Image URL to crop |
+| `aspectRatio` | number | Crop aspect ratio (1 = square) |
+| `onCrop` | function | Callback with cropped image data |

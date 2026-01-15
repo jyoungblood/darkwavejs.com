@@ -1,0 +1,39 @@
+---
+title: Astro Patterns
+---
+
+Common Astro patterns and snippets for DW development.
+
+## Conditional Rendering
+
+Edit vs new form pattern:
+
+```astro
+{(item && item.uuid ? (
+  // Edit form content
+  <h1>Edit {item.title}</h1>
+) : (
+  // New form content
+  <h1>Create New</h1>
+))}
+```
+
+## Dynamic Imports
+
+```astro
+---
+const { slug } = Astro.params;
+const item = await db.selectFrom('items').where('slug', '=', slug).executeTakeFirst();
+---
+```
+
+## Form Handling
+
+```astro
+---
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  // Handle form submission
+}
+---
+```
