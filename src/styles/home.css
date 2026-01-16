@@ -1,4 +1,7 @@
 @import '@fontsource-variable/inter';
+@import '@fontsource-variable/source-code-pro';
+@import '@fontsource-variable/inconsolata';
+
 
 @tailwind base;
 @tailwind components;
@@ -17,6 +20,166 @@
 
 body * {
   font-family: "Inter Variable", sans-serif;
+}
+
+/* Expressive Code overrides */
+.expressive-code {
+  margin-bottom: 1.5rem !important;
+  --expressive-code-border-radius: 0.375rem;
+}
+
+.expressive-code .frame {
+  border-radius: var(--expressive-code-border-radius) !important;
+  /* border: 1px solid #333 !important; */
+  border: none !important;
+}
+
+.expressive-code .header,
+.expressive-code .copy button,
+.expressive-code pre {
+  border-radius: var(--expressive-code-border-radius) !important;
+}
+
+.expressive-code pre {
+  border: none !important;
+  margin: 0 !important;
+}
+
+/* these need to be set in astro.config.mjs */
+.expressive-code code {
+  /* font-family: "Inconsolata Variable", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; */
+  /* font-family: "Source Code Pro Variable", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; */
+  /* font-weight: 200; */
+  /* font-size: 0.9rem; */
+}
+
+/* Prose-like styling for content */
+.main-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #d49ebe; /* dw-pink */
+}
+
+.main-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #d49ebe; /* dw-pink */
+}
+
+.main-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.main-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.main-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.main-content a {
+  color: #bbfdde; /* dw-green */
+  text-decoration: underline;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.main-content a:hover {
+  background-color: #bbfdde;
+  color: #171717;
+}
+
+.main-content ul,
+.main-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.main-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.main-content ul li {
+  list-style-type: disc;
+}
+
+.main-content ol li {
+  list-style-type: decimal;
+}
+
+.main-content strong {
+  font-weight: 600;
+}
+
+.main-content code:not(pre code) {
+  background-color: #262626;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.main-content pre {
+  background-color: #171717;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid #333;
+}
+
+.main-content pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.main-content blockquote {
+  border-left: 3px solid #bbfdde;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: #a3a3a3;
+  font-style: italic;
+}
+
+.main-content hr {
+  border: none;
+  border-top: 1px solid #404040;
+  margin: 2rem 0;
+}
+
+.main-content table {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+}
+
+.main-content th,
+.main-content td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.main-content th {
+  font-weight: 600;
+  color: #d49ebe;
+}
+
+.main-content tbody tr:hover {
+  background-color: #111;
 }
 
 

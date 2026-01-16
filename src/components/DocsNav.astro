@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs');
+const currentPath = Astro.url.pathname;
+
+// Define sections with their order and display names
+// Files at root level (no slash in slug) are "Introduction"
+// Files with getting-started/, workflow/ prefixes are in those sections
+const sections = [
+  { id: '', label: 'Introduction', order: ['index', 'what', 'who', 'why', 'ethos', 'vibes'] },
+  { id: 'getting-started', label: 'Getting Started', order: ['index', 'architecture', 'configuring', 'llms'] },
+  { id: 'workflow', label: 'Workflow', order: ['index', 'cli', 'deployment', 'troubleshooting'] },
+];
+
+// Group docs by section
+function getDocsForSection(sectionId: string) {
+  const sectionDocs = allDocs.filter(doc => {
+    if (sectionId === '') {
+      // Root level docs (no slash in slug) - explicitly exclude subdirectory files
+      return !doc.slug.includes('/') && 
+             !doc.slug.startsWith('getting-started') && 
+             !doc.slug.startsWith('workflow');
+    }
+    // Match files in this section (e.g., 'getting-started/index', 'getting-started/architecture')
+    // Some content collections use the section id as the slug for index files.
+    return doc.slug.startsWith(sectionId + '/') || doc.slug === sectionId;
+  });
+
+  const section = sections.find(s => s.id === sectionId);
+  if (!section) return sectionDocs;
+
+  // Sort by defined order
+  return sectionDocs.sort((a, b) => {
+    const aName = a.slug === sectionId ? 'index' : (a.slug.split('/').pop() || a.slug);
+    const bName = b.slug === sectionId ? 'index' : (b.slug.split('/').pop() || b.slug);
+    const aIndex = section.order.indexOf(aName);
+    const bIndex = section.order.indexOf(bName);
+    if (aIndex === -1 && bIndex === -1) return a.data.title.localeCompare(b.data.title);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+}
+
+function getHref(doc: any) {
+  const slug = doc.slug;
+  // Handle index pages
+  if (slug === 'index') {
+    return '/docs/';
+  }
+  if (slug.endsWith('/index')) {
+    return `/docs/${slug.replace('/index', '')}/`;
+  }
+  return `/docs/${slug}/`;
+}
+
+function isActive(doc: any) {
+  const href = getHref(doc);
+  return currentPath === href || currentPath === href.slice(0, -1);
+}
+
+function isSectionActive(sectionId: string) {
+  if (sectionId === '') {
+    // Introduction section - active if at /docs/ and NOT in getting-started or workflow
+    return currentPath.startsWith('/docs') &&
+           !currentPath.includes('/getting-started') &&
+           !currentPath.includes('/workflow');
+  }
+  return currentPath.includes(`/docs/${sectionId}`);
+}
+---
+
+<nav class="space-y-6">
+  {sections.map((section) => {
+    const docs = getDocsForSection(section.id);
+    const sectionActive = isSectionActive(section.id);
+
+    return (
+      <div class="nav-section" data-section={section.id || 'intro'}>
+        <button
+          class="nav-section-toggle w-full flex items-center justify-between text-sm font-semibold text-neutral-400 uppercase tracking-wide mb-2 hover:text-neutral-200 transition-colors"
+          type="button"
+          aria-expanded={sectionActive ? "true" : "false"}
+        >
+          <span>{section.label}</span>
+          <svg
+            class="w-4 h-4 transition-transform section-chevron"
+            style={sectionActive ? "transform: rotate(180deg)" : ""}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+        <ul class="nav-section-content space-y-1" style={sectionActive ? "" : "display: none"}>
+          {docs.map((doc) => {
+            const active = isActive(doc);
+            return (
+              <li>
+                <a
+                  href={getHref(doc)}
+                  class:list={[
+                    "block px-3 py-2 rounded text-sm transition-colors",
+                    active
+                      ? "bg-neutral-800 text-dw-green"
+                      : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
+                  ]}
+                >
+                  {doc.data.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  })}
+</nav>
+
+<script>
+  // Collapsible sections
+  document.querySelectorAll('.nav-section-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const section = button.closest('.nav-section');
+      const content = section?.querySelector('.nav-section-content') as HTMLElement;
+      const chevron = button.querySelector('.section-chevron') as HTMLElement;
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+      if (content) {
+        content.style.display = isExpanded ? 'none' : '';
+      }
+      if (chevron) {
+        chevron.style.transform = isExpanded ? '' : 'rotate(180deg)';
+      }
+      button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    });
+  });
+</script>

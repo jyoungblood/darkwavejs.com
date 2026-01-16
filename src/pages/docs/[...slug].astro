@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const docsEntries = await getCollection('docs');
+  return docsEntries.map((entry) => {
+    const slug = entry.slug;
+
+    // Handle index files
+    if (slug === 'index') {
+      return {
+        params: { slug: undefined },
+        props: { entry },
+      };
+    }
+
+    // Handle section index files (e.g., getting-started/index)
+    if (slug.endsWith('/index')) {
+      return {
+        params: { slug: slug.replace('/index', '') },
+        props: { entry },
+      };
+    }
+
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<DocsLayout title={entry.data.title} description={entry.data.description}>
+  <Content />
+</DocsLayout>

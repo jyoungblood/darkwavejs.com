@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 
-const fieldguideEntries = await getCollection('fieldguide');
+const componentsEntries = await getCollection('components');
 
 // Sort entries: index first, then alphabetically
-const sortedEntries = fieldguideEntries.sort((a, b) => {
+const sortedEntries = componentsEntries.sort((a, b) => {
   if (a.slug === 'index') return -1;
   if (b.slug === 'index') return 1;
   return a.data.title.localeCompare(b.data.title);
@@ -14,10 +14,10 @@ const currentPath = Astro.url.pathname;
 ---
 
 <nav>
-  <h2 class="text-sm font-semibold text-neutral-500 uppercase tracking-wide mb-4">Field Guide</h2>
+  <h2 class="text-sm font-semibold text-neutral-500 uppercase tracking-wide mb-4">Components</h2>
   <ul class="space-y-1">
     {sortedEntries.map((entry) => {
-      const href = entry.slug === 'index' ? '/fieldguide/' : `/fieldguide/${entry.slug}/`;
+      const href = entry.slug === 'index' ? '/components/' : `/components/${entry.slug}/`;
       const isActive = currentPath === href || currentPath === href.slice(0, -1);
       return (
         <li>

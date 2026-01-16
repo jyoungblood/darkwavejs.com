@@ -1,7 +1,6 @@
 ---
 import "../styles/home.css";
 import MainNav from '../components/MainNav.astro';
-import FieldGuideNav from '../components/FieldGuideNav.astro';
 
 interface Props {
   title: string;
@@ -16,7 +15,7 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Field Guide | Darkwave</title>
+    <title>{title} | Darkwave</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script
@@ -29,17 +28,9 @@ const { title, description } = Astro.props;
     <div class="w-full max-w-7xl mx-auto lg:px-20 md:px-12 px-6">
       <MainNav />
 
-      <div class="flex gap-12 pb-16">
-        <aside class="w-64 flex-shrink-0 hidden md:block">
-          <FieldGuideNav />
-        </aside>
-        <main class="flex-1 min-w-0 max-w-3xl">
-          <article class="main-content">
-            <h1>{title}</h1>
-            <slot />
-          </article>
-        </main>
-      </div>
+      <main class="pb-16">
+        <slot />
+      </main>
     </div>
   </body>
 </html>

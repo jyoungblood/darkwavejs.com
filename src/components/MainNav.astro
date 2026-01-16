@@ -1,0 +1,197 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/docs/", label: "Docs" },
+  { href: "/components/", label: "Components" },
+  { href: "/fieldguide/", label: "Field Guide" },
+  { href: "/project/", label: "Project" },
+];
+---
+
+<nav class="flex items-center justify-between py-6 border-b border-neutral-800 mb-12">
+  <div class="flex items-center gap-4">
+    <a href="/" class="block">
+      <img src="/images/dw-triangles-white.svg" alt="Darkwave" class="h-8" />
+    </a>
+
+    <!-- Search Button -->
+    <button
+      id="search-button"
+      class="flex items-center gap-2 w-56 md:w-64 px-3 py-2 text-sm text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 hover:text-white transition-colors"
+      type="button"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512">
+        <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"/>
+      </svg>
+      <span class="hidden sm:inline flex-1 text-left">Search</span>
+      <kbd class="ml-2 hidden md:inline-flex items-center gap-1 px-1.5 py-0.5 text-xs bg-neutral-800 rounded border border-neutral-700">
+        <span class="text-xs">⌘</span>K
+      </kbd>
+    </button>
+  </div>
+
+  <div class="flex items-center gap-6">
+    <!-- Nav Links -->
+    {navLinks.map((link) => {
+      const normalizePath = (path: string) =>
+        path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+      const isActive = normalizePath(currentPath).startsWith(
+        normalizePath(link.href)
+      );
+      return (
+        <a
+          href={link.href}
+          class:list={[
+            "text-sm font-medium transition-colors",
+            isActive
+              ? "text-dw-green"
+              : "text-neutral-400 hover:text-dw-green"
+          ]}
+        >
+          {link.label}
+        </a>
+      );
+    })}
+  </div>
+</nav>
+
+<!-- Search Modal -->
+<div id="search-modal" class="hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="search-backdrop"></div>
+  <div class="relative flex items-start justify-center pt-[15vh]">
+    <div class="w-full max-w-2xl mx-4 bg-neutral-900 rounded-lg border border-neutral-700 shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-neutral-700">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" viewBox="0 0 512 512">
+            <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"/>
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search documentation..."
+            class="flex-1 bg-transparent text-white placeholder-neutral-500 outline-none text-lg"
+            autocomplete="off"
+          />
+          <kbd class="px-2 py-1 text-xs bg-neutral-800 rounded border border-neutral-700 text-neutral-400">ESC</kbd>
+        </div>
+      </div>
+      <div id="search-results" class="max-h-[60vh] overflow-y-auto p-2">
+        <div class="text-neutral-500 text-sm p-4 text-center">
+          Type to search across all documentation...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Search Modal functionality
+  const searchButton = document.getElementById('search-button');
+  const searchModal = document.getElementById('search-modal');
+  const searchBackdrop = document.getElementById('search-backdrop');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchResults = document.getElementById('search-results');
+
+  let pagefind: any = null;
+
+  async function initPagefind() {
+    if (pagefind) return pagefind;
+    try {
+      // Construct path at runtime to avoid Vite bundling
+      const pagefindPath = ['/pagefind', '/pagefind.js'].join('');
+      pagefind = await import(/* @vite-ignore */ pagefindPath);
+      await pagefind.init();
+      return pagefind;
+    } catch (e) {
+      console.log('Pagefind not available yet');
+      return null;
+    }
+  }
+
+  function openSearch() {
+    searchModal?.classList.remove('hidden');
+    searchInput?.focus();
+    document.body.style.overflow = 'hidden';
+    initPagefind();
+  }
+
+  function closeSearch() {
+    searchModal?.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (searchInput) searchInput.value = '';
+    if (searchResults) {
+      searchResults.innerHTML = '<div class="text-neutral-500 text-sm p-4 text-center">Type to search across all documentation...</div>';
+    }
+  }
+
+  searchButton?.addEventListener('click', openSearch);
+  searchBackdrop?.addEventListener('click', closeSearch);
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+
+  // Search functionality
+  let searchTimeout: ReturnType<typeof setTimeout>;
+  searchInput?.addEventListener('input', async (e) => {
+    const query = (e.target as HTMLInputElement).value;
+
+    clearTimeout(searchTimeout);
+
+    if (!query || query.length < 2) {
+      if (searchResults) {
+        searchResults.innerHTML = '<div class="text-neutral-500 text-sm p-4 text-center">Type to search across all documentation...</div>';
+      }
+      return;
+    }
+
+    searchTimeout = setTimeout(async () => {
+      const pf = await initPagefind();
+      if (!pf) {
+        if (searchResults) {
+          searchResults.innerHTML = '<div class="text-neutral-500 text-sm p-4 text-center">Search is loading...</div>';
+        }
+        return;
+      }
+
+      const search = await pf.search(query);
+
+      if (search.results.length === 0) {
+        if (searchResults) {
+          searchResults.innerHTML = '<div class="text-neutral-500 text-sm p-4 text-center">No results found</div>';
+        }
+        return;
+      }
+
+      const results = await Promise.all(
+        search.results.slice(0, 10).map((r: any) => r.data())
+      );
+
+      if (searchResults) {
+        searchResults.innerHTML = results.map((result: any) => `
+          <a href="${result.url}" class="block p-3 rounded-lg hover:bg-neutral-800 transition-colors group">
+            <div class="font-medium text-white group-hover:text-dw-green transition-colors">${result.meta?.title || result.url}</div>
+            <div class="text-sm text-neutral-400 mt-1 line-clamp-2">${result.excerpt}</div>
+          </a>
+        `).join('');
+      }
+    }, 150);
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
