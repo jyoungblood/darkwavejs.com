@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import MobileNavDropdown from './MobileNavDropdown.astro';
 
 const componentsEntries = await getCollection('components');
 
@@ -11,9 +12,46 @@ const sortedEntries = componentsEntries.sort((a, b) => {
 });
 
 const currentPath = Astro.url.pathname;
+
+// Find current page title for mobile dropdown
+function getCurrentPageTitle() {
+  const currentEntry = sortedEntries.find(entry => {
+    const href = entry.slug === 'index' ? '/components/' : `/components/${entry.slug}/`;
+    return currentPath === href || currentPath === href.slice(0, -1);
+  });
+  return currentEntry?.data.title || 'Navigate';
+}
+
+const currentPageTitle = getCurrentPageTitle();
 ---
 
-<nav>
+<!-- Mobile Dropdown Nav -->
+<MobileNavDropdown id="components" currentTitle={currentPageTitle} label="Components">
+  <ul class="space-y-1">
+    {sortedEntries.map((entry) => {
+      const href = entry.slug === 'index' ? '/components/' : `/components/${entry.slug}/`;
+      const isActive = currentPath === href || currentPath === href.slice(0, -1);
+      return (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              "block px-3 py-2 rounded text-sm transition-colors",
+              isActive
+                ? "bg-neutral-800 text-dw-green"
+                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
+            ]}
+          >
+            {entry.data.title}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</MobileNavDropdown>
+
+<!-- Desktop/Tablet Nav -->
+<nav class="hidden sm:block">
   <h2 class="text-sm font-semibold text-neutral-500 uppercase tracking-wide mb-4">Components</h2>
   <ul class="space-y-1">
     {sortedEntries.map((entry) => {

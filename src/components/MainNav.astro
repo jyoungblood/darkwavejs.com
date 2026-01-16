@@ -9,50 +9,120 @@ const navLinks = [
 ];
 ---
 
-<nav class="flex items-center justify-between py-6 border-b border-neutral-800 mb-12">
-  <div class="flex items-center gap-4">
-    <a href="/" class="block">
-      <img src="/images/dw-triangles-white.svg" alt="Darkwave" class="h-8" />
+<nav class="relative py-6 border-b border-neutral-800 mb-12">
+  <!-- Mobile Nav (visible on small screens only) -->
+  <div class="flex sm:hidden items-center gap-3">
+    <!-- Logo -->
+    <a href="/" class="block flex-shrink-0">
+      <img src="/images/dw-triangles-white.svg" alt="Darkwave" class="h-7" />
     </a>
 
-    <!-- Search Button -->
+    <!-- Spacer -->
+    <div class="flex-1"></div>
+
+    <!-- Search Button (flexible width with max size) -->
     <button
-      id="search-button"
-      class="flex items-center gap-2 w-56 md:w-64 px-3 py-2 text-sm text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 hover:text-white transition-colors"
+      id="search-button-mobile"
+      class="flex items-center justify-start flex-shrink min-w-0 max-w-[14rem] px-3 py-2 text-sm text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 hover:text-white transition-colors"
       type="button"
+      aria-label="Open search"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" viewBox="0 0 512 512">
         <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"/>
       </svg>
-      <span class="hidden sm:inline flex-1 text-left">Search</span>
-      <kbd class="ml-2 hidden md:inline-flex items-center gap-1 px-1.5 py-0.5 text-xs bg-neutral-800 rounded border border-neutral-700">
-        <span class="text-xs">⌘</span>K
-      </kbd>
+    </button>
+
+    <!-- Hamburger Menu Button -->
+    <button
+      id="mobile-menu-toggle"
+      class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-neutral-400 hover:text-dw-green transition-colors"
+      type="button"
+      aria-label="Toggle menu"
+    >
+      <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
     </button>
   </div>
 
-  <div class="flex items-center gap-6">
-    <!-- Nav Links -->
-    {navLinks.map((link) => {
-      const normalizePath = (path: string) =>
-        path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
-      const isActive = normalizePath(currentPath).startsWith(
-        normalizePath(link.href)
-      );
-      return (
-        <a
-          href={link.href}
-          class:list={[
-            "text-sm font-medium transition-colors",
-            isActive
-              ? "text-dw-green"
-              : "text-neutral-400 hover:text-dw-green"
-          ]}
-        >
-          {link.label}
-        </a>
-      );
-    })}
+  <!-- Desktop/Tablet Nav (visible on small screens and up) -->
+  <div class="hidden sm:flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a href="/" class="block">
+        <img src="/images/dw-triangles-white.svg" alt="Darkwave" class="h-8" />
+      </a>
+
+      <!-- Search Button -->
+      <button
+        id="search-button"
+        class="flex items-center gap-2 w-56 md:w-64 px-3 py-2 text-sm text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 hover:text-white transition-colors"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512">
+          <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"/>
+        </svg>
+        <span class="flex-1 text-left">Search</span>
+        <kbd class="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 text-xs bg-neutral-800 rounded border border-neutral-700">
+          <span class="text-xs">⌘</span>K
+        </kbd>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <!-- Nav Links -->
+      {navLinks.map((link) => {
+        const normalizePath = (path: string) =>
+          path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+        const isActive = normalizePath(currentPath).startsWith(
+          normalizePath(link.href)
+        );
+        return (
+          <a
+            href={link.href}
+            class:list={[
+              "text-sm font-medium transition-colors",
+              isActive
+                ? "text-dw-green"
+                : "text-neutral-400 hover:text-dw-green"
+            ]}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown - Absolute positioned overlay -->
+  <div
+    id="mobile-menu"
+    class="sm:hidden hidden absolute top-full left-0 right-0 bg-black border-t border-neutral-800 z-40"
+  >
+    <div class="flex flex-col gap-1 py-4 px-6">
+      {navLinks.map((link) => {
+        const normalizePath = (path: string) =>
+          path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+        const isActive = normalizePath(currentPath).startsWith(
+          normalizePath(link.href)
+        );
+        return (
+          <a
+            href={link.href}
+            class:list={[
+              "px-4 py-3 text-sm font-medium transition-colors rounded-md",
+              isActive
+                ? "text-dw-green bg-neutral-900"
+                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-900"
+            ]}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </div>
   </div>
 </nav>
 
@@ -86,8 +156,29 @@ const navLinks = [
 </div>
 
 <script>
+  // Mobile Menu functionality
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  mobileMenuToggle?.addEventListener('click', () => {
+    const isHidden = mobileMenu?.classList.contains('hidden');
+
+    if (isHidden) {
+      mobileMenu?.classList.remove('hidden');
+      hamburgerIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+    } else {
+      mobileMenu?.classList.add('hidden');
+      hamburgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    }
+  });
+
   // Search Modal functionality
   const searchButton = document.getElementById('search-button');
+  const searchButtonMobile = document.getElementById('search-button-mobile');
   const searchModal = document.getElementById('search-modal');
   const searchBackdrop = document.getElementById('search-backdrop');
   const searchInput = document.getElementById('search-input') as HTMLInputElement;
@@ -126,6 +217,7 @@ const navLinks = [
   }
 
   searchButton?.addEventListener('click', openSearch);
+  searchButtonMobile?.addEventListener('click', openSearch);
   searchBackdrop?.addEventListener('click', closeSearch);
 
   // Keyboard shortcuts

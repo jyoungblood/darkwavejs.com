@@ -29,8 +29,13 @@ const { title, description } = Astro.props;
     <div class="w-full max-w-7xl mx-auto lg:px-20 md:px-12 px-6">
       <MainNav />
 
-      <div class="flex gap-12 pb-16">
-        <aside class="w-64 flex-shrink-0 hidden md:block">
+      <!-- Mobile Nav Dropdown (only on mobile) -->
+      <div class="sm:hidden">
+        <ComponentsNav />
+      </div>
+
+      <div class="sm:flex gap-8 lg:gap-12 pb-16">
+        <aside class="w-56 lg:w-64 flex-shrink-0 hidden sm:block">
           <ComponentsNav />
         </aside>
         <main class="flex-1 min-w-0 max-w-3xl">

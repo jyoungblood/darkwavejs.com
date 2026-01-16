@@ -1,0 +1,58 @@
+---
+interface Props {
+  id: string;
+  currentTitle: string;
+  label: string;
+}
+
+const { id, currentTitle, label } = Astro.props;
+---
+
+<div class={`mobile-nav-dropdown-${id} sm:hidden mb-6 relative`}>
+  <button
+    class="mobile-nav-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-neutral-100 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 transition-colors"
+    type="button"
+    aria-expanded="false"
+  >
+    <span>{currentTitle}</span>
+    <svg
+      class="mobile-nav-chevron w-4 h-4 transition-transform"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  </button>
+
+  <nav
+    class="mobile-nav-content hidden absolute top-full left-0 right-0 mt-2 p-4 bg-neutral-900 border border-neutral-800 rounded-md max-h-[70vh] overflow-y-auto z-50"
+  >
+    <h2 class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">{label}</h2>
+    <slot />
+  </nav>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.mobile-nav-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const container = button.closest('[class*="mobile-nav-dropdown-"]');
+        const dropdown = container?.querySelector('.mobile-nav-content');
+        const chevron = button.querySelector('.mobile-nav-chevron');
+        const isHidden = dropdown?.classList.contains('hidden');
+
+        if (isHidden) {
+          dropdown?.classList.remove('hidden');
+          if (chevron) chevron.style.transform = 'rotate(180deg)';
+          button.setAttribute('aria-expanded', 'true');
+        } else {
+          dropdown?.classList.add('hidden');
+          if (chevron) chevron.style.transform = '';
+          button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+</script>
