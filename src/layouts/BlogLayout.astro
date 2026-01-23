@@ -1,0 +1,66 @@
+---
+import "../styles/home.css";
+import MainNav from '../components/MainNav.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  date?: string;
+  tags?: string[];
+}
+
+const { title, subtitle, date, tags } = Astro.props;
+
+let pageTitle = title ? `${title} | Blog | Darkwave` : "Blog | Darkwave";
+---
+
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    {subtitle && <meta name="description" content={subtitle} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="4345c349-059a-42dd-8483-67b7c0730da6"
+      async
+    ></script>
+  </head>
+  <body class="font-sans h-100 bg-black text-neutral-100" data-pagefind-body>
+    <div class="w-full max-w-7xl mx-auto lg:px-20 md:px-12 px-6">
+      <MainNav />
+
+      <div class="pb-16">
+        <main class="max-w-3xl mx-auto">
+          <article class="main-content">
+            {title && <h1>{title}</h1>}
+            {subtitle && <p class="text-xl text-neutral-400 mt-4">{subtitle}</p>}
+            {date && (
+              <div class="text-sm text-neutral-500 mt-4">
+                {new Date(date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </div>
+            )}
+            {tags && tags.length > 0 && (
+              <div class="flex gap-2 mt-4">
+                {tags.map((tag) => (
+                  <span class="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div class="mt-8">
+              <slot />
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

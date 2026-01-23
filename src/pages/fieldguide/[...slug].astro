@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import FieldGuideLayout from '../../layouts/FieldGuideLayout.astro';
 
 export async function getStaticPaths() {
-  const fieldguideEntries = await getCollection('fieldguide');
+  const fieldguideEntries = await getCollection('fieldguide', ({ data }) => {
+    return !data.status || data.status === 'published';
+  });
   return fieldguideEntries.map((entry) => ({
     params: { slug: entry.slug === 'index' ? undefined : entry.slug },
     props: { entry },

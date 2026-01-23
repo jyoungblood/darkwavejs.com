@@ -1,0 +1,34 @@
+---
+status: published
+title: GenericCard
+---
+
+Card container component for content grouping.
+
+## Usage
+
+```astro
+<GenericCard>
+  <h3>Card Title</h3>
+  <p>Card content goes here.</p>
+</GenericCard>
+```
+
+## With Header and Footer
+
+```astro
+<GenericCard
+  title="Card Title"
+  footer={<button>Action</button>}
+>
+  <p>Card content goes here.</p>
+</GenericCard>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `title` | string | Card header title |
+| `footer` | node | Footer content |
+| `className` | string | Additional CSS classes |

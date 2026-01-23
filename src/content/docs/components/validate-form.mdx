@@ -1,0 +1,26 @@
+---
+status: published
+title: ValidateForm
+---
+
+Form validation script for checking all fields before submission.
+
+## Usage
+
+The script is automatically included with ButtonSubmit. It validates all required fields when the form is submitted.
+
+```astro
+<form data-form>
+  <InputText label="Name" name="name" required />
+  <InputText label="Email" name="email" required />
+  <ButtonSubmit text="Submit" form="[data-form]" />
+</form>
+```
+
+## How It Works
+
+1. Intercepts form submission
+2. Checks all fields with `required` attribute
+3. Runs any field-level validation rules
+4. Prevents submission if any validation fails
+5. Shows error messages on invalid fields

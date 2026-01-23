@@ -1,0 +1,27 @@
+---
+status: published
+title: Label
+---
+
+Form label component with optional popover support.
+
+Most form components include a basic label. Use this component when you need additional features like popovers or custom styling.
+
+## Usage
+
+```astro
+<Label
+  text="Username"
+  for="username"
+  required
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `text` | string | Label text |
+| `for` | string | ID of associated input |
+| `required` | boolean | Show required indicator |
+| `popover` | string | Popover help text |

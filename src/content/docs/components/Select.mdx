@@ -1,0 +1,30 @@
+---
+status: published
+title: Select
+---
+
+Dropdown selection component.
+
+## Usage
+
+```astro
+<Select
+  label="Country"
+  name="country"
+  options={[
+    { value: "us", label: "United States" },
+    { value: "ca", label: "Canada" },
+    { value: "mx", label: "Mexico" },
+  ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Select label text |
+| `name` | string | Select name attribute |
+| `options` | array | Array of `{ value, label }` objects |
+| `required` | boolean | Whether selection is required |
+| `value` | string | Default selected value |

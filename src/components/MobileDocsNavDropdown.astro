@@ -22,7 +22,7 @@ const { currentTitle } = Astro.props;
       stroke="currentColor"
       stroke-width="2"
     >
-      <path d="M6 9l6 6 6-6" />
+      <path d="M9 18l6-6-6-6" />
     </svg>
   </button>
 
@@ -47,7 +47,7 @@ const { currentTitle } = Astro.props;
 
         if (isHidden) {
           mobileDocsNavDropdown.classList.remove('hidden');
-          mobileDocsChevron.style.transform = 'rotate(180deg)';
+          mobileDocsChevron.style.transform = 'rotate(90deg)';
           mobileDocsNavToggle.setAttribute('aria-expanded', 'true');
         } else {
           mobileDocsNavDropdown.classList.add('hidden');
@@ -69,7 +69,7 @@ const { currentTitle } = Astro.props;
           content.style.display = isExpanded ? 'none' : '';
         }
         if (chevron) {
-          chevron.style.transform = isExpanded ? '' : 'rotate(180deg)';
+          chevron.style.transform = isExpanded ? '' : 'rotate(90deg)';
         }
         button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
       });

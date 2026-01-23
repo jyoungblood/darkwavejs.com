@@ -1,0 +1,28 @@
+---
+status: published
+title: ValidateInput
+---
+
+Input validation script providing real-time field validation.
+
+## Usage
+
+Validation is built into input components. Add a `validation` prop to enable:
+
+```astro
+<InputText
+  label="Email"
+  name="email"
+  validation={{ types: ["email"] }}
+/>
+```
+
+## Features
+
+- Real-time validation on blur/change
+- Debounced validation for performance
+- Success and error states
+- Custom error messages
+- Unique value checking via API
+
+See [Input Validation](/components/input-validation/) for full documentation.

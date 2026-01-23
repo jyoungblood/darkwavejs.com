@@ -1,0 +1,29 @@
+---
+status: published
+title: InputText
+---
+
+Text input component with validation support.
+
+## Usage
+
+```astro
+<InputText
+  label="Email"
+  name="email"
+  type="email"
+  placeholder="you@example.com"
+  required
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | string | Input label text |
+| `name` | string | Input name attribute |
+| `type` | string | Input type (text, email, password, etc.) |
+| `placeholder` | string | Placeholder text |
+| `required` | boolean | Whether input is required |
+| `value` | string | Default value |

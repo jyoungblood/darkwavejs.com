@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+
+const blogEntries = await getCollection("blog", ({ data }) => {
+  return data.status === "published";
+});
+
+// Sort by date, newest first
+const sortedEntries = blogEntries.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+---
+
+<!-- title="Blog" subtitle="Thoughts, updates, and insights" -->
+<BlogLayout>
+  <div class="space-y-8">
+    {
+      sortedEntries.map((entry) => (
+        <article class="border-b border-neutral-800 pb-8 last:border-b-0">
+          <h2 class="text-2xl font-bold text-white group-hover:text-dw-green transition-colors">
+            <a href={`/blog/${entry.slug}`}>{entry.data.title}</a>
+          </h2>
+          <p class="text-neutral-400 mt-2">{entry.data.subtitle}</p>
+          <div class="flex items-center gap-4 mt-4 text-sm text-neutral-500">
+            <time datetime={entry.data.date}>
+              {new Date(entry.data.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            {entry.data.tags && entry.data.tags.length > 0 && (
+              <div class="flex gap-2">
+                {entry.data.tags.map((tag) => (
+                  <span class="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </article>
+      ))
+    }
+    {
+      sortedEntries.length === 0 && (
+        <p class="text-neutral-500 text-center py-12">No blog posts yet.</p>
+      )
+    }
+  </div>
+</BlogLayout>

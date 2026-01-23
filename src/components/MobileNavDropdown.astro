@@ -22,7 +22,7 @@ const { id, currentTitle, label } = Astro.props;
       stroke="currentColor"
       stroke-width="2"
     >
-      <path d="M6 9l6 6 6-6" />
+      <path d="M9 18l6-6-6-6" />
     </svg>
   </button>
 
@@ -45,7 +45,7 @@ const { id, currentTitle, label } = Astro.props;
 
         if (isHidden) {
           dropdown?.classList.remove('hidden');
-          if (chevron) chevron.style.transform = 'rotate(180deg)';
+          if (chevron) chevron.style.transform = 'rotate(90deg)';
           button.setAttribute('aria-expanded', 'true');
         } else {
           dropdown?.classList.add('hidden');

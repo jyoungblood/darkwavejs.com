@@ -7,11 +7,12 @@ const currentPath = Astro.url.pathname;
 
 // Define sections with their order and display names
 // Files at root level (no slash in slug) are "Introduction"
-// Files with getting-started/, workflow/ prefixes are in those sections
+// Files with getting-started/, workflow/, components/ prefixes are in those sections
 const sections = [
   { id: '', label: 'Introduction', order: ['index', 'what', 'who', 'why', 'ethos', 'vibes'] },
   { id: 'getting-started', label: 'Getting Started', order: ['index', 'architecture', 'configuring', 'llms'] },
   { id: 'workflow', label: 'Workflow', order: ['index', 'cli', 'deployment', 'troubleshooting'] },
+  { id: 'components', label: 'Components', order: ['index'] },
 ];
 
 // Group docs by section
@@ -21,7 +22,8 @@ function getDocsForSection(sectionId: string) {
       // Root level docs (no slash in slug) - explicitly exclude subdirectory files
       return !doc.slug.includes('/') &&
              !doc.slug.startsWith('getting-started') &&
-             !doc.slug.startsWith('workflow');
+             !doc.slug.startsWith('workflow') &&
+             !doc.slug.startsWith('components');
     }
     // Match files in this section (e.g., 'getting-started/index', 'getting-started/architecture')
     // Some content collections use the section id as the slug for index files.
@@ -63,10 +65,11 @@ function isActive(doc: any) {
 
 function isSectionActive(sectionId: string) {
   if (sectionId === '') {
-    // Introduction section - active if at /docs/ and NOT in getting-started or workflow
+    // Introduction section - active if at /docs/ and NOT in getting-started, workflow, or components
     return currentPath.startsWith('/docs') &&
            !currentPath.includes('/getting-started') &&
-           !currentPath.includes('/workflow');
+           !currentPath.includes('/workflow') &&
+           !currentPath.includes('/components');
   }
   return currentPath.includes(`/docs/${sectionId}`);
 }
@@ -96,13 +99,13 @@ const currentPageTitle = getCurrentPageTitle();
             <span>{section.label}</span>
             <svg
               class="w-3 h-3 transition-transform section-chevron-mobile"
-              style={sectionActive ? "transform: rotate(180deg)" : ""}
+              style={sectionActive ? "transform: rotate(90deg)" : ""}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
             >
-              <path d="M6 9l6 6 6-6" />
+              <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
           <ul class="nav-section-content-mobile space-y-1" style={sectionActive ? "" : "display: none"}>
@@ -146,13 +149,13 @@ const currentPageTitle = getCurrentPageTitle();
           <span>{section.label}</span>
           <svg
             class="w-4 h-4 transition-transform section-chevron"
-            style={sectionActive ? "transform: rotate(180deg)" : ""}
+            style={sectionActive ? "transform: rotate(90deg)" : ""}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
           >
-            <path d="M6 9l6 6 6-6" />
+            <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
         <ul class="nav-section-content space-y-1" style={sectionActive ? "" : "display: none"}>
@@ -194,7 +197,7 @@ const currentPageTitle = getCurrentPageTitle();
           content.style.display = isExpanded ? 'none' : '';
         }
         if (chevron) {
-          chevron.style.transform = isExpanded ? '' : 'rotate(180deg)';
+          chevron.style.transform = isExpanded ? '' : 'rotate(90deg)';
         }
         button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
       });
