@@ -245,7 +245,16 @@ const navLinks = [
 
   searchButton?.addEventListener('click', openSearch);
   searchButtonMobile?.addEventListener('click', openSearch);
-  searchBackdrop?.addEventListener('click', closeSearch);
+
+  // Close search when clicking outside the modal content
+  searchModal?.addEventListener('click', (e) => {
+    const target = e.target as Element;
+    // Close if clicking the modal overlay itself, not the content inside
+    const modalContent = searchModal.querySelector('.max-w-2xl');
+    if (modalContent && !modalContent.contains(target)) {
+      closeSearch();
+    }
+  });
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
