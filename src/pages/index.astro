@@ -1,133 +1,111 @@
 ---
-import "../styles/home.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import SickTable from "../components/SickTable.astro";
+import JYLink from "../components/JYLink.astro";
 ---
 
-<!doctype html>
-<html class="h-100">
-  <head>
-    <title>Darkwave | Web application development kit</title>
-
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <script
-      src="https://beamanalytics.b-cdn.net/beam.min.js"
-      data-token="4345c349-059a-42dd-8483-67b7c0730da6"
-      async></script>
-  </head>
-  <!-- <body class="font-sans h-100 bg-neutral-900 text-neutral-100"> -->
-  <body class="font-sans h-100 bg-black text-neutral-100">
-    <div class="w-full max-w-7xl mx-auto lg:p-20 md:p-12 p-6">
-      <div
-        class="lg:text-8xl md:text-7xl text-6xl text-dw-pink font-bold uppercase mb-16"
-      >
-        YES! YOU CAN BUILD WEB APPS WITH ASTRO!
-      </div>
-
-      <div class="mb-16 md:w-1/2 pl-2">
-        <p class="mb-4">
-          Darkwave provides a flexible system for building
-          data-driven web applications with <a
-            href="https://astro.build"
-            class="text-dw-green underline hover:bg-dw-green hover:text-neutral-900"
-            >Astro</a
-          > and a curated bundle of tools and libraries.
-        </p>
-        <p class="mb-4">
-          It offers pre-wired functionality for common CRUD features,
-          making the development process fast, efficient, and fun!
-        </p>
-      </div>
-
-      <div class="flex items-center gap-4 mb-16 pl-2">
-        <a
-          href="/docs"
-          class="border-2 border-dw-green bg-dw-green text-neutral-900 py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
-        >
-          <span class="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              viewBox="0 0 448 512"
-              ><path
-                fill="currentColor"
-                d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-64c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32zm0 384h256v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32m32-240c0-8.8 7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16m16 48h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16"
-              ></path></svg
-            >
-            <span class="pl-2">Learn More</span>
-          </span>
-        </a>
-
-        <!-- <a
-          href="/fieldguide"
-          class="border-dw-green border-2 text-dw-green py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
-        >
-          <span class="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="currentColor"
-                d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"
-              ></path>
-            </svg>
-            <span class="pl-2">Field Guide</span>
-          </span>
-        </a> -->
-
-        <a
-          href="https://github.com/hxgf/darkwave/"
-          target="_blank"
-          class="border-dw-green border-2 text-dw-green py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
-        >
-          <span class="flex items-center">
-            <svg
-              class="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              style="pointer-events: auto;"
-            >
-              <path
-                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-              ></path>
-            </svg>
-            <span class="pl-2">Source</span>
-          </span>
-        </a>
-      </div>
-<!-- 
-      <div class="mb-12">
-        <div class="flex items-center gap-3">
-          <img class="h-14 w-auto" src="/images/dw-triangles-white.svg" />
-          <div class="text-4xl font-semibold uppercase tracking-wide">
-            Darkwave
-          </div>
-        </div>
-        <div class="text-lg mb-12">Web application development kit</div>
-      </div> -->
-
-      <div class="mt-24 mb-24">
-        <img src="./images/dw-scriptina.png" class="flex-shrink-0 block mb-4" />
-        <div class="text opacity-50 italic uppercase tracking-wider">Web application development kit</div>
-      </div>
-
-      <!-- <SickTable /> -->
-
-      <div class="text-right mb-24">
-        <a
-          class="text-sm font-semibold text-white no-underline opacity-50 hover:opacity-100"
-          target="_blank"
-          href="https://jonathanyoungblood.com/studio">♥︎ J Y</a
-        >
-      </div>
-
-      
+<BaseLayout title="Darkwave | Web application development kit" showNav={false} showFooter={false}>
+  <div class="pt-6 lg:pt-14 md:pt-6">
+    <div
+      class="lg:text-8xl md:text-7xl text-6xl text-dw-pink font-bold uppercase mb-16"
+    >
+      YES! YOU CAN BUILD WEB APPS WITH ASTRO!
     </div>
-  </body>
-</html>
+
+    <div class="mb-16 md:w-1/2 pl-2">
+      <p class="mb-4">
+        Darkwave provides a flexible system for building
+        data-driven web applications with <a
+          href="https://astro.build"
+          class="text-dw-green underline hover:bg-dw-green hover:text-neutral-900"
+          >Astro</a
+        > and a curated bundle of tools and libraries.
+      </p>
+      <p class="mb-4">
+        It offers pre-wired functionality for common CRUD features,
+        making the development process fast, efficient, and fun!
+      </p>
+    </div>
+
+    <div class="flex items-center gap-4 mb-16 pl-2">
+      <a
+        href="/docs"
+        class="border-2 border-dw-green bg-dw-green text-neutral-900 py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
+      >
+        <span class="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            viewBox="0 0 448 512"
+            ><path
+              fill="currentColor"
+              d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-64c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32zm0 384h256v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32m32-240c0-8.8 7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16m16 48h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16"
+            ></path></svg
+          >
+          <span class="pl-2">Learn More</span>
+        </span>
+      </a>
+
+      <!-- <a
+        href="/fieldguide"
+        class="border-dw-green border-2 text-dw-green py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
+      >
+        <span class="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"
+            ></path>
+          </svg>
+          <span class="pl-2">Field Guide</span>
+        </span>
+      </a> -->
+
+      <a
+        href="https://github.com/hxgf/darkwave/"
+        target="_blank"
+        class="border-dw-green border-2 text-dw-green py-2 px-3 rounded hover:opacity-90 text-sm inline-block font-semibold"
+      >
+        <span class="flex items-center">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            style="pointer-events: auto;"
+          >
+            <path
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+            ></path>
+          </svg>
+          <span class="pl-2">Source</span>
+        </span>
+      </a>
+    </div>
+<!-- 
+    <div class="mb-12">
+      <div class="flex items-center gap-3">
+        <img class="h-14 w-auto" src="/images/dw-triangles-white.svg" />
+        <div class="text-4xl font-semibold uppercase tracking-wide">
+          Darkwave
+        </div>
+      </div>
+      <div class="text-lg mb-12">Web application development kit</div>
+    </div> -->
+
+    <div class="mt-24 mb-24">
+      <img src="./images/dw-scriptina.png" class="flex-shrink-0 block mb-4" />
+      <div class="text opacity-50 italic uppercase tracking-wider">Web application development kit</div>
+    </div>
+
+    <!-- <SickTable /> -->
+
+    <div class="text-right mb-24">
+      <JYLink class="text-sm text-white opacity-50 hover:opacity-100" />
+    </div>
+  </div>
+</BaseLayout>

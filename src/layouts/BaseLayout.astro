@@ -1,0 +1,37 @@
+---
+import "../styles/home.css";
+import MainNav from '../components/MainNav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  showNav?: boolean;
+  showFooter?: boolean;
+}
+
+const { title, description, showNav = true, showFooter = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="4345c349-059a-42dd-8483-67b7c0730da6"
+      async
+    ></script>
+  </head>
+  <body class="font-sans h-100 bg-black text-neutral-100" data-pagefind-body>
+    <div class="w-full max-w-7xl mx-auto lg:px-20 md:px-12 px-6">
+      {showNav && <MainNav />}
+      <slot />
+      {showFooter && <Footer />}
+    </div>
+  </body>
+</html>

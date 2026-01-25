@@ -1,6 +1,5 @@
 ---
-import "../styles/home.css";
-import MainNav from '../components/MainNav.astro';
+import BaseLayout from './BaseLayout.astro';
 import FieldGuideNav from '../components/FieldGuideNav.astro';
 import PrevNextNav from '../components/PrevNextNav.astro';
 
@@ -20,41 +19,22 @@ interface Props {
 const { title, description, prev, next } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Field Guide | Darkwave</title>
-    {description && <meta name="description" content={description} />}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script
-      src="https://beamanalytics.b-cdn.net/beam.min.js"
-      data-token="4345c349-059a-42dd-8483-67b7c0730da6"
-      async
-    ></script>
-  </head>
-  <body class="font-sans h-100 bg-black text-neutral-100" data-pagefind-body>
-    <div class="w-full max-w-7xl mx-auto lg:px-20 md:px-12 px-6">
-      <MainNav />
+<BaseLayout title={`${title} | Field Guide | Darkwave`} description={description}>
+  <!-- Mobile Nav Dropdown (only on mobile) -->
+  <div class="sm:hidden">
+    <FieldGuideNav />
+  </div>
 
-      <!-- Mobile Nav Dropdown (only on mobile) -->
-      <div class="sm:hidden">
-        <FieldGuideNav />
-      </div>
-
-      <div class="sm:flex gap-8 lg:gap-12 pb-16">
-        <aside class="w-56 lg:w-64 flex-shrink-0 hidden sm:block">
-          <FieldGuideNav />
-        </aside>
-        <main class="flex-1 min-w-0 max-w-3xl">
-          <article class="main-content">
-            <h1>{title}</h1>
-            <slot />
-            <PrevNextNav prev={prev} next={next} />
-          </article>
-        </main>
-      </div>
-    </div>
-  </body>
-</html>
+  <div class="sm:flex gap-8 lg:gap-12 pb-16">
+    <aside class="w-56 lg:w-64 flex-shrink-0 hidden sm:block">
+      <FieldGuideNav />
+    </aside>
+    <main class="flex-1 min-w-0 max-w-3xl">
+      <article class="main-content">
+        <h1>{title}</h1>
+        <slot />
+        <PrevNextNav prev={prev} next={next} />
+      </article>
+    </main>
+  </div>
+</BaseLayout>
