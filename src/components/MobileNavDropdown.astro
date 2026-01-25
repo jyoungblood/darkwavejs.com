@@ -1,14 +1,21 @@
 ---
+/**
+ * Mobile navigation dropdown component.
+ * Handles both sectioned navigation (docs) and flat lists (fieldguide).
+ */
 interface Props {
+  /** Unique identifier for the dropdown */
   id: string;
+  /** Current page title shown in collapsed state */
   currentTitle: string;
-  label: string;
+  /** Optional header label shown inside the dropdown */
+  label?: string;
 }
 
 const { id, currentTitle, label } = Astro.props;
 ---
 
-<div class={`mobile-nav-dropdown-${id} sm:hidden mb-6 relative`}>
+<div class={`mobile-nav-dropdown mobile-nav-dropdown-${id} sm:hidden mb-6 relative`}>
   <button
     class="mobile-nav-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-neutral-100 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 transition-colors"
     type="button"
@@ -27,32 +34,55 @@ const { id, currentTitle, label } = Astro.props;
   </button>
 
   <nav
-    class="mobile-nav-content hidden absolute top-full left-0 right-0 mt-2 p-4 bg-neutral-900 border border-neutral-800 rounded-md max-h-[70vh] overflow-y-auto z-50"
+    class="mobile-nav-content hidden absolute top-full left-0 right-0 mt-2 p-4 bg-neutral-900 border border-neutral-800 rounded-md max-h-[70vh] overflow-y-auto z-50 space-y-4"
   >
-    <h2 class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">{label}</h2>
+    {label && <h2 class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">{label}</h2>}
     <slot />
   </nav>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.mobile-nav-toggle').forEach(button => {
-      button.addEventListener('click', () => {
-        const container = button.closest('[class*="mobile-nav-dropdown-"]');
-        const dropdown = container?.querySelector('.mobile-nav-content');
-        const chevron = button.querySelector('.mobile-nav-chevron');
+  function initMobileNavDropdowns() {
+    document.querySelectorAll('.mobile-nav-dropdown').forEach(container => {
+      const toggle = container.querySelector('.mobile-nav-toggle');
+      const dropdown = container.querySelector('.mobile-nav-content');
+      const chevron = container.querySelector('.mobile-nav-chevron');
+
+      toggle?.addEventListener('click', () => {
         const isHidden = dropdown?.classList.contains('hidden');
 
         if (isHidden) {
           dropdown?.classList.remove('hidden');
-          if (chevron) chevron.style.transform = 'rotate(90deg)';
-          button.setAttribute('aria-expanded', 'true');
+          if (chevron) (chevron as HTMLElement).style.transform = 'rotate(90deg)';
+          toggle.setAttribute('aria-expanded', 'true');
         } else {
           dropdown?.classList.add('hidden');
-          if (chevron) chevron.style.transform = '';
-          button.setAttribute('aria-expanded', 'false');
+          if (chevron) (chevron as HTMLElement).style.transform = '';
+          toggle.setAttribute('aria-expanded', 'false');
         }
       });
     });
-  });
+
+    // Collapsible sections within mobile dropdowns
+    document.querySelectorAll('.nav-section-toggle-mobile').forEach(button => {
+      button.addEventListener('click', () => {
+        const section = button.closest('.nav-section-mobile');
+        const content = section?.querySelector('.nav-section-content-mobile');
+        const chevron = button.querySelector('.section-chevron-mobile');
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+        if (content) {
+          (content as HTMLElement).style.display = isExpanded ? 'none' : '';
+        }
+        if (chevron) {
+          (chevron as HTMLElement).style.transform = isExpanded ? '' : 'rotate(90deg)';
+        }
+        button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+      });
+    });
+  }
+
+  // Run on initial load and on Astro page transitions
+  document.addEventListener('DOMContentLoaded', initMobileNavDropdowns);
+  document.addEventListener('astro:page-load', initMobileNavDropdowns);
 </script>

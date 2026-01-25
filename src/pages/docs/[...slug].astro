@@ -4,8 +4,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { getDocsPrevNext } from '../../utils/navigation';
 
 export async function getStaticPaths() {
+  // Only include content explicitly marked as published (draft by default)
   const docsEntries = await getCollection('docs', ({ data }) => {
-    return !data.status || data.status === 'published';
+    return data.status === 'published';
   });
   return docsEntries.map((entry) => {
     const slug = entry.slug;

@@ -1,77 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
+/**
+ * Field Guide navigation component.
+ * Dynamically loads published fieldguide entries from the centralized navigation config.
+ */
+import { getFieldguideNavEntries } from '../utils/navigation';
 import MobileNavDropdown from './MobileNavDropdown.astro';
+import NavList from './NavList.astro';
 
-const fieldguideEntries = await getCollection('fieldguide');
-
-// Sort entries: index first, then alphabetically
-const sortedEntries = fieldguideEntries.sort((a, b) => {
-  if (a.slug === 'index') return -1;
-  if (b.slug === 'index') return 1;
-  return a.data.title.localeCompare(b.data.title);
-});
-
+const entries = await getFieldguideNavEntries();
 const currentPath = Astro.url.pathname;
 
 // Find current page title for mobile dropdown
-function getCurrentPageTitle() {
-  const currentEntry = sortedEntries.find(entry => {
-    const href = entry.slug === 'index' ? '/fieldguide/' : `/fieldguide/${entry.slug}/`;
-    return currentPath === href || currentPath === href.slice(0, -1);
-  });
-  return currentEntry?.data.title || 'Navigate';
-}
-
-const currentPageTitle = getCurrentPageTitle();
+const currentEntry = entries.find(e => currentPath === e.href || currentPath === e.href.slice(0, -1));
+const currentPageTitle = currentEntry?.title || 'Navigate';
 ---
 
 <!-- Mobile Dropdown Nav -->
 <MobileNavDropdown id="fieldguide" currentTitle={currentPageTitle} label="Field Guide">
-  <ul class="space-y-1">
-    {sortedEntries.map((entry) => {
-      const href = entry.slug === 'index' ? '/fieldguide/' : `/fieldguide/${entry.slug}/`;
-      const isActive = currentPath === href || currentPath === href.slice(0, -1);
-      return (
-        <li>
-          <a
-            href={href}
-            class:list={[
-              "block px-3 py-2 rounded text-sm transition-colors",
-              isActive
-                ? "bg-neutral-800 text-dw-green"
-                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
-            ]}
-          >
-            {entry.data.title}
-          </a>
-        </li>
-      );
-    })}
-  </ul>
+  <NavList entries={entries} currentPath={currentPath} />
 </MobileNavDropdown>
 
 <!-- Desktop/Tablet Nav -->
 <nav class="hidden sm:block">
   <h2 class="text-sm font-semibold text-neutral-500 uppercase tracking-wide mb-4">Field Guide</h2>
-  <ul class="space-y-1">
-    {sortedEntries.map((entry) => {
-      const href = entry.slug === 'index' ? '/fieldguide/' : `/fieldguide/${entry.slug}/`;
-      const isActive = currentPath === href || currentPath === href.slice(0, -1);
-      return (
-        <li>
-          <a
-            href={href}
-            class:list={[
-              "block px-3 py-2 rounded text-sm transition-colors",
-              isActive
-                ? "bg-neutral-800 text-dw-green"
-                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
-            ]}
-          >
-            {entry.data.title}
-          </a>
-        </li>
-      );
-    })}
-  </ul>
+  <NavList entries={entries} currentPath={currentPath} />
 </nav>

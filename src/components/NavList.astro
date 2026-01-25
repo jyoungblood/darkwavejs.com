@@ -1,0 +1,41 @@
+---
+/**
+ * Simple flat list navigation component.
+ * Used for sections without collapsible subsections (like Field Guide).
+ */
+import type { NavEntry } from '../utils/navigation';
+
+interface Props {
+  /** Navigation entries to display */
+  entries: NavEntry[];
+  /** Current page path for active state detection */
+  currentPath: string;
+}
+
+const { entries, currentPath } = Astro.props;
+
+function isActive(entry: NavEntry) {
+  return currentPath === entry.href || currentPath === entry.href.slice(0, -1);
+}
+---
+
+<ul class="space-y-1">
+  {entries.map((entry) => {
+    const active = isActive(entry);
+    return (
+      <li>
+        <a
+          href={entry.href}
+          class:list={[
+            "block px-3 py-2 rounded text-sm transition-colors",
+            active
+              ? "bg-neutral-800 text-dw-green"
+              : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
+          ]}
+        >
+          {entry.title}
+        </a>
+      </li>
+    );
+  })}
+</ul>

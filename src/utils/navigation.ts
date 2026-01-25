@@ -1,16 +1,39 @@
 import { getCollection } from 'astro:content';
 
-// Docs section configuration - defines the order of pages
-const docsSections = [
-  { id: '', order: ['index', 'what', 'who', 'why', 'ethos', 'vibes'] },
-  { id: 'getting-started', order: ['index', 'architecture', 'configuring', 'llms'] },
-  { id: 'workflow', order: ['index', 'cli', 'deployment', 'troubleshooting'] },
-  { id: 'components', order: ['index'] }, // Rest added dynamically
+// =============================================================================
+// NAVIGATION CONFIGURATION - Single source of truth for ordering
+// =============================================================================
+
+/**
+ * Docs sections with their display labels and page order.
+ * Pages not listed in 'order' will be appended alphabetically.
+ */
+export const docsSections = [
+  { id: '', label: 'Introduction', order: ['index', 'what', 'who', 'why', 'ethos', 'vibes'] },
+  { id: 'getting-started', label: 'Getting Started', order: ['index', 'architecture', 'configuring', 'llms'] },
+  { id: 'workflow', label: 'Workflow', order: ['index', 'cli', 'deployment', 'troubleshooting'] },
+  { id: 'components', label: 'Components', order: ['index'] },
 ];
 
-interface NavEntry {
+/**
+ * Field guide page order. Pages not listed will be appended alphabetically.
+ */
+export const fieldguideOrder = ['index'];
+
+// =============================================================================
+// TYPES
+// =============================================================================
+
+export interface NavEntry {
   href: string;
   title: string;
+  slug: string;
+}
+
+export interface NavSection {
+  id: string;
+  label: string;
+  entries: NavEntry[];
 }
 
 interface PrevNextResult {
@@ -18,89 +41,18 @@ interface PrevNextResult {
   next?: NavEntry;
 }
 
-/**
- * Get the flat ordered list of all docs pages
- */
-export async function getOrderedDocs() {
-  const allDocs = await getCollection('docs', ({ data }) => {
-    return !data.status || data.status === 'published';
-  });
+// =============================================================================
+// HELPER: Filter for published content
+// =============================================================================
 
-  const orderedDocs: Array<{ slug: string; title: string }> = [];
-
-  for (const section of docsSections) {
-    // Get docs for this section
-    const sectionDocs = allDocs.filter(doc => {
-      if (section.id === '') {
-        return !doc.slug.includes('/') &&
-               !doc.slug.startsWith('getting-started') &&
-               !doc.slug.startsWith('workflow') &&
-               !doc.slug.startsWith('components');
-      }
-      return doc.slug.startsWith(section.id + '/') || doc.slug === section.id;
-    });
-
-    // Sort by defined order
-    const sorted = sectionDocs.sort((a, b) => {
-      const aName = a.slug === section.id ? 'index' : (a.slug.split('/').pop() || a.slug);
-      const bName = b.slug === section.id ? 'index' : (b.slug.split('/').pop() || b.slug);
-      const aIndex = section.order.indexOf(aName);
-      const bIndex = section.order.indexOf(bName);
-      if (aIndex === -1 && bIndex === -1) return a.data.title.localeCompare(b.data.title);
-      if (aIndex === -1) return 1;
-      if (bIndex === -1) return -1;
-      return aIndex - bIndex;
-    });
-
-    for (const doc of sorted) {
-      orderedDocs.push({ slug: doc.slug, title: doc.data.title });
-    }
-  }
-
-  return orderedDocs;
+function isPublished(data: { status?: string }) {
+  // Only show content explicitly marked as published (draft by default)
+  return data.status === 'published';
 }
 
-/**
- * Get prev/next navigation for a docs page
- */
-export async function getDocsPrevNext(currentSlug: string): Promise<PrevNextResult> {
-  const orderedDocs = await getOrderedDocs();
-
-  // Normalize the slug for comparison
-  const normalizedCurrent = currentSlug || 'index';
-
-  const currentIndex = orderedDocs.findIndex(doc => {
-    // Handle various slug formats
-    if (doc.slug === normalizedCurrent) return true;
-    if (doc.slug === normalizedCurrent + '/index') return true;
-    if (doc.slug.endsWith('/index') && doc.slug.replace('/index', '') === normalizedCurrent) return true;
-    return false;
-  });
-
-  if (currentIndex === -1) {
-    return {};
-  }
-
-  const result: PrevNextResult = {};
-
-  if (currentIndex > 0) {
-    const prev = orderedDocs[currentIndex - 1];
-    result.prev = {
-      href: getDocsHref(prev.slug),
-      title: prev.title,
-    };
-  }
-
-  if (currentIndex < orderedDocs.length - 1) {
-    const next = orderedDocs[currentIndex + 1];
-    result.next = {
-      href: getDocsHref(next.slug),
-      title: next.title,
-    };
-  }
-
-  return result;
-}
+// =============================================================================
+// DOCS NAVIGATION
+// =============================================================================
 
 function getDocsHref(slug: string): string {
   if (slug === 'index') {
@@ -113,19 +65,125 @@ function getDocsHref(slug: string): string {
 }
 
 /**
- * Get the flat ordered list of all fieldguide pages
+ * Sort docs by the defined order array, with unlisted items appended alphabetically
  */
-export async function getOrderedFieldguide() {
-  const entries = await getCollection('fieldguide', ({ data }) => {
-    return !data.status || data.status === 'published';
+function sortByOrder(docs: Array<{ slug: string; data: { title: string } }>, sectionId: string, order: string[]) {
+  return docs.sort((a, b) => {
+    const aName = a.slug === sectionId ? 'index' : (a.slug.split('/').pop() || a.slug);
+    const bName = b.slug === sectionId ? 'index' : (b.slug.split('/').pop() || b.slug);
+    const aIndex = order.indexOf(aName);
+    const bIndex = order.indexOf(bName);
+    if (aIndex === -1 && bIndex === -1) return a.data.title.localeCompare(b.data.title);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+}
+
+/**
+ * Get docs for a specific section, filtered to published only
+ */
+function filterDocsForSection(allDocs: Array<{ slug: string; data: { title: string } }>, sectionId: string) {
+  return allDocs.filter(doc => {
+    if (sectionId === '') {
+      // Root level docs - exclude subdirectory files
+      return !doc.slug.includes('/') &&
+             !doc.slug.startsWith('getting-started') &&
+             !doc.slug.startsWith('workflow') &&
+             !doc.slug.startsWith('components');
+    }
+    return doc.slug.startsWith(sectionId + '/') || doc.slug === sectionId;
+  });
+}
+
+/**
+ * Get all docs sections with their published, ordered entries for navigation display
+ */
+export async function getDocsNavSections(): Promise<NavSection[]> {
+  const allDocs = await getCollection('docs', ({ data }) => isPublished(data));
+
+  return docsSections.map(section => {
+    const sectionDocs = filterDocsForSection(allDocs, section.id);
+    const sorted = sortByOrder(sectionDocs, section.id, section.order);
+
+    return {
+      id: section.id,
+      label: section.label,
+      entries: sorted.map(doc => ({
+        slug: doc.slug,
+        title: doc.data.title,
+        href: getDocsHref(doc.slug),
+      })),
+    };
+  });
+}
+
+/**
+ * Get the flat ordered list of all published docs pages
+ */
+export async function getOrderedDocs() {
+  const sections = await getDocsNavSections();
+  return sections.flatMap(section => section.entries);
+}
+
+/**
+ * Get prev/next navigation for a docs page
+ */
+export async function getDocsPrevNext(currentSlug: string): Promise<PrevNextResult> {
+  const orderedDocs = await getOrderedDocs();
+  const normalizedCurrent = currentSlug || 'index';
+
+  const currentIndex = orderedDocs.findIndex(doc => {
+    if (doc.slug === normalizedCurrent) return true;
+    if (doc.slug === normalizedCurrent + '/index') return true;
+    if (doc.slug.endsWith('/index') && doc.slug.replace('/index', '') === normalizedCurrent) return true;
+    return false;
   });
 
-  // Sort: index first, then alphabetically by title
-  return entries.sort((a, b) => {
-    if (a.slug === 'index') return -1;
-    if (b.slug === 'index') return 1;
-    return a.data.title.localeCompare(b.data.title);
-  }).map(entry => ({ slug: entry.slug, title: entry.data.title }));
+  if (currentIndex === -1) return {};
+
+  const result: PrevNextResult = {};
+  if (currentIndex > 0) {
+    result.prev = orderedDocs[currentIndex - 1];
+  }
+  if (currentIndex < orderedDocs.length - 1) {
+    result.next = orderedDocs[currentIndex + 1];
+  }
+  return result;
+}
+
+// =============================================================================
+// FIELDGUIDE NAVIGATION
+// =============================================================================
+
+/**
+ * Get all published fieldguide entries, properly ordered for navigation
+ */
+export async function getFieldguideNavEntries(): Promise<NavEntry[]> {
+  const entries = await getCollection('fieldguide', ({ data }) => isPublished(data));
+
+  // Sort by defined order, then alphabetically for unlisted items
+  const sorted = entries.sort((a, b) => {
+    const aIndex = fieldguideOrder.indexOf(a.slug);
+    const bIndex = fieldguideOrder.indexOf(b.slug);
+    if (aIndex === -1 && bIndex === -1) return a.data.title.localeCompare(b.data.title);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
+  return sorted.map(entry => ({
+    slug: entry.slug,
+    title: entry.data.title,
+    href: entry.slug === 'index' ? '/fieldguide/' : `/fieldguide/${entry.slug}/`,
+  }));
+}
+
+/**
+ * Get the flat ordered list of all published fieldguide pages (alias for consistency)
+ */
+export async function getOrderedFieldguide() {
+  return getFieldguideNavEntries();
 }
 
 /**
@@ -133,32 +191,17 @@ export async function getOrderedFieldguide() {
  */
 export async function getFieldguidePrevNext(currentSlug: string): Promise<PrevNextResult> {
   const orderedEntries = await getOrderedFieldguide();
-
   const normalizedCurrent = currentSlug || 'index';
-
   const currentIndex = orderedEntries.findIndex(entry => entry.slug === normalizedCurrent);
 
-  if (currentIndex === -1) {
-    return {};
-  }
+  if (currentIndex === -1) return {};
 
   const result: PrevNextResult = {};
-
   if (currentIndex > 0) {
-    const prev = orderedEntries[currentIndex - 1];
-    result.prev = {
-      href: prev.slug === 'index' ? '/fieldguide/' : `/fieldguide/${prev.slug}/`,
-      title: prev.title,
-    };
+    result.prev = orderedEntries[currentIndex - 1];
   }
-
   if (currentIndex < orderedEntries.length - 1) {
-    const next = orderedEntries[currentIndex + 1];
-    result.next = {
-      href: next.slug === 'index' ? '/fieldguide/' : `/fieldguide/${next.slug}/`,
-      title: next.title,
-    };
+    result.next = orderedEntries[currentIndex + 1];
   }
-
   return result;
 }

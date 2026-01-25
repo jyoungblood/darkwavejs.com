@@ -4,8 +4,9 @@ import FieldGuideLayout from '../../layouts/FieldGuideLayout.astro';
 import { getFieldguidePrevNext } from '../../utils/navigation';
 
 export async function getStaticPaths() {
+  // Only include content explicitly marked as published (draft by default)
   const fieldguideEntries = await getCollection('fieldguide', ({ data }) => {
-    return !data.status || data.status === 'published';
+    return data.status === 'published';
   });
   return fieldguideEntries.map((entry) => ({
     params: { slug: entry.slug === 'index' ? undefined : entry.slug },
