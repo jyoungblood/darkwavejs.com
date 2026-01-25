@@ -2,13 +2,22 @@
 import "../styles/home.css";
 import MainNav from '../components/MainNav.astro';
 import FieldGuideNav from '../components/FieldGuideNav.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
 
 interface Props {
   title: string;
   description?: string;
+  prev?: {
+    href: string;
+    title: string;
+  };
+  next?: {
+    href: string;
+    title: string;
+  };
 }
 
-const { title, description } = Astro.props;
+const { title, description, prev, next } = Astro.props;
 ---
 
 <!doctype html>
@@ -42,6 +51,7 @@ const { title, description } = Astro.props;
           <article class="main-content">
             <h1>{title}</h1>
             <slot />
+            <PrevNextNav prev={prev} next={next} />
           </article>
         </main>
       </div>
