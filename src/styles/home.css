@@ -198,8 +198,9 @@ body * {
 }
 
 
-/* Mobile touch feedback for nav dropdown links */
-.mobile-nav-content a {
+/* Mobile touch feedback for nav links */
+.mobile-nav-content a,
+#mobile-menu a {
   -webkit-tap-highlight-color: rgba(187, 253, 222, 0.2); /* dw-green with transparency */
   cursor: pointer;
 }
