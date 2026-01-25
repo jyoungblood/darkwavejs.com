@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import ArchiveList from "../../../components/ArchiveList.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog", ({ data }) => {
+    return data.status === "published";
+  });
+
+  // Get all unique tags
+  const allTags = new Set<string>();
+  allPosts.forEach((post) => {
+    post.data.tags?.forEach((tag) => allTags.add(tag));
+  });
+
+  // Create a path for each tag
+  return Array.from(allTags).map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: allPosts
+        .filter((post) => post.data.tags?.includes(tag))
+        .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Array<{
+    slug: string;
+    data: {
+      title: string;
+      subtitle: string;
+      date: string;
+      tags?: string[];
+    };
+  }>;
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BlogLayout>
+  <p class="text-neutral-400 mb-8">Posts tagged "{tag}"</p>
+  <ArchiveList entries={posts} emptyMessage={`No posts found with tag "${tag}".`} />
+</BlogLayout>

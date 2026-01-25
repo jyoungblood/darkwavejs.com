@@ -1,9 +1,10 @@
 ---
 import "../styles/home.css";
 import MainNav from '../components/MainNav.astro';
+import Tag from '../components/Tag.astro';
 
 interface Props {
-  title: string;
+  title?: string;
   subtitle?: string;
   date?: string;
   tags?: string[];
@@ -47,11 +48,9 @@ let pageTitle = title ? `${title} | Blog | Darkwave` : "Blog | Darkwave";
               </div>
             )}
             {tags && tags.length > 0 && (
-              <div class="flex gap-2 mt-4">
+              <div class="flex gap-2 flex-wrap mt-4">
                 {tags.map((tag) => (
-                  <span class="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">
-                    {tag}
-                  </span>
+                  <Tag tag={tag} />
                 ))}
               </div>
             )}

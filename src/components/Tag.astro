@@ -1,0 +1,35 @@
+---
+interface Props {
+  tag: string;
+  linked?: boolean;
+}
+
+const { tag, linked = true } = Astro.props;
+const href = `/blog/tag/${encodeURIComponent(tag)}`;
+---
+
+{linked ? (
+  <a href={href} class="tag-link">
+    {tag}
+  </a>
+) : (
+  <span class="tag-link">
+    {tag}
+  </span>
+)}
+
+<style>
+  .tag-link {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #171717;
+    color: #a3a3a3 !important;
+    border-radius: 0.25rem;
+    transition: background-color 0.15s, color 0.15s;
+    text-decoration: none !important;
+  }
+  .tag-link:hover {
+    background-color: #262626;
+    color: #d4d4d4 !important;
+  }
+</style>
