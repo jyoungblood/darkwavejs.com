@@ -198,6 +198,12 @@ body * {
 }
 
 
+/* Mobile touch feedback for nav dropdown links */
+.mobile-nav-content a {
+  -webkit-tap-highlight-color: rgba(187, 253, 222, 0.2); /* dw-green with transparency */
+  cursor: pointer;
+}
+
 @layer utilities {
   .text-dw-purple {
     color: #b97aa9;
