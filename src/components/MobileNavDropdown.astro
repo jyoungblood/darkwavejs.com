@@ -42,14 +42,51 @@ const { id, currentTitle, label } = Astro.props;
 </div>
 
 <script>
+  // Helper to close a specific dropdown
+  function closeDropdown(container: Element) {
+    const dropdown = container.querySelector('.mobile-nav-content');
+    const chevron = container.querySelector('.mobile-nav-chevron');
+    const toggle = container.querySelector('.mobile-nav-toggle');
+
+    dropdown?.classList.add('hidden');
+    if (chevron) (chevron as HTMLElement).style.transform = '';
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+
+  // Close all dropdowns on the page
+  function closeAllMobileNavDropdowns() {
+    document.querySelectorAll('.mobile-nav-dropdown').forEach(closeDropdown);
+  }
+
+  // Document-level click handler (added once)
+  function handleDocumentClick(e: MouseEvent) {
+    const target = e.target as Element;
+    // Check if click is outside all dropdowns
+    if (!target.closest('.mobile-nav-dropdown')) {
+      closeAllMobileNavDropdowns();
+    }
+  }
+
   function initMobileNavDropdowns() {
-    document.querySelectorAll('.mobile-nav-dropdown').forEach(container => {
+    const dropdowns = document.querySelectorAll('.mobile-nav-dropdown');
+
+    dropdowns.forEach(container => {
       const toggle = container.querySelector('.mobile-nav-toggle');
       const dropdown = container.querySelector('.mobile-nav-content');
       const chevron = container.querySelector('.mobile-nav-chevron');
 
-      toggle?.addEventListener('click', () => {
+      // Skip if already initialized
+      if (toggle?.hasAttribute('data-dropdown-init')) return;
+      toggle?.setAttribute('data-dropdown-init', 'true');
+
+      toggle?.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent document click from immediately closing
         const isHidden = dropdown?.classList.contains('hidden');
+
+        // Close any other open dropdowns first
+        dropdowns.forEach(other => {
+          if (other !== container) closeDropdown(other);
+        });
 
         if (isHidden) {
           dropdown?.classList.remove('hidden');
@@ -61,10 +98,19 @@ const { id, currentTitle, label } = Astro.props;
           toggle.setAttribute('aria-expanded', 'false');
         }
       });
+
+      // Prevent clicks inside the dropdown content from closing it
+      dropdown?.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
     });
 
     // Collapsible sections within mobile dropdowns
     document.querySelectorAll('.nav-section-toggle-mobile').forEach(button => {
+      // Skip if already initialized
+      if (button.hasAttribute('data-section-init')) return;
+      button.setAttribute('data-section-init', 'true');
+
       button.addEventListener('click', () => {
         const section = button.closest('.nav-section-mobile');
         const content = section?.querySelector('.nav-section-content-mobile');
@@ -81,6 +127,9 @@ const { id, currentTitle, label } = Astro.props;
       });
     });
   }
+
+  // Add document click handler once
+  document.addEventListener('click', handleDocumentClick);
 
   // Run on initial load and on Astro page transitions
   document.addEventListener('DOMContentLoaded', initMobileNavDropdowns);
