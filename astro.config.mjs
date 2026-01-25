@@ -34,6 +34,9 @@ export default defineConfig({
         codeFontWeight: "400",
         codeFontSize: "0.95rem",
         codeLineHeight: "1.5",
+        frames: {
+          inlineButtonBorderOpacity: "0",
+        },
       },
     }),
     mdx(),

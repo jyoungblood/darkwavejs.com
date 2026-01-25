@@ -20,14 +20,14 @@ const navLinks = [
     <!-- Spacer -->
     <div class="flex-1"></div>
 
-    <!-- Search Button (flexible width with max size) -->
+    <!-- Search Button -->
     <button
       id="search-button-mobile"
-      class="flex items-center justify-start flex-shrink min-w-0 max-w-[14rem] px-3 py-2 text-sm text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md hover:border-neutral-700 hover:text-white transition-colors"
+      class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-neutral-400 hover:text-dw-green transition-colors"
       type="button"
       aria-label="Open search"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" viewBox="0 0 512 512">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512">
         <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208M208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288"/>
       </svg>
     </button>
@@ -96,12 +96,18 @@ const navLinks = [
     </div>
   </div>
 
+  <!-- Mobile Menu Backdrop - dims and blurs background (below nav only) -->
+  <div
+    id="mobile-menu-backdrop"
+    class="sm:hidden hidden fixed left-0 right-0 bottom-0 bg-black/60 backdrop-blur-sm z-[60] transition-opacity duration-200"
+  ></div>
+
   <!-- Mobile Menu Dropdown - Absolute positioned overlay -->
   <div
     id="mobile-menu"
-    class="sm:hidden hidden absolute top-full left-0 right-0 bg-black border-t border-neutral-800 z-40"
+    class="sm:hidden hidden absolute top-full left-0 right-0 -mt-px bg-neutral-900 border border-neutral-800 rounded-md z-[70]"
   >
-    <div class="flex flex-col gap-1 py-4 px-6">
+    <div class="flex flex-col gap-1 p-4">
       {navLinks.map((link) => {
         const normalizePath = (path: string) =>
           path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
@@ -112,10 +118,10 @@ const navLinks = [
           <a
             href={link.href}
             class:list={[
-              "px-4 py-3 text-sm font-medium transition-colors rounded-md",
+              "block px-3 py-2 text-sm font-medium transition-colors rounded",
               isActive
-                ? "text-dw-green bg-neutral-900"
-                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-900"
+                ? "text-dw-green bg-neutral-800"
+                : "text-neutral-400 hover:text-dw-green hover:bg-neutral-800/50"
             ]}
           >
             {link.label}
@@ -159,22 +165,43 @@ const navLinks = [
   // Mobile Menu functionality
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop') as HTMLElement;
   const hamburgerIcon = document.getElementById('hamburger-icon');
   const closeIcon = document.getElementById('close-icon');
+  const navElement = document.querySelector('nav');
+
+  function openMobileMenu() {
+    // Position backdrop to start below the nav
+    if (mobileMenuBackdrop && navElement) {
+      const navRect = navElement.getBoundingClientRect();
+      mobileMenuBackdrop.style.top = `${navRect.bottom}px`;
+    }
+    mobileMenu?.classList.remove('hidden');
+    mobileMenuBackdrop?.classList.remove('hidden');
+    hamburgerIcon?.classList.add('hidden');
+    closeIcon?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    mobileMenu?.classList.add('hidden');
+    mobileMenuBackdrop?.classList.add('hidden');
+    hamburgerIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
 
   mobileMenuToggle?.addEventListener('click', () => {
     const isHidden = mobileMenu?.classList.contains('hidden');
-
     if (isHidden) {
-      mobileMenu?.classList.remove('hidden');
-      hamburgerIcon?.classList.add('hidden');
-      closeIcon?.classList.remove('hidden');
+      openMobileMenu();
     } else {
-      mobileMenu?.classList.add('hidden');
-      hamburgerIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
+      closeMobileMenu();
     }
   });
+
+  // Close mobile menu when clicking backdrop
+  mobileMenuBackdrop?.addEventListener('click', closeMobileMenu);
 
   // Search Modal functionality
   const searchButton = document.getElementById('search-button');

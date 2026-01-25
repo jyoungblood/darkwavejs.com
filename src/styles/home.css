@@ -40,6 +40,16 @@ body * {
   border-radius: var(--expressive-code-border-radius) !important;
 }
 
+.expressive-code .copy button {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+}
+
+.expressive-code .copy button svg {
+  width: 0.9rem !important;
+  height: 0.9rem !important;
+}
+
 .expressive-code pre {
   border: none !important;
   margin: 0 !important;
