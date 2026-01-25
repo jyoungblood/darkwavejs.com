@@ -21,6 +21,7 @@ const { title, description, showNav = true, showFooter = true } = Astro.props;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="text/plain" title="LLM-friendly documentation" href="/llms.txt" />
     <script
       src="https://beamanalytics.b-cdn.net/beam.min.js"
       data-token="4345c349-059a-42dd-8483-67b7c0730da6"
