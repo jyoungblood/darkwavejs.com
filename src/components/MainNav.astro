@@ -134,9 +134,11 @@ const navLinks = [
 
 <!-- Search Modal -->
 <div id="search-modal" class="hidden fixed inset-0 z-50">
+  <!-- Backdrop that covers entire screen and handles close on click/touch -->
   <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="search-backdrop"></div>
-  <div class="relative flex items-start justify-center pt-[15vh]">
-    <div class="w-full max-w-2xl mx-4 bg-neutral-900 rounded-lg border border-neutral-700 shadow-2xl overflow-hidden">
+  <!-- Content wrapper - absolute to ensure full coverage for touch events -->
+  <div class="absolute inset-0 flex items-start justify-center pt-[15vh] pointer-events-none">
+    <div class="w-full max-w-2xl mx-4 bg-neutral-900 rounded-lg border border-neutral-700 shadow-2xl overflow-hidden pointer-events-auto">
       <div class="p-4 border-b border-neutral-700">
         <div class="flex items-center gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" viewBox="0 0 512 512">
@@ -246,15 +248,8 @@ const navLinks = [
   searchButton?.addEventListener('click', openSearch);
   searchButtonMobile?.addEventListener('click', openSearch);
 
-  // Close search when clicking outside the modal content
-  searchModal?.addEventListener('click', (e) => {
-    const target = e.target as Element;
-    // Close if clicking the modal overlay itself, not the content inside
-    const modalContent = searchModal.querySelector('.max-w-2xl');
-    if (modalContent && !modalContent.contains(target)) {
-      closeSearch();
-    }
-  });
+  // Close search when clicking/touching the backdrop
+  searchBackdrop?.addEventListener('click', closeSearch);
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
