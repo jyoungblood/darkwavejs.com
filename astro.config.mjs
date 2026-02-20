@@ -10,6 +10,9 @@ export default defineConfig({
   integrations: [
     favicons(),
     expressiveCode({
+      defaultProps: {
+        frame: "none",
+      },
       themes: [
         // "dracula",
         // "synthwave-84",
